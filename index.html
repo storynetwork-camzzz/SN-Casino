@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>SN Casino</title>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;900&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="style.css"/>
+</head>
+<body>
+
+<canvas id="bgCanvas"></canvas>
+<div class="side-deco left"><div class="deco-line"></div><div class="deco-suit">♠</div><div class="deco-line"></div><div class="deco-suit">♦</div><div class="deco-line"></div><div class="deco-suit">♣</div><div class="deco-line"></div><div class="deco-suit">♥</div><div class="deco-line"></div></div>
+<div class="side-deco right"><div class="deco-line"></div><div class="deco-suit">♥</div><div class="deco-line"></div><div class="deco-suit">♣</div><div class="deco-line"></div><div class="deco-suit">♦</div><div class="deco-line"></div><div class="deco-suit">♠</div><div class="deco-line"></div></div>
+
+<div id="toast"></div>
+
+<!-- AUTH -->
+<div class="screen active" id="screen-auth">
+  <div class="page">
+    <div class="brand">
+      <div class="logo-wrap"><img src="https://codehs.com/uploads/b9084e2547f1923caa433b97f16c89d1" alt="SN"/></div>
+      <h1 class="brand-name"><span>SN</span> Casino</h1>
+      <p class="brand-tag">by Story Network</p>
+    </div>
+    <div class="card">
+      <div class="tabs">
+        <button class="tab active" id="tab-login" onclick="switchTab('login')">Sign In</button>
+        <div class="tab-divider"></div>
+        <button class="tab" id="tab-signup" onclick="switchTab('signup')">Register</button>
+      </div>
+      <div class="panel active" id="panel-login">
+        <div class="form-group"><label>Username</label><div class="input-wrap"><span class="input-icon">@</span><input type="text" id="login-username" placeholder="your username" autocomplete="off"/></div></div>
+        <div class="form-group"><label>Password</label><div class="input-wrap"><span class="input-icon">🔒</span><input type="password" id="login-password" placeholder="••••••••"/></div></div>
+        <button class="btn" id="login-btn" onclick="doLogin()"><span class="btn-text">Enter Casino</span><span class="btn-icon">→</span></button>
+        <div class="msg" id="login-msg"></div>
+      </div>
+      <div class="panel" id="panel-signup">
+        <div class="coins-notice"><span class="coins-icon">🪙</span><span>Start with <strong>10,000 free coins</strong></span></div>
+        <div class="form-group"><label>Username</label><div class="input-wrap"><span class="input-icon">@</span><input type="text" id="signup-username" placeholder="coolplayer123" autocomplete="off"/></div><span class="field-hint">Letters, numbers, underscores only</span></div>
+        <div class="form-group"><label>Password</label><div class="input-wrap"><span class="input-icon">🔒</span><input type="password" id="signup-password" placeholder="min 6 characters"/></div></div>
+        <div class="form-group"><label>Confirm Password</label><div class="input-wrap"><span class="input-icon">✓</span><input type="password" id="signup-confirm" placeholder="repeat password"/></div></div>
+        <button class="btn" id="signup-btn" onclick="doSignup()"><span class="btn-text">Create Account</span><span class="btn-icon">→</span></button>
+        <div class="msg" id="signup-msg"></div>
+      </div>
+      <p class="disclaimer">⚠ For entertainment only · No real money · 18+</p>
+    </div>
+  </div>
+</div>
+
+<!-- LOBBY -->
+<div class="screen" id="screen-lobby">
+  <nav class="nav">
+    <div class="nav-brand">
+      <img src="https://codehs.com/uploads/b9084e2547f1923caa433b97f16c89d1" alt="SN"/>
+      <span><b>SN</b> Casino</span>
+    </div>
+    <div class="nav-center">
+      <button class="nav-btn" onclick="showScreen('lobby')">🎮 Lobby</button>
+      <button class="nav-btn" onclick="showScreen('leaderboard')">🏆 Leaderboard</button>
+      <button class="nav-btn" onclick="showScreen('achievements')">🎖 Achievements</button>
+      <button class="nav-btn" onclick="showScreen('shop')">🛒 Shop</button>
+      <button class="nav-btn" onclick="showScreen('stats')">📊 My Stats</button>
+      <button class="nav-btn" onclick="showScreen('suggestions')">💬 Suggestions</button>
+    </div>
+    <div class="nav-right">
+      <button class="nav-btn sound-btn" id="sound-btn" onclick="toggleSound()" title="Toggle Sound">🔊</button>
+      <span class="coin-bal"><span id="nav-coin-icon">🪙</span> <span id="user-coins">0</span></span>
+      <span class="username-display" id="user-name">—</span>
+      <button class="signout-btn" onclick="doSignOut()">Sign Out</button>
+    </div>
+  </nav>
+  <div class="lobby-body">
+    <div class="daily-banner" id="daily-banner">
+      <div class="daily-content">
+        <span class="daily-icon">🎡</span>
+        <div><strong>Daily Spin Available!</strong><p>Spin the wheel for free coins</p></div>
+        <button class="btn btn-sm" onclick="showScreen('daily-spin')">Spin Now →</button>
+      </div>
+    </div>
+    <div class="bailout-banner" id="bailout-banner" style="display:none">
+      <div class="daily-content">
+        <span class="daily-icon">💸</span>
+        <div><strong>Running Low!</strong><p>Claim your free 1,000 coin bailout</p></div>
+        <button class="btn btn-sm" onclick="claimBailout()">Claim →</button>
+      </div>
+    </div>
+    <div class="lobby-welcome">
+      <h2>Welcome back, <span id="welcome-name">Player</span>!</h2>
+      <p>Choose a game to play</p>
+    </div>
+    <div class="games-grid">
+      <div class="game-card" onclick="showGame('slots')"><div class="game-icon">🎰</div><div class="game-name">Slots</div><div class="game-tag">Luck</div></div>
+      <div class="game-card" onclick="showGame('blackjack')"><div class="game-icon">🃏</div><div class="game-name">Blackjack</div><div class="game-tag">Skill</div></div>
+      <div class="game-card" onclick="showGame('roulette')"><div class="game-icon">🎡</div><div class="game-name">Roulette</div><div class="game-tag">Luck</div></div>
+      <div class="game-card" onclick="showGame('plinko')"><div class="game-icon">🔵</div><div class="game-name">Plinko</div><div class="game-tag">Luck</div></div>
+      <div class="game-card" onclick="showGame('poker')"><div class="game-icon">🂡</div><div class="game-name">Video Poker</div><div class="game-tag">Skill</div></div>
+      <div class="game-card" onclick="showGame('dice')"><div class="game-icon">🎲</div><div class="game-name">Dice</div><div class="game-tag">Luck</div></div>
+      <div class="game-card" onclick="showGame('scratch')"><div class="game-icon">🎟️</div><div class="game-name">Scratch Card</div><div class="game-tag">Luck</div></div>
+      <div class="game-card" onclick="showGame('ridebus')"><div class="game-icon">🚌</div><div class="game-name">Ride the Bus</div><div class="game-tag">Skill</div></div>
+      <div class="game-card" onclick="showGame('gofish')"><div class="game-icon">🐟</div><div class="game-name">Go Fish</div><div class="game-tag">Skill</div></div>
+      <div class="game-card" onclick="showGame('flappy')"><div class="game-icon">🐦</div><div class="game-name">Flappy Bet</div><div class="game-tag">Skill</div></div>
+      <div class="game-card new-game" onclick="showGame('coinflip')"><div class="game-icon">🪙</div><div class="game-name">Coin Flip</div><div class="game-tag">Luck</div><div class="game-new-badge">NEW</div></div>
+      <div class="game-card new-game" onclick="showGame('minesweeper')"><div class="game-icon">💣</div><div class="game-name">Minesweeper</div><div class="game-tag">Skill</div><div class="game-new-badge">NEW</div></div>
+      <div class="game-card new-game" onclick="showGame('horserace')"><div class="game-icon">🐎</div><div class="game-name">Horse Racing</div><div class="game-tag">Luck</div><div class="game-new-badge">NEW</div></div>
+      <div class="game-card new-game" onclick="showGame('higherlow')"><div class="game-icon">🎯</div><div class="game-name">Higher or Lower</div><div class="game-tag">Skill</div><div class="game-new-badge">NEW</div></div>
+      <div class="game-card new-game" onclick="showGame('wheelfortune')"><div class="game-icon">🎡</div><div class="game-name">Wheel of Fortune</div><div class="game-tag">Luck</div><div class="game-new-badge">NEW</div></div>
+    </div>
+    <p class="disclaimer" style="margin-top:32px;text-align:center;">⚠ For entertainment only · No real money · 18+</p>
+  </div>
+</div>
+
+<!-- GAME WRAPPER -->
+<div class="screen" id="screen-game">
+  <nav class="nav">
+    <div class="nav-brand"><img src="https://codehs.com/uploads/b9084e2547f1923caa433b97f16c89d1" alt="SN"/><span><b>SN</b> Casino</span></div>
+    <div class="nav-center"><button class="nav-btn" onclick="showScreen('lobby')">← Back to Lobby</button></div>
+    <div class="nav-right">
+      <button class="nav-btn sound-btn" onclick="toggleSound()">🔊</button>
+      <span class="coin-bal"><span id="game-coin-icon">🪙</span> <span id="game-coins">0</span></span>
+      <span class="username-display" id="game-username">—</span>
+    </div>
+  </nav>
+  <div id="game-container"></div>
+</div>
+
+<!-- LEADERBOARD -->
+<div class="screen" id="screen-leaderboard">
+  <nav class="nav">
+    <div class="nav-brand"><img src="https://codehs.com/uploads/b9084e2547f1923caa433b97f16c89d1" alt="SN"/><span><b>SN</b> Casino</span></div>
+    <div class="nav-center">
+      <button class="nav-btn" onclick="showScreen('lobby')">← Lobby</button>
+      <button class="nav-btn" onclick="showScreen('stats')">📊 My Stats</button>
+      <button class="nav-btn" onclick="showScreen('suggestions')">💬 Suggestions</button>
+    </div>
+    <div class="nav-right"><span class="coin-bal"><span id="lb-coin-icon">🪙</span> <span id="lb-coins">0</span></span></div>
+  </nav>
+  <div class="inner-body">
+    <h2 class="screen-title">🏆 Leaderboard</h2>
+    <div class="lb-tabs">
+      <button class="lb-tab active" onclick="showLbTab('coins')">Most Coins</button>
+      <button class="lb-tab" onclick="showLbTab('won')">Biggest Win</button>
+      <button class="lb-tab" onclick="showLbTab('games')">Most Games</button>
+      <button class="lb-tab" onclick="showLbTab('time')">Time Played</button>
+    </div>
+    <div id="lb-list" class="lb-list"></div>
+  </div>
+</div>
+
+<!-- ACHIEVEMENTS -->
+<div class="screen" id="screen-achievements">
+  <nav class="nav">
+    <div class="nav-brand"><img src="https://codehs.com/uploads/b9084e2547f1923caa433b97f16c89d1" alt="SN"/><span><b>SN</b> Casino</span></div>
+    <div class="nav-center">
+      <button class="nav-btn" onclick="showScreen('lobby')">← Lobby</button>
+      <button class="nav-btn" onclick="showScreen('stats')">📊 My Stats</button>
+      <button class="nav-btn" onclick="showScreen('suggestions')">💬 Suggestions</button>
+    </div>
+    <div class="nav-right"><span class="coin-bal"><span id="ach-coin-icon">🪙</span> <span id="ach-coins">0</span></span></div>
+  </nav>
+  <div class="inner-body">
+    <h2 class="screen-title">🎖 Achievements</h2>
+    <p class="screen-sub" id="ach-progress">0 / 0 unlocked</p>
+    <div id="ach-grid" class="ach-grid"></div>
+  </div>
+</div>
+
+<!-- SHOP -->
+<div class="screen" id="screen-shop">
+  <nav class="nav">
+    <div class="nav-brand"><img src="https://codehs.com/uploads/b9084e2547f1923caa433b97f16c89d1" alt="SN"/><span><b>SN</b> Casino</span></div>
+    <div class="nav-center">
+      <button class="nav-btn" onclick="showScreen('lobby')">← Lobby</button>
+      <button class="nav-btn" onclick="showScreen('stats')">📊 My Stats</button>
+      <button class="nav-btn" onclick="showScreen('suggestions')">💬 Suggestions</button>
+    </div>
+    <div class="nav-right"><span class="coin-bal"><span id="shop-coin-icon">🪙</span> <span id="shop-coins">0</span></span></div>
+  </nav>
+  <div class="inner-body">
+    <h2 class="screen-title">🛒 Shop</h2>
+    <div class="shop-tabs">
+      <button class="shop-tab active" onclick="showShopTab('themes')">🎨 Site Themes</button>
+      <button class="shop-tab" onclick="showShopTab('bgfx')">✨ BG Effects</button>
+      <button class="shop-tab" onclick="showShopTab('carddecks')">🃏 Card Decks</button>
+      <button class="shop-tab" onclick="showShopTab('coinskinsshop')">🪙 Coin Skins</button>
+      <button class="shop-tab" onclick="showShopTab('avatars')">🧑 Avatars</button>
+    </div>
+    <div id="shop-grid" class="shop-grid"></div>
+  </div>
+</div>
+
+<!-- DAILY SPIN -->
+<div class="screen" id="screen-daily-spin">
+  <nav class="nav">
+    <div class="nav-brand"><img src="https://codehs.com/uploads/b9084e2547f1923caa433b97f16c89d1" alt="SN"/><span><b>SN</b> Casino</span></div>
+    <div class="nav-center"><button class="nav-btn" onclick="showScreen('lobby')">← Lobby</button></div>
+    <div class="nav-right"><span class="coin-bal"><span id="spin-coin-icon">🪙</span> <span id="spin-coins">0</span></span></div>
+  </nav>
+  <div class="inner-body" style="text-align:center;">
+    <h2 class="screen-title">🎡 Daily Spin</h2>
+    <p class="screen-sub">Spin once per day for free coins!</p>
+    <div class="wheel-wrap">
+      <canvas id="wheelCanvas" width="400" height="400"></canvas>
+      <div class="wheel-pointer">▼</div>
+    </div>
+    <button class="btn" id="spin-btn" onclick="spinWheel()" style="margin-top:24px;max-width:220px;">
+      <span class="btn-text">Spin!</span>
+    </button>
+    <div id="spin-result" class="spin-result"></div>
+  </div>
+</div>
+
+<!-- STATS -->
+<div class="screen" id="screen-stats">
+  <nav class="nav">
+    <div class="nav-brand"><img src="https://codehs.com/uploads/b9084e2547f1923caa433b97f16c89d1" alt="SN"/><span><b>SN</b> Casino</span></div>
+    <div class="nav-center">
+      <button class="nav-btn" onclick="showScreen('lobby')">← Lobby</button>
+      <button class="nav-btn" onclick="showScreen('suggestions')">💬 Suggestions</button>
+    </div>
+    <div class="nav-right"><span class="coin-bal"><span id="stats-coin-icon">🪙</span> <span id="stats-coins">0</span></span></div>
+  </nav>
+  <div class="inner-body">
+    <h2 class="screen-title">📊 Your Stats</h2>
+    <div class="stats-cards">
+      <div class="stat-card">
+        <div class="stat-label">Total Earned</div>
+        <div class="stat-value green" id="stat-earned">🪙 0</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">Total Lost</div>
+        <div class="stat-value red" id="stat-lost">🪙 0</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">Net Gain / Loss</div>
+        <div class="stat-value" id="stat-net">🪙 0</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">Total Bets Placed</div>
+        <div class="stat-value" id="stat-bets">0</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">Biggest Win</div>
+        <div class="stat-value green" id="stat-bigwin">🪙 0</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">Biggest Loss</div>
+        <div class="stat-value red" id="stat-bigloss">🪙 0</div>
+      </div>
+    </div>
+    <div class="stats-graph-wrap">
+      <h3 class="graph-title">Balance Over Time</h3>
+      <p class="graph-sub">Every bet — watch your balance go up and down</p>
+      <div class="graph-canvas-wrap">
+        <canvas id="statsGraph"></canvas>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- SUGGESTIONS -->
+<div class="screen" id="screen-suggestions">
+  <nav class="nav">
+    <div class="nav-brand"><img src="https://codehs.com/uploads/b9084e2547f1923caa433b97f16c89d1" alt="SN"/><span><b>SN</b> Casino</span></div>
+    <div class="nav-center">
+      <button class="nav-btn" onclick="showScreen('lobby')">← Lobby</button>
+      <button class="nav-btn" onclick="showScreen('stats')">📊 My Stats</button>
+    </div>
+    <div class="nav-right"><span class="coin-bal"><span id="sug-coin-icon">🪙</span> <span id="sug-coins">0</span></span></div>
+  </nav>
+  <div class="inner-body">
+    <h2 class="screen-title">💬 Suggestions</h2>
+    <p class="screen-sub">Got an idea? Share it with the SN Casino team — we read everything!</p>
+    <div class="suggestion-form">
+      <div class="sug-form-row">
+        <select id="sug-category" class="sug-select">
+          <option value="game">🎮 New Game Idea</option>
+          <option value="feature">✨ New Feature</option>
+          <option value="shop">🛒 Shop Item</option>
+          <option value="bug">🐛 Bug Report</option>
+          <option value="other">💡 Other</option>
+        </select>
+        <input type="text" id="sug-title" class="sug-input" placeholder="Short title for your suggestion..." maxlength="80"/>
+      </div>
+      <textarea id="sug-body" class="sug-textarea" placeholder="Describe your suggestion in detail..." maxlength="500"></textarea>
+      <div class="sug-form-footer">
+        <span class="sug-char-count"><span id="sug-char">0</span>/500</span>
+        <button class="btn btn-sm" onclick="submitSuggestion()"><span class="btn-text">Submit Suggestion</span><span class="btn-icon">→</span></button>
+      </div>
+    </div>
+    <div class="sug-list-header">
+      <h3>All Suggestions <span class="sug-live-dot" title="Live updates">●</span> LIVE</h3>
+      <div class="sug-filters">
+        <button class="sug-filter active" onclick="filterSuggestions('all')">All</button>
+        <button class="sug-filter" onclick="filterSuggestions('game')">🎮 Games</button>
+        <button class="sug-filter" onclick="filterSuggestions('feature')">✨ Features</button>
+        <button class="sug-filter" onclick="filterSuggestions('shop')">🛒 Shop</button>
+        <button class="sug-filter" onclick="filterSuggestions('bug')">🐛 Bugs</button>
+        <button class="sug-filter" onclick="filterSuggestions('other')">💡 Other</button>
+      </div>
+    </div>
+    <div id="suggestions-list" class="suggestions-list">
+      <div class="sug-loading">Loading suggestions...</div>
+    </div>
+  </div>
+</div>
+
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-database-compat.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
