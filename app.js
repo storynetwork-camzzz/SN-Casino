@@ -25,6 +25,9 @@ let currentBet   = 100;
 let currentGame  = null;
 let coinSymbol   = '🪙';
 
+// Owner UID for moderation features
+const OWNER_UID = 'Xs86zRgqpOdNw2tCEfBWgGlTnNL2';
+
 // ════════════════════════════════════════════════
 // ACHIEVEMENTS
 // ════════════════════════════════════════════════
@@ -54,6 +57,7 @@ const ACHIEVEMENTS = [
   {id:'horse_win',    icon:'🐎', name:'Pick a Winner',     desc:'Win a Horse Race bet'},
   {id:'higher_streak',icon:'🎯', name:'Streak Reader',     desc:'Get a 5-card streak in Higher or Lower'},
   {id:'wheel_jackpot',icon:'🎡', name:'Wheel Winner',      desc:'Hit the top prize on Wheel of Fortune'},
+  {id:'ttt_win',      icon:'❌', name:'Tic-Tac-Toe Champ', desc:'Win a game of Tic-Tac-Toe'},
 ];
 
 // ════════════════════════════════════════════════
@@ -207,7 +211,7 @@ const SHOP_COINS = [
   // DIVINE
   {id:'coin_omnipotent',name:'OMNIPOTENT',      preview:'⚡', desc:'The currency of gods. Pure power.',        price:1000000, tier:'divine'},
 
-  {id:'coin_starstruck',name:'STARSTRUCK',      preview:'🌟', desc:'Only The Goats Have This Divine Currency',        price:10000000, tier:'divine'},
+  {id:'coin_starstruck',name:'STARSTRUCK',      preview:'🌟', desc:'Only The Goats Have This Divine Currency',        price:1000000000, tier:'divine'},
 
 ];
 
@@ -235,7 +239,7 @@ const SHOP_AVATARS = [
   // MYTHIC
   {id:'av_immortal',   name:'IMMORTAL',        preview:'♾️', desc:'Has never lost. Will never lose.',         price:750000, tier:'mythic'},
   // DIVINE
-  {id:'av_theone',     name:'THE ONE',         preview:'🌟', desc:'There is no description. You just know.',  price:10000000, tier:'divine'},
+  {id:'av_theone',     name:'THE ONE',         preview:'🌟', desc:'There is no description. You just know.',  price:1000000000000, tier:'divine'},
 ];
 
 // ════════════════════════════════════════════════
@@ -291,7 +295,21 @@ function rand(min,max){return Math.floor(Math.random()*(max-min+1))+min;}
 function showMsg(id,text,type){const el=document.getElementById(id);if(!el)return;el.textContent=text;el.className='msg '+type;}
 function clearMsg(id){const el=document.getElementById(id);if(!el)return;el.className='msg';el.textContent='';}
 function setLoading(id,loading,label){const b=document.getElementById(id);if(!b)return;b.disabled=loading;const t=b.querySelector('.btn-text');if(t)t.textContent=loading?'Please wait...':label;}
-function fmtCoins(n){return Number(n).toLocaleString();}
+function fmtCoins(n){
+  n=Number(n);
+  if(n>=1e12)  return (n/1e12).toFixed(n%1e12===0?0:2).replace(/\.?0+$/,'')+'T';
+  if(n>=1e9)   return (n/1e9).toFixed(n%1e9===0?0:2).replace(/\.?0+$/,'')+'B';
+  if(n>=1e6)   return (n/1e6).toFixed(n%1e6===0?0:2).replace(/\.?0+$/,'')+'M';
+  if(n>=1e5)   return (n/1e3).toFixed(n%1e3===0?0:1).replace(/\.?0+$/,'')+'K';
+  return n.toLocaleString();
+}
+function fmtPrice(n){
+  n=Number(n);
+  if(n>=1e12)  return (n/1e12).toFixed(n%1e12===0?0:2).replace(/\.?0+$/,'')+'T';
+  if(n>=1e9)   return (n/1e9).toFixed(n%1e9===0?0:2).replace(/\.?0+$/,'')+'B';
+  if(n>=1e6)   return (n/1e6).toFixed(n%1e6===0?0:2).replace(/\.?0+$/,'')+'M';
+  return n.toLocaleString();
+}
 function fmtTime(ms){const s=Math.floor(ms/1000),m=Math.floor(s/60),h=Math.floor(m/60);return h>0?h+'h '+(m%60)+'m':m>0?m+'m '+(s%60)+'s':s+'s';}
 
 function toast(msg,dur=3000){
@@ -388,9 +406,8 @@ async function saveUserData(updates){
   refreshCoinDisplays();
 }
 
-// addCoins: amount is NET (positive=won, negative=lost)
-// payout = what you RECEIVE back (bet already deducted before calling this)
-// So if bet=100 and you win 2x, call addCoins(200) — you get your stake back + profit
+// addCoins: amount is the payout received (always positive for wins, 0 for full loss)
+// Bet is deducted BEFORE calling this. So addCoins(200) on a 100 bet = net +100.
 async function addCoins(amount, label=''){
   const prev = userData.coins || 0;
   const next = prev + amount;
@@ -399,10 +416,6 @@ async function addCoins(amount, label=''){
     const bw = userData.biggestWin || 0;
     if(amount > bw) updates.biggestWin = amount;
     updates.totalEarned = (userData.totalEarned||0) + amount;
-  } else {
-    const bl = userData.biggestLoss || 0;
-    if(Math.abs(amount) > bl) updates.biggestLoss = Math.abs(amount);
-    updates.totalLost = (userData.totalLost||0) + Math.abs(amount);
   }
   updates.totalWagered = (userData.totalWagered||0) + currentBet;
   updates.totalBets    = (userData.totalBets||0) + 1;
@@ -411,8 +424,18 @@ async function addCoins(amount, label=''){
   if(hist.length > 200) hist.shift();
   updates.balanceHistory = hist;
   await saveUserData(updates);
-  checkBailout();
+  checkBailoutLive();
   if(label) toast((amount>0?'+':'')+fmtCoins(amount)+' '+coinSymbol+(label?' · '+label:''));
+}
+
+// trackLoss: call with the bet amount lost (positive number)
+async function trackLoss(amount){
+  if(!amount || amount <= 0) return;
+  const bl = userData.biggestLoss || 0;
+  const updates = {};
+  if(amount > bl) updates.biggestLoss = amount;
+  updates.totalLost = (userData.totalLost||0) + amount;
+  await saveUserData(updates);
 }
 
 async function addGame(){
@@ -423,23 +446,26 @@ async function addGame(){
 function refreshCoinDisplays(){
   const c    = fmtCoins(userData.coins||0);
   const icon = coinSymbol;
-  ['user-coins','game-coins','lb-coins','ach-coins','shop-coins','spin-coins','stats-coins','sug-coins'].forEach(id=>{
+  ['user-coins','game-coins','lb-coins','ach-coins','shop-coins','spin-coins','stats-coins','sug-coins','gs-coins','send-coins','cred-coins'].forEach(id=>{
     const el=document.getElementById(id); if(el) el.textContent=c;
   });
-  ['nav-coin-icon','game-coin-icon','lb-coin-icon','ach-coin-icon','shop-coin-icon','spin-coin-icon','stats-coin-icon','sug-coin-icon'].forEach(id=>{
+  ['nav-coin-icon','game-coin-icon','lb-coin-icon','ach-coin-icon','shop-coin-icon','spin-coin-icon','stats-coin-icon','sug-coin-icon','gs-coin-icon','send-coin-icon','cred-coin-icon'].forEach(id=>{
     const el=document.getElementById(id); if(el) el.textContent=icon;
   });
 }
 
-function checkBailout(){
+function checkBailoutLive(){
   const b=document.getElementById('bailout-banner');
   if(!b) return;
   b.style.display=((userData.coins||0)<500&&!userData.bailoutUsed)?'block':'none';
 }
+// keep old name as alias for backward compat
+function checkBailout(){ checkBailoutLive(); }
 
 async function claimBailout(){
   if((userData.coins||0)>=500||userData.bailoutUsed) return;
-  await saveUserData({coins:(userData.coins||0)+1000, bailoutUsed:true});
+  const newCount = (userData.bailoutCount||0) + 1;
+  await saveUserData({coins:(userData.coins||0)+1000, bailoutUsed:true, bailoutCount:newCount});
   document.getElementById('bailout-banner').style.display='none';
   toast('💸 Bailout claimed! +1,000 coins');
   unlockAchievement('broke');
@@ -482,12 +508,15 @@ function showScreen(id){
   document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
   const s=document.getElementById('screen-'+id);
   if(s) s.classList.add('active');
-  if(id==='leaderboard')  loadLeaderboard('coins');
+  if(id==='leaderboard')  initLeaderboard();
   if(id==='achievements') renderAchievements();
   if(id==='shop')         renderShop('themes');
   if(id==='daily-spin')   initWheel();
   if(id==='stats')        renderStats();
+  if(id==='globalstats')  renderGlobalStats();
   if(id==='suggestions')  initSuggestions();
+  if(id==='send')         initSendCoins();
+  if(id==='lobby')        checkBailoutLive();
   playSound('click');
 }
 
@@ -500,7 +529,8 @@ function showGame(name){
     slots:buildSlots, blackjack:buildBlackjack, roulette:buildRoulette, plinko:buildPlinko,
     poker:buildPoker, dice:buildDice, scratch:buildScratch, ridebus:buildRideBus, gofish:buildGoFish,
     flappy:buildFlappy, coinflip:buildCoinFlip, minesweeper:buildMinesweeper,
-    horserace:buildHorseRace, higherlow:buildHigherLow, wheelfortune:buildWheelFortune
+    horserace:buildHorseRace, higherlow:buildHigherLow, wheelfortune:buildWheelFortune,
+    tictactoe:buildTicTacToe
   };
   if(games[name]) games[name](c);
 }
@@ -508,6 +538,9 @@ function showGame(name){
 // ════════════════════════════════════════════════
 // BET PANEL
 // ════════════════════════════════════════════════
+function lockBets(locked){
+  document.querySelectorAll('.bet-opt').forEach(b=>b.disabled=locked);
+}
 function buildBetPanel(container){
   const opts=[100,500,1000,5000,10000];
   const div=document.createElement('div');
@@ -582,9 +615,10 @@ function buildSlots(c){
   window.spinSlots = async function(){
     if(spinning) return;
     if((userData.coins||0)<currentBet){toast('Not enough coins!');return;}
-    spinning=true; setLoading('spin-slots-btn',true,'Spin');
+    spinning=true; setLoading('spin-slots-btn',true,'Spin'); lockBets(true);
     document.getElementById('slots-result').className='result-banner';
-    await saveUserData({coins:(userData.coins||0)-currentBet});
+    const betAmt = currentBet;
+    await saveUserData({coins:(userData.coins||0)-betAmt});
     let tickCount=0; const tickMax=32; let tickDelay=40;
     function doTick(){
       if(tickCount>=tickMax||!spinning) return;
@@ -610,21 +644,20 @@ function buildSlots(c){
       clearTimeout(slotTickInterval);
       let slow=0;
       function slowTick(){
-        if(slow>=3){for(let i=0;i<3;i++) document.getElementById('r'+i).textContent=reels[i]; finishSpin(reels); return;}
+        if(slow>=3){for(let i=0;i<3;i++) document.getElementById('r'+i).textContent=reels[i]; finishSpin(reels,betAmt); return;}
         playSound('slot_tick'); slow++; setTimeout(slowTick,180+slow*60);
       }
       slowTick();
     },1800);
   };
 
-  function finishSpin(reels){
+  function finishSpin(reels,betAmt){
     const combo=reels.join('');
     let mult=PAYS[combo]||0;
     if(!mult&&reels[0]===reels[1]&&PAYS[reels[0]+reels[0]]) mult=PAYS[reels[0]+reels[0]];
     const rb=document.getElementById('slots-result');
     if(mult>0){
-      // mult is total return (includes stake), e.g. 3x on 100 bet → get 300 back
-      const payout=currentBet*mult;
+      const payout=betAmt*mult;
       addCoins(payout,'Slots');
       rb.textContent='🎉 '+reels.join(' ')+' · '+mult+'x · +'+fmtCoins(payout)+' coins!';
       rb.className='result-banner win';
@@ -632,10 +665,11 @@ function buildSlots(c){
       if(combo==='7️⃣7️⃣7️⃣'){unlockAchievement('lucky_7');toast('🎰 JACKPOT! Three 7s!');}
       if(payout>=10000) unlockAchievement('big_win');
     } else {
+      trackLoss(betAmt);
       rb.textContent='😔 '+reels.join(' ')+' · No match. Try again!';
       rb.className='result-banner lose'; playSound('lose'); recordResult(false);
     }
-    spinning=false; setLoading('spin-slots-btn',false,'Spin');
+    spinning=false; setLoading('spin-slots-btn',false,'Spin'); lockBets(false);
   }
 }
 
@@ -643,7 +677,7 @@ function buildSlots(c){
 // GAME: BLACKJACK
 // ════════════════════════════════════════════════
 function buildBlackjack(c){
-  let deck=[],playerHand=[],dealerHand=[],gameActive=false;
+  let deck=[],playerHand=[],dealerHand=[],gameActive=false,betAmt=0;
   function handValue(hand){
     let v=hand.reduce((s,c)=>s+cardValue(c.rank),0);
     let aces=hand.filter(c=>c.rank==='A').length;
@@ -685,24 +719,23 @@ function buildBlackjack(c){
     gameActive=false; renderHands(false);
     const rb=document.getElementById('bj-result'); rb.textContent=msg;
     ['bj-hit','bj-stand','bj-double'].forEach(id=>document.getElementById(id).disabled=true);
-    document.getElementById('bj-deal').disabled=false;
+    document.getElementById('bj-deal').disabled=false; lockBets(false);
     if(result==='win'){
-      // Return bet × 2 (stake back + equal profit)
       rb.className='result-banner win';
-      await addCoins(currentBet*2,'Blackjack');
+      await addCoins(betAmt*2,'Blackjack');
       await recordResult(true); playSound('win');
     } else if(result==='blackjack'){
-      // Return bet + 1.5× profit = 2.5× total
-      const payout=Math.floor(currentBet*2.5);
+      const payout=Math.floor(betAmt*2.5);
       rb.className='result-banner win';
       await addCoins(payout,'Blackjack!');
       await recordResult(true); playSound('bigwin'); unlockAchievement('blackjack');
     } else if(result==='push'){
       rb.className='result-banner push';
-      await addCoins(currentBet,'Push');  // stake returned
+      await addCoins(betAmt,'Push');
       await recordResult(false); playSound('click');
     } else {
       rb.className='result-banner lose';
+      await trackLoss(betAmt);
       await recordResult(false); playSound('lose');
     }
   }
@@ -710,7 +743,9 @@ function buildBlackjack(c){
   window.bjDeal=async function(){
     if((userData.coins||0)<currentBet){toast('Not enough coins!');return;}
     deck=shuffleDeck(newDeck());
-    await saveUserData({coins:(userData.coins||0)-currentBet});
+    betAmt=currentBet;
+    await saveUserData({coins:(userData.coins||0)-betAmt});
+    lockBets(true);
     document.getElementById('bj-result').className='result-banner';
     playerHand=[deck.pop(),deck.pop()]; dealerHand=[deck.pop(),deck.pop()];
     gameActive=true; renderHands(true);
@@ -736,9 +771,9 @@ function buildBlackjack(c){
     else           endGame('lose','😔 Dealer wins. '+pv+' vs '+dv);
   };
   window.bjDouble=async function(){
-    if(!gameActive||(userData.coins||0)<currentBet){toast('Not enough coins!');return;}
-    await saveUserData({coins:(userData.coins||0)-currentBet});
-    currentBet*=2;
+    if(!gameActive||(userData.coins||0)<betAmt){toast('Not enough coins!');return;}
+    await saveUserData({coins:(userData.coins||0)-betAmt});
+    betAmt*=2;
     playerHand.push(deck.pop()); renderHands(true); playSound('flip');
     if(handValue(playerHand)>21) endGame('lose','💥 Bust after double!');
     else bjStand();
@@ -808,9 +843,10 @@ function buildRoulette(c){
     if(spinning) return;
     if(!selectedBet){toast('Pick a bet first!');return;}
     if((userData.coins||0)<currentBet){toast('Not enough coins!');return;}
-    spinning=true; setLoading('rl-spin-btn',true,'Spinning...');
+    spinning=true; setLoading('rl-spin-btn',true,'Spinning...'); lockBets(true);
     document.getElementById('rl-result').className='result-banner';
-    await saveUserData({coins:(userData.coins||0)-currentBet});
+    const betAmt=currentBet;
+    await saveUserData({coins:(userData.coins||0)-betAmt});
     const ballEl=document.getElementById('rl-ball-display'); ballEl.style.display='flex';
     let frame=0; const total=50; let tickDelay=40;
     function rlTick(){
@@ -834,7 +870,7 @@ function buildRoulette(c){
         else if(b==='dozen3'&&landed>=25&&landed<=36)    mult=3;
         const rb=document.getElementById('rl-result');
         if(mult>0){
-          const payout=currentBet*mult;
+          const payout=betAmt*mult;
           addCoins(payout,'Roulette');
           rb.textContent='🎉 Landed '+landed+'! '+selectedBet.label+' · +'+fmtCoins(payout)+' coins!';
           rb.className='result-banner win';
@@ -842,10 +878,11 @@ function buildRoulette(c){
           if(landed===0) unlockAchievement('roulette_0');
           if(payout>=10000) unlockAchievement('big_win');
         } else {
+          trackLoss(betAmt);
           rb.textContent='😔 Landed '+landed+'. '+selectedBet.label+' loses.';
           rb.className='result-banner lose'; playSound('lose'); recordResult(false);
         }
-        spinning=false; setLoading('rl-spin-btn',false,'Spin');
+        spinning=false; setLoading('rl-spin-btn',false,'Spin'); lockBets(false);
         return;
       }
       setTimeout(rlTick,tickDelay);
@@ -896,7 +933,8 @@ function buildPlinko(c){
     document.getElementById('pk-drop-btn').disabled=true;
     document.getElementById('pk-result').className='result-banner';
     document.querySelectorAll('.pm').forEach(e=>e.style.background='');
-    await saveUserData({coins:(userData.coins||0)-currentBet});
+    const betAmt=currentBet;
+    await saveUserData({coins:(userData.coins||0)-betAmt});
     dropping=true; playSound('spin');
     let bx=PW/2+(Math.random()-0.5)*20, by=15, vx=(Math.random()-0.5)*1.5, vy=0;
     const GRAVITY=0.35, BOUNCE_DAMP=0.55, PEG_RADIUS=14, BALL_R=11; let pegCooldown=0;
@@ -909,7 +947,7 @@ function buildPlinko(c){
       drawBoard({x:bx,y:by});
       if(by>=bucketY){
         const slot=Math.min(Math.floor(bx/bucketW),MULTS.length-1);
-        const mult=MULTS[slot], payout=Math.floor(currentBet*mult);
+        const mult=MULTS[slot], payout=Math.floor(betAmt*mult);
         document.getElementById('pm'+slot).style.background='rgba(255,215,0,.35)';
         const rb=document.getElementById('pk-result');
         if(mult>=1){
@@ -920,9 +958,9 @@ function buildPlinko(c){
           if(mult===Math.max(...MULTS)) unlockAchievement('plinko_max');
           if(payout>=10000) unlockAchievement('big_win');
         } else {
-          // Partial return — not a win
           if(payout>0) addCoins(payout,'Plinko partial');
-          rb.textContent='😔 '+mult+'x · Only '+fmtCoins(payout)+' of '+fmtCoins(currentBet)+' returned.';
+          trackLoss(betAmt - payout);
+          rb.textContent='😔 '+mult+'x · Only '+fmtCoins(payout)+' of '+fmtCoins(betAmt)+' returned.';
           rb.className='result-banner lose'; playSound('lose'); recordResult(false);
         }
         dropping=false; document.getElementById('pk-drop-btn').disabled=false;
@@ -938,7 +976,7 @@ function buildPlinko(c){
 // GAME: VIDEO POKER
 // ════════════════════════════════════════════════
 function buildPoker(c){
-  let deck=[],hand=[],held=[],dealt=false;
+  let deck=[],hand=[],held=[],dealt=false,betAmt=0;
   function evalHand(h){
     const rankIdxs=h.map(c=>RANKS.indexOf(c.rank)).sort((a,b)=>a-b);
     const suits=h.map(c=>c.suit);
@@ -990,7 +1028,8 @@ function buildPoker(c){
   window.pokerDeal=async function(){
     if((userData.coins||0)<currentBet){toast('Not enough coins!');return;}
     deck=shuffleDeck(newDeck());
-    await saveUserData({coins:(userData.coins||0)-currentBet});
+    betAmt=currentBet;
+    await saveUserData({coins:(userData.coins||0)-betAmt});
     hand=[deck.pop(),deck.pop(),deck.pop(),deck.pop(),deck.pop()];
     held=[false,false,false,false,false]; dealt=true; renderHand();
     document.getElementById('poker-result').className='result-banner';
@@ -1005,7 +1044,7 @@ function buildPoker(c){
     document.getElementById('poker-deal-btn').disabled=false;
     const result=evalHand(hand); const rb=document.getElementById('poker-result');
     if(result.mult>0){
-      const payout=currentBet*result.mult;
+      const payout=betAmt*result.mult;
       await addCoins(payout,'Video Poker');
       rb.textContent='🎉 '+result.name+'! +'+fmtCoins(payout)+' coins!';
       rb.className='result-banner win';
@@ -1013,6 +1052,7 @@ function buildPoker(c){
       if(result.name==='Royal Flush'){unlockAchievement('poker_royal');toast('👑 ROYAL FLUSH!');}
       if(payout>=10000) unlockAchievement('big_win');
     } else {
+      await trackLoss(betAmt);
       rb.textContent='😔 '+result.name+'. No win — deal again!';
       rb.className='result-banner lose'; playSound('lose'); await recordResult(false);
     }
@@ -1056,9 +1096,10 @@ function buildDice(c){
     if(rolling) return;
     if(playerPick===null){toast('Pick a number or High/Low!');return;}
     if((userData.coins||0)<currentBet){toast('Not enough coins!');return;}
-    rolling=true; setLoading('dice-roll-btn',true,'Rolling...');
+    rolling=true; setLoading('dice-roll-btn',true,'Rolling...'); lockBets(true);
     document.getElementById('dice-result').className='result-banner';
-    await saveUserData({coins:(userData.coins||0)-currentBet}); playSound('spin');
+    const betAmt=currentBet;
+    await saveUserData({coins:(userData.coins||0)-betAmt}); playSound('spin');
     let frame=0;
     const iv=setInterval(async()=>{
       document.getElementById('die1').textContent=DICE_FACES[rand(1,6)]; frame++;
@@ -1070,16 +1111,17 @@ function buildDice(c){
         else if(playerPick==='low'&&d1<=3){won=true;mult=2;}
         else if(playerPick==='high'&&d1>=4){won=true;mult=2;}
         if(won){
-          const payout=currentBet*mult;
+          const payout=betAmt*mult;
           await addCoins(payout,'Dice');
           rb.textContent='🎉 Rolled '+DICE_FACES[d1]+' '+d1+'! '+mult+'x · +'+fmtCoins(payout)+' coins!';
           rb.className='result-banner win'; playSound('win'); await recordResult(true);
           if(payout>=10000) unlockAchievement('big_win');
         } else {
+          await trackLoss(betAmt);
           rb.textContent='😔 Rolled '+DICE_FACES[d1]+' '+d1+'. No match.';
           rb.className='result-banner lose'; playSound('lose'); await recordResult(false);
         }
-        rolling=false; setLoading('dice-roll-btn',false,'Roll');
+        rolling=false; setLoading('dice-roll-btn',false,'Roll'); lockBets(false);
       }
     },80);
   };
@@ -1089,7 +1131,7 @@ function buildDice(c){
 // GAME: SCRATCH CARD
 // ════════════════════════════════════════════════
 function buildScratch(c){
-  let scratching=false;
+  let scratching=false, cardPaid=false;
   const EMOJIS=['🍒','💎','⭐','🎰','🍀','7️⃣','🔔','🍉'];
   let symGrid=[];
   c.innerHTML=`<div class="game-wrap">
@@ -1098,7 +1140,7 @@ function buildScratch(c){
     <div id="sc-bet"></div>
     <div style="display:flex;gap:10px;margin-bottom:14px;flex-wrap:wrap;">
       <button class="btn" id="sc-new-btn" onclick="newScratch()" style="max-width:180px;"><span class="btn-text">New Card</span></button>
-      <button class="btn btn-gold" onclick="revealAll()" style="max-width:180px;"><span class="btn-text">Reveal All</span></button>
+      <button class="btn btn-gold" id="sc-reveal-btn" onclick="revealAll()" style="max-width:180px;" disabled><span class="btn-text">Reveal All</span></button>
     </div>
     <div class="scratch-wrap"><canvas id="scratchCanvas" width="360" height="360"></canvas></div>
     <div class="result-banner" id="sc-result"></div>
@@ -1156,11 +1198,18 @@ function buildScratch(c){
     if((userData.coins||0)<currentBet){toast('Not enough coins!');return;}
     await saveUserData({coins:(userData.coins||0)-currentBet});
     genCard(); document.getElementById('sc-result').className='result-banner';
+    cardPaid=true;
+    const revBtn=document.getElementById('sc-reveal-btn');
+    if(revBtn) revBtn.disabled=false;
     drawCard(); scratching=true; playSound('click');
   };
   window.revealAll=function(){
+    if(!cardPaid){toast('Buy a card first!');return;}
     if(!scratching&&symGrid.length===0) return;
-    symGrid.forEach(s=>s.scratched=true); drawCard(); scratching=false; checkScratch();
+    symGrid.forEach(s=>s.scratched=true); drawCard(); scratching=false; cardPaid=false;
+    const revBtn=document.getElementById('sc-reveal-btn');
+    if(revBtn) revBtn.disabled=true;
+    checkScratch();
   };
   function scratch(e){
     if(!scratching) return;
@@ -1171,7 +1220,12 @@ function buildScratch(c){
     const col=Math.floor(x/120), row=Math.floor(y/120), idx=row*3+col;
     if(idx>=0&&idx<9&&!symGrid[idx].scratched){
       symGrid[idx].scratched=true; drawCard(); playSound('scratch');
-      if(symGrid.every(s=>s.scratched)){scratching=false; checkScratch();}
+      if(symGrid.every(s=>s.scratched)){
+        scratching=false; cardPaid=false;
+        const revBtn=document.getElementById('sc-reveal-btn');
+        if(revBtn) revBtn.disabled=true;
+        checkScratch();
+      }
     }
   }
   canvas.addEventListener('mousemove',e=>{if(e.buttons)scratch(e);});
@@ -1189,6 +1243,7 @@ function buildScratch(c){
       await recordResult(true); unlockAchievement('scratch_3');
       if(payout>=10000) unlockAchievement('big_win');
     } else {
+      await trackLoss(currentBet);
       rb.textContent='😔 No 3-of-a-kind. Better luck next time!';
       rb.className='result-banner lose'; playSound('lose'); await recordResult(false);
     }
@@ -1200,7 +1255,7 @@ function buildScratch(c){
 // GAME: RIDE THE BUS
 // ════════════════════════════════════════════════
 function buildRideBus(c){
-  let deck=[],cardHistory=[],stage=0,active=false,winnings=0;
+  let deck=[],cardHistory=[],stage=0,active=false,winnings=0,betAmt=0;
   const QUESTIONS=['Question 1: Red or Black?','Question 2: Higher or Lower?','Question 3: Inside or Outside?','Question 4: Suit?'];
   const QOPTS=[['🔴 Red','⚫ Black'],['⬆️ Higher','⬇️ Lower'],['↔️ Inside','↕️ Outside'],['♠ Spades','♥ Hearts','♦ Diamonds','♣ Clubs']];
   c.innerHTML=`<div class="game-wrap">
@@ -1252,8 +1307,9 @@ function buildRideBus(c){
   window.startBus=async function(){
     if((userData.coins||0)<currentBet){toast('Not enough coins!');return;}
     deck=shuffleDeck(newDeck());
-    await saveUserData({coins:(userData.coins||0)-currentBet});
-    cardHistory=[]; stage=0; active=true; winnings=currentBet*2;
+    betAmt=currentBet;
+    await saveUserData({coins:(userData.coins||0)-betAmt});
+    cardHistory=[]; stage=0; active=true; winnings=betAmt*2;
     document.getElementById('bus-result').className='result-banner';
     document.getElementById('bus-start-btn').style.display='none';
     renderCards(); updateChoices(); playSound('deal');
@@ -1285,7 +1341,7 @@ function buildRideBus(c){
     }
     const rb=document.getElementById('bus-result');
     if(correct){
-      stage++; winnings=currentBet*Math.pow(2,stage+1);
+      stage++; winnings=betAmt*Math.pow(2,stage+1);
       rb.textContent='✅ Correct! Got '+card.rank+card.suit+'. Stage '+stage+'/4 · Potential: '+fmtCoins(winnings);
       rb.className='result-banner win'; playSound('coin');
       if(stage===4){
@@ -1302,6 +1358,7 @@ function buildRideBus(c){
         if(winnings>=10000) unlockAchievement('big_win'); playSound('bigwin');
       } else { updateChoices(); }
     } else {
+      await trackLoss(betAmt);
       rb.textContent='❌ Wrong! Card was '+card.rank+card.suit+'. You lose.';
       rb.className='result-banner lose'; playSound('lose'); active=false;
       document.getElementById('bus-choices').innerHTML='';
@@ -1314,7 +1371,7 @@ function buildRideBus(c){
   };
   window.busCashout=async function(){
     if(!active||stage===0) return;
-    const cashAmt=currentBet*Math.pow(2,stage);
+    const cashAmt=betAmt*Math.pow(2,stage);
     active=false;
     await addCoins(cashAmt,'Bus cashout');
     document.getElementById('bus-result').textContent='💰 Cashed out! +'+fmtCoins(cashAmt)+' coins!';
@@ -1331,7 +1388,7 @@ function buildRideBus(c){
 // GAME: GO FISH
 // ════════════════════════════════════════════════
 function buildGoFish(c){
-  let deck=[],playerHand=[],cpuHand=[],playerBooks=[],cpuBooks=[],selectedRank=null,gameActive=false,playerTurn=true;
+  let deck=[],playerHand=[],cpuHand=[],playerBooks=[],cpuBooks=[],selectedRank=null,gameActive=false,playerTurn=true,betAmt=0;
   c.innerHTML=`<div class="game-wrap">
     <div class="game-title">🐟 Go Fish</div>
     <div class="game-subtitle">Collect sets of 4 (books) · Most books wins · Win pays 3x bet</div>
@@ -1387,16 +1444,17 @@ function buildGoFish(c){
     const win=playerBooks.length>cpuBooks.length, tie=playerBooks.length===cpuBooks.length;
     const rb=document.getElementById('gf-result');
     if(win){
-      const prize=currentBet*3;
+      const prize=betAmt*3;
       addCoins(prize,'Go Fish');
       rb.textContent='🎉 You win! '+playerBooks.length+' books vs '+cpuBooks.length+' · +'+fmtCoins(prize)+' coins!';
       rb.className='result-banner win'; playSound('bigwin'); recordResult(true);
       if(playerBooks.length>=1) unlockAchievement('fish_book');
     } else if(tie){
-      addCoins(currentBet,'Go Fish tie');
+      addCoins(betAmt,'Go Fish tie');
       rb.textContent='🤝 Tie! '+playerBooks.length+' books each · Bet returned.';
       rb.className='result-banner push'; playSound('click'); recordResult(false);
     } else {
+      trackLoss(betAmt);
       rb.textContent='😔 CPU wins. '+playerBooks.length+' vs '+cpuBooks.length+' books.';
       rb.className='result-banner lose'; playSound('lose'); recordResult(false);
     }
@@ -1405,7 +1463,8 @@ function buildGoFish(c){
   }
   window.startGoFish=async function(){
     if((userData.coins||0)<currentBet){toast('Not enough coins!');return;}
-    await saveUserData({coins:(userData.coins||0)-currentBet});
+    betAmt=currentBet;
+    await saveUserData({coins:(userData.coins||0)-betAmt});
     deck=shuffleDeck(newDeck()); playerHand=[]; cpuHand=[]; playerBooks=[]; cpuBooks=[]; selectedRank=null; gameActive=true; playerTurn=true;
     for(let i=0;i<7;i++){playerHand.push(deck.pop());cpuHand.push(deck.pop());}
     checkBooks(playerHand,playerBooks); checkBooks(cpuHand,cpuBooks);
@@ -1454,7 +1513,7 @@ function buildGoFish(c){
 // GAME: FLAPPY BET
 // ════════════════════════════════════════════════
 function buildFlappy(c){
-  let gameRunning=false,gameOver=false,betPlaced=false,bird,pipes,frame,score,multiplier,animId;
+  let gameRunning=false,gameOver=false,betPlaced=false,bird,pipes,frame,score,multiplier,animId,countdownActive=false;
   const W=480,H=500,PIPE_W=60,PIPE_GAP=160,PIPE_SPEED=3,GRAVITY=0.45,FLAP_FORCE=-8;
   const MULT_TABLE=[{pipes:1,mult:1.5},{pipes:3,mult:2},{pipes:5,mult:3},{pipes:8,mult:5},{pipes:10,mult:8},{pipes:15,mult:12},{pipes:20,mult:20},{pipes:25,mult:35},{pipes:30,mult:50}];
   function getCurrentMult(pipes){let m=1;for(const row of MULT_TABLE){if(pipes>=row.pipes)m=row.mult;}return m;}
@@ -1477,9 +1536,9 @@ function buildFlappy(c){
   </div>`;
   buildBetPanel(document.getElementById('fl-bet'));
   const canvas=document.getElementById('flappy-canvas'); const ctx=canvas.getContext('2d');
-  const keyHandler=function(e){if((e.code==='Space'||e.key===' ')&&gameRunning) flappyFlap();};
+  const keyHandler=function(e){if((e.code==='Space'||e.key===' ')&&gameRunning&&!countdownActive) flappyFlap();};
   document.addEventListener('keydown',keyHandler);
-  function initGame(){bird={x:80,y:H/2,vy:0,radius:16};pipes=[];frame=0;score=0;multiplier=1;gameOver=false;gameRunning=true;}
+  function initGame(){bird={x:80,y:H/2,vy:0,radius:16};pipes=[];frame=0;score=0;multiplier=1;gameOver=false;gameRunning=false;}
   function drawGame(){
     const sky=ctx.createLinearGradient(0,0,0,H);sky.addColorStop(0,'#020a20');sky.addColorStop(1,'#030515');ctx.fillStyle=sky;ctx.fillRect(0,0,W,H);
     ctx.fillStyle='rgba(255,255,255,.3)';for(let i=0;i<30;i++){const sx=(i*137+frame*0.2)%W,sy=(i*79)%H;ctx.beginPath();ctx.arc(sx,sy,0.8,0,Math.PI*2);ctx.fill();}
@@ -1498,6 +1557,24 @@ function buildFlappy(c){
     for(const p of pipes){if(bRight>p.x&&bLeft<p.x+PIPE_W){if(bTop<p.topH||bBottom>p.topH+PIPE_GAP){crash();return;}}}
     drawGame(); animId=requestAnimationFrame(gameLoop);
   }
+  function drawCountdown(num){
+    drawGame();
+    ctx.fillStyle='rgba(0,0,0,.6)';ctx.fillRect(0,0,W,H);
+    ctx.fillStyle='#fff';ctx.font='bold 90px Montserrat';ctx.textAlign='center';ctx.textBaseline='middle';
+    ctx.shadowColor='rgba(0,200,255,.8)';ctx.shadowBlur=40;
+    ctx.fillText(num===0?'GO!':String(num),W/2,H/2);
+    ctx.shadowBlur=0;
+    ctx.font='bold 18px Montserrat';ctx.fillStyle='rgba(255,255,255,.55)';
+    ctx.fillText('Get Ready!',W/2,H/2+70);
+  }
+  function startCountdown(callback){
+    countdownActive=true;let count=3;drawCountdown(count);playSound('click');
+    const iv=setInterval(()=>{
+      count--;
+      if(count===0){drawCountdown(0);playSound('win');setTimeout(()=>{countdownActive=false;clearInterval(iv);callback();},600);}
+      else{drawCountdown(count);playSound('click');}
+    },800);
+  }
   function crash(){
     gameRunning=false;gameOver=true;playSound('hit');
     ctx.fillStyle='rgba(255,0,0,.3)';ctx.fillRect(0,0,W,H);
@@ -1508,18 +1585,20 @@ function buildFlappy(c){
     document.getElementById('fl-cashout-btn').style.display='none';
     document.getElementById('fl-start-btn').style.display='block';
     document.getElementById('fl-mult-display').textContent='Multiplier: —';
+    trackLoss(currentBet);
     playSound('lose'); recordResult(false);
   }
-  window.flappyFlap=function(){if(!gameRunning)return;bird.vy=FLAP_FORCE;playSound('flap');};
+  window.flappyFlap=function(){if(!gameRunning||countdownActive)return;bird.vy=FLAP_FORCE;playSound('flap');};
   window.flappyStart=async function(){
-    if(gameRunning) return;
+    if(gameRunning||countdownActive) return;
     if((userData.coins||0)<currentBet){toast('Not enough coins!');return;}
     await saveUserData({coins:(userData.coins||0)-currentBet});
     document.getElementById('fl-result').className='result-banner';
     document.getElementById('fl-start-btn').style.display='none';
     document.getElementById('fl-cashout-btn').style.display='block';
     document.getElementById('fl-mult-display').textContent='Multiplier: 1x';
-    betPlaced=true; initGame(); animId=requestAnimationFrame(gameLoop);
+    betPlaced=true; initGame();
+    startCountdown(()=>{gameRunning=true;animId=requestAnimationFrame(gameLoop);});
   };
   window.flappyCashout=async function(){
     if(!gameRunning||gameOver||score===0){if(score===0)toast('Pass at least 1 pipe first!');return;}
@@ -1574,7 +1653,7 @@ function buildCoinFlip(c){
   window.flipCoin=async function(choice, btn){
     if(flipping) return;
     if((userData.coins||0)<currentBet){toast('Not enough coins!');return;}
-    flipping=true;
+    flipping=true; lockBets(true);
     ['cf-heads','cf-tails'].forEach(id=>document.getElementById(id).disabled=true);
     await saveUserData({coins:(userData.coins||0)-currentBet});
     document.getElementById('cf-result').className='result-banner';
@@ -1597,11 +1676,12 @@ function buildCoinFlip(c){
         if(coinFlipWins>=10) unlockAchievement('coin_flip_10');
       } else {
         streak=0;
+        await trackLoss(currentBet);
         rb.textContent='😔 '+result.toUpperCase()+'! Bad luck. Streak reset.';
         rb.className='result-banner lose'; playSound('lose'); await recordResult(false);
       }
       document.getElementById('cf-streak').textContent='Streak: '+streak+(streak>=3?' 🔥':'');
-      flipping=false;
+      flipping=false; lockBets(false);
       ['cf-heads','cf-tails'].forEach(id=>document.getElementById(id).disabled=false);
     },1200);
   };
@@ -1612,7 +1692,7 @@ function buildCoinFlip(c){
 // ════════════════════════════════════════════════
 function buildMinesweeper(c){
   const GRID=5, MINES=5, TOTAL=GRID*GRID;
-  let grid=[], revealed=0, gameActive=false, betPaid=false, tilesCleared=0;
+  let grid=[], revealed=0, gameActive=false, betPaid=false, tilesCleared=0, betAmt=0;
   function getMult(safe){const m=[0,1.1,1.3,1.6,2,2.5,3.2,4,5,6.5,8,10,13,17,22,28,36,46,60,80,100];return m[Math.min(safe,m.length-1)];}
   c.innerHTML=`<div class="game-wrap">
     <div class="game-title">💣 Minesweeper</div>
@@ -1653,18 +1733,19 @@ function buildMinesweeper(c){
     if(grid[i].mine){
       gameActive=false; grid.forEach(c=>{if(c.mine)c.revealed=true;}); renderGrid();
       const rb=document.getElementById('ms-result');
-      rb.textContent='💥 BOOM! You hit a mine! Lost '+fmtCoins(currentBet)+' coins.';
+      rb.textContent='💥 BOOM! You hit a mine! Lost '+fmtCoins(betAmt)+' coins.';
       rb.className='result-banner lose';
       document.getElementById('ms-cashout-btn').disabled=true;
       document.getElementById('ms-start-btn').disabled=false;
+      await trackLoss(betAmt);
       playSound('lose'); await recordResult(false); tilesCleared=0;
     } else {
       revealed++; tilesCleared++; renderGrid(); playSound('coin');
       const mult=getMult(revealed);
-      document.getElementById('ms-mult-display').textContent='Mult: '+mult+'x  →  '+coinSymbol+' '+fmtCoins(Math.floor(currentBet*mult));
+      document.getElementById('ms-mult-display').textContent='Mult: '+mult+'x  →  '+coinSymbol+' '+fmtCoins(Math.floor(betAmt*mult));
       document.getElementById('ms-cashout-btn').disabled=false;
       if(revealed===TOTAL-MINES){
-        gameActive=false; const payout=Math.floor(currentBet*getMult(revealed));
+        gameActive=false; const payout=Math.floor(betAmt*getMult(revealed));
         await addCoins(payout,'Minesweeper');
         document.getElementById('ms-result').textContent='🎉 All safe tiles found! +'+fmtCoins(payout)+' coins!';
         document.getElementById('ms-result').className='result-banner win';
@@ -1678,7 +1759,8 @@ function buildMinesweeper(c){
   }
   window.startMine=async function(){
     if((userData.coins||0)<currentBet){toast('Not enough coins!');return;}
-    await saveUserData({coins:(userData.coins||0)-currentBet});
+    betAmt=currentBet;
+    await saveUserData({coins:(userData.coins||0)-betAmt});
     initGrid(); revealed=0; gameActive=true; betPaid=true;
     document.getElementById('ms-result').className='result-banner';
     document.getElementById('ms-cashout-btn').disabled=true;
@@ -1688,7 +1770,7 @@ function buildMinesweeper(c){
   };
   window.mineCashout=async function(){
     if(!gameActive||revealed===0){toast('Reveal at least 1 tile first!');return;}
-    gameActive=false; const mult=getMult(revealed); const payout=Math.floor(currentBet*mult);
+    gameActive=false; const mult=getMult(revealed); const payout=Math.floor(betAmt*mult);
     await addCoins(payout,'Minesweeper');
     grid.forEach(c=>{if(c.mine)c.revealed=true;}); renderGrid();
     document.getElementById('ms-result').textContent='💰 Cashed out! '+revealed+' tiles · '+mult+'x · +'+fmtCoins(payout)+' coins!';
@@ -1780,6 +1862,7 @@ function buildHorseRace(c){
           rb.className='result-banner win'; playSound('bigwin'); recordResult(true);
           unlockAchievement('horse_win'); if(payout>=10000) unlockAchievement('big_win');
         } else {
+          trackLoss(currentBet);
           rb.textContent='😔 '+HORSES[finishedIdx].name+' wins! Your horse '+HORSES[picked].name+' lost.';
           rb.className='result-banner lose'; playSound('lose'); recordResult(false);
         }
@@ -1796,7 +1879,7 @@ function buildHorseRace(c){
 // GAME: HIGHER OR LOWER
 // ════════════════════════════════════════════════
 function buildHigherLow(c){
-  let deck=[],currentCard=null,streak=0,gameActive=false;
+  let deck=[],currentCard=null,streak=0,gameActive=false,betAmt=0;
   function getMultForStreak(s){const m=[0,1.5,2,3,4.5,6.5,10,15,22,35,55];return m[Math.min(s,m.length-1)];}
   c.innerHTML=`<div class="game-wrap">
     <div class="game-title">🎯 Higher or Lower</div>
@@ -1828,7 +1911,8 @@ function buildHigherLow(c){
   window.hlStart=async function(){
     if((userData.coins||0)<currentBet){toast('Not enough coins!');return;}
     deck=shuffleDeck(newDeck());
-    await saveUserData({coins:(userData.coins||0)-currentBet});
+    betAmt=currentBet;
+    await saveUserData({coins:(userData.coins||0)-betAmt});
     currentCard=deck.pop(); streak=0; gameActive=true;
     document.getElementById('hl-current-card').innerHTML=cardHTML(currentCard);
     document.getElementById('hl-streak').textContent='0';
@@ -1850,7 +1934,7 @@ function buildHigherLow(c){
     else if(guess==='lower'&&nextRank<=prevRank) correct=true;
     const rb=document.getElementById('hl-result');
     if(correct){
-      streak++; const mult=getMultForStreak(streak); const potential=Math.floor(currentBet*mult);
+      streak++; const mult=getMultForStreak(streak); const potential=Math.floor(betAmt*mult);
       document.getElementById('hl-streak').textContent=streak;
       document.getElementById('hl-potential').textContent='Potential: '+coinSymbol+' '+fmtCoins(potential);
       rb.textContent='✅ Correct! '+nextCard.rank+nextCard.suit+' · Streak: '+streak+' · '+mult+'x potential';
@@ -1861,6 +1945,7 @@ function buildHigherLow(c){
       if(deck.length===0){hlCashout();return;}
     } else {
       gameActive=false;
+      await trackLoss(betAmt);
       rb.textContent='❌ Wrong! '+nextCard.rank+nextCard.suit+' — streak broken at '+streak+'.';
       rb.className='result-banner lose'; playSound('lose'); await recordResult(false);
       streak=0; document.getElementById('hl-streak').textContent='0';
@@ -1870,7 +1955,7 @@ function buildHigherLow(c){
   };
   window.hlCashout=async function(){
     if(!gameActive||streak===0){toast('Get at least 1 correct first!');return;}
-    gameActive=false; const mult=getMultForStreak(streak); const payout=Math.floor(currentBet*mult);
+    gameActive=false; const mult=getMultForStreak(streak); const payout=Math.floor(betAmt*mult);
     await addCoins(payout,'Higher or Lower');
     document.getElementById('hl-result').textContent='💰 Cashed out! Streak '+streak+' · '+mult+'x · +'+fmtCoins(payout)+' coins!';
     document.getElementById('hl-result').className='result-banner win';
@@ -1889,19 +1974,23 @@ function buildWheelFortune(c){
     {label:'0.5x', mult:0.5, color:'#660000'},
     {label:'1.5x', mult:1.5, color:'#003366'},
     {label:'2x',   mult:2,   color:'#004400'},
-    {label:'0.5x', mult:0.5, color:'#660000'},
+    {label:'BUST', mult:0,   color:'#440000'},
     {label:'3x',   mult:3,   color:'#005588'},
     {label:'1.5x', mult:1.5, color:'#003366'},
     {label:'BUST', mult:0,   color:'#440000'},
     {label:'2x',   mult:2,   color:'#004400'},
     {label:'5x',   mult:5,   color:'#886600'},
+    {label:'BUST', mult:0,   color:'#440000'},
     {label:'1x',   mult:1,   color:'#002244'},
     {label:'BUST', mult:0,   color:'#440000'},
     {label:'10x',  mult:10,  color:'#aa4400'},
     {label:'1.5x', mult:1.5, color:'#003366'},
     {label:'BUST', mult:0,   color:'#440000'},
+    {label:'0.5x', mult:0.5, color:'#660000'},
     {label:'2x',   mult:2,   color:'#004400'},
-    {label:'25x',  mult:25,  color:'#886600'},
+    {label:'20x',  mult:20,  color:'#886600'},
+    {label:'1x',   mult:1,   color:'#002244'},
+    {label:'0.5x', mult:0.5, color:'#660000'},
   ];
   let spinning=false, currentAngle=0;
   const N=SEGMENTS.length;
@@ -2002,14 +2091,15 @@ function buildWheelFortune(c){
           rb.className='result-banner win';
           playSound(seg.mult>=5?'bigwin':'win'); recordResult(true);
           if(payout>=10000) unlockAchievement('big_win');
-          if(seg.mult>=25) unlockAchievement('wheel_jackpot');
+          if(seg.mult>=20) unlockAchievement('wheel_jackpot');
         } else if(seg.mult>0){
-          // Partial return — not a win
           const payout=Math.floor(currentBet*seg.mult);
           if(payout>0) addCoins(payout,'Wheel partial');
+          trackLoss(currentBet - payout);
           rb.textContent='😔 '+seg.label+' · Only '+fmtCoins(payout)+' of '+fmtCoins(currentBet)+' returned.';
           rb.className='result-banner lose'; playSound('lose'); recordResult(false);
         } else {
+          trackLoss(currentBet);
           rb.textContent='💀 BUST! Better luck next time.';
           rb.className='result-banner lose'; playSound('lose'); recordResult(false);
         }
@@ -2020,28 +2110,174 @@ function buildWheelFortune(c){
 }
 
 // ════════════════════════════════════════════════
-// LEADERBOARD
+// GAME: TIC-TAC-TOE
 // ════════════════════════════════════════════════
-async function loadLeaderboard(type){
-  document.querySelectorAll('.lb-tab').forEach((t,i)=>t.classList.toggle('active',['coins','won','games','time'][i]===type));
+function buildTicTacToe(c){
+  let board=Array(9).fill(null), gameActive=false, betAmt=0;
+  const WIN_LINES=[[0,1,2],[3,4,5],[6,7,8],[0,3,6],[1,4,7],[2,5,8],[0,4,8],[2,4,6]];
+
+  c.innerHTML=`<div class="game-wrap">
+    <div class="game-title">❌ Tic-Tac-Toe</div>
+    <div class="game-subtitle">You are X · Beat the CPU (O) · Win = 2x · Draw = bet back</div>
+    <div id="ttt-bet"></div>
+    <div id="ttt-status" style="font-size:.85rem;font-weight:800;color:var(--gold);margin:10px 0 14px;min-height:22px;text-align:center;">Press Start to play!</div>
+    <div class="ttt-grid" id="ttt-grid" style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px;max-width:300px;margin:0 auto 16px;"></div>
+    <div class="result-banner" id="ttt-result"></div>
+    <button class="btn btn-green" id="ttt-start-btn" onclick="tttStart()" style="max-width:160px;margin-top:12px;"><span class="btn-text">Start Game</span></button>
+    ${buildInfoCard('Tic-Tac-Toe Payouts', [
+      ['Win (3 in a row)','2x your bet'],
+      ['Draw (board full, no winner)','Bet returned'],
+      ['Loss (CPU wins)','Lose your bet'],
+    ], '<strong>Tip:</strong> CPU plays smart — it will try to win or block you. Take corners early!')}
+  </div>`;
+  buildBetPanel(document.getElementById('ttt-bet'));
+
+  function checkWinner(b){
+    for(const [a,bI,cI] of WIN_LINES){
+      if(b[a]&&b[a]===b[bI]&&b[a]===b[cI]) return b[a];
+    }
+    return b.includes(null)?null:'draw';
+  }
+
+  function renderBoard(highlightLine=null){
+    const grid=document.getElementById('ttt-grid'); if(!grid) return;
+    grid.innerHTML=board.map((cell,i)=>{
+      const inLine=highlightLine&&highlightLine.includes(i);
+      const color=cell==='X'?'#4488ff':cell==='O'?'#ff4444':'rgba(255,255,255,.1)';
+      return`<button onclick="tttMove(${i})" style="height:90px;border-radius:12px;border:2px solid ${inLine?'var(--gold)':cell?color:'rgba(0,0,255,.4)'};background:${inLine?'rgba(255,215,0,.15)':cell?color+'22':'rgba(0,0,50,.4)'};font-size:2.2rem;font-weight:900;color:${cell==='X'?'#4488ff':cell==='O'?'#ff4444':'rgba(255,255,255,.2)'};cursor:${gameActive&&!cell?'pointer':'default'};transition:all .15s;" ${!gameActive||cell?'disabled':''}>
+        ${cell||'·'}
+      </button>`;
+    }).join('');
+  }
+
+  function cpuMove(){
+    // Win if possible
+    for(const [a,b,cI] of WIN_LINES){
+      const line=[board[a],board[b],board[cI]];
+      if(line.filter(x=>x==='O').length===2&&line.includes(null)){
+        const idx=[a,b,cI][line.indexOf(null)]; return idx;
+      }
+    }
+    // Block player
+    for(const [a,b,cI] of WIN_LINES){
+      const line=[board[a],board[b],board[cI]];
+      if(line.filter(x=>x==='X').length===2&&line.includes(null)){
+        const idx=[a,b,cI][line.indexOf(null)]; return idx;
+      }
+    }
+    // Center
+    if(!board[4]) return 4;
+    // Corners
+    const corners=[0,2,6,8].filter(i=>!board[i]);
+    if(corners.length) return corners[Math.floor(Math.random()*corners.length)];
+    // Any
+    const empties=board.map((v,i)=>v===null?i:-1).filter(i=>i>=0);
+    return empties[Math.floor(Math.random()*empties.length)];
+  }
+
+  function finishGame(winner){
+    gameActive=false;
+    const rb=document.getElementById('ttt-result');
+    const status=document.getElementById('ttt-status');
+    // Find winning line for highlight
+    let winLine=null;
+    for(const line of WIN_LINES){
+      if(board[line[0]]&&board[line[0]]===board[line[1]]&&board[line[0]]===board[line[2]]){winLine=line;break;}
+    }
+    renderBoard(winLine);
+    if(winner==='X'){
+      const payout=betAmt*2;
+      addCoins(payout,'Tic-Tac-Toe');
+      rb.textContent='🎉 You win! +'+fmtCoins(payout)+' coins!';
+      rb.className='result-banner win';
+      status.textContent='You win! ✅';
+      playSound('bigwin'); recordResult(true); unlockAchievement('ttt_win');
+    } else if(winner==='draw'){
+      addCoins(betAmt,'Tic-Tac-Toe draw');
+      rb.textContent='🤝 Draw! Bet returned.';
+      rb.className='result-banner push';
+      status.textContent='Draw! 🤝';
+      playSound('click'); recordResult(false);
+    } else {
+      trackLoss(betAmt);
+      rb.textContent='😔 CPU wins! Better luck next time.';
+      rb.className='result-banner lose';
+      status.textContent='CPU wins! ❌';
+      playSound('lose'); recordResult(false);
+    }
+    document.getElementById('ttt-start-btn').style.display='block'; lockBets(false);
+  }
+
+  window.tttMove=function(i){
+    if(!gameActive||board[i]) return;
+    board[i]='X'; playSound('click'); renderBoard();
+    const res=checkWinner(board);
+    if(res){finishGame(res);return;}
+    // CPU turn
+    gameActive=false;
+    document.getElementById('ttt-status').textContent='CPU thinking...';
+    setTimeout(()=>{
+      const cpuIdx=cpuMove();
+      if(cpuIdx!==undefined&&cpuIdx!==null) board[cpuIdx]='O';
+      playSound('flip');
+      const res2=checkWinner(board);
+      if(res2){renderBoard();finishGame(res2);}
+      else{gameActive=true;document.getElementById('ttt-status').textContent='Your turn! (X)';renderBoard();}
+    },450);
+  };
+
+  window.tttStart=async function(){
+    if((userData.coins||0)<currentBet){toast('Not enough coins!');return;}
+    betAmt=currentBet;
+    await saveUserData({coins:(userData.coins||0)-betAmt});
+    board=Array(9).fill(null); gameActive=true;
+    document.getElementById('ttt-result').className='result-banner';
+    document.getElementById('ttt-start-btn').style.display='none'; lockBets(true);
+    document.getElementById('ttt-status').textContent='Your turn! (X)';
+    renderBoard(); playSound('deal');
+  };
+
+  renderBoard();
+}
+
+// ════════════════════════════════════════════════
+// LEADERBOARD (live real-time)
+// ════════════════════════════════════════════════
+let lbListener = null;
+let lbCurrentType = 'coins';
+
+function initLeaderboard(){
+  lbCurrentType = 'coins';
+  document.querySelectorAll('.lb-tab').forEach((t,i)=>t.classList.toggle('active',i===0));
+  if(lbListener){ lbListener(); lbListener=null; }
   const list=document.getElementById('lb-list');
   list.innerHTML=`<div style="color:var(--muted);padding:20px;text-align:center;font-size:.8rem;">Loading...</div>`;
-  try{
-    const snap=await db.ref('users').get();
-    if(!snap.exists()){list.innerHTML=`<div style="color:var(--muted);padding:20px;text-align:center;">No players yet.</div>`;return;}
-    let players=[]; snap.forEach(child=>{players.push({uid:child.key,...child.val()});});
-    const field={coins:'coins',won:'biggestWin',games:'gamesPlayed',time:'timeSpent'}[type];
-    players.sort((a,b)=>(b[field]||0)-(a[field]||0));
-    const medals=['🥇','🥈','🥉'];
-    list.innerHTML=players.slice(0,20).map((p,i)=>{
-      const isYou=p.uid===currentUser?.uid;
-      const av=(SHOP_AVATARS.find(a=>a.id===(p.equippedItems?.avatars))||SHOP_AVATARS[0]).preview;
-      const val=type==='coins'?coinSymbol+' '+fmtCoins(p.coins||0):type==='won'?'💥 '+fmtCoins(p.biggestWin||0):type==='games'?'🎮 '+fmtCoins(p.gamesPlayed||0)+' games':'⏱ '+fmtTime(p.timeSpent||0);
-      return`<div class="lb-row${isYou?' lb-you':''}"><span class="lb-rank${i<3?' '+['gold','silver','bronze'][i]:''}">${medals[i]||i+1}</span><span class="lb-avatar">${av}</span><span class="lb-username">${p.username||'?'}${isYou?' (You)':''}</span><span class="lb-val">${val}</span></div>`;
-    }).join('')||`<div style="color:var(--muted);padding:20px;text-align:center;">No data.</div>`;
-  }catch(e){list.innerHTML=`<div style="color:var(--red);padding:20px;text-align:center;">Could not load leaderboard.</div>`;}
+  lbListener = db.ref('users').on('value', snap => {
+    renderLeaderboard(snap, lbCurrentType);
+  });
 }
-window.showLbTab=function(type){loadLeaderboard(type);};
+
+function renderLeaderboard(snap, type){
+  const list=document.getElementById('lb-list');
+  if(!snap||!snap.exists()){list.innerHTML=`<div style="color:var(--muted);padding:20px;text-align:center;">No players yet.</div>`;return;}
+  let players=[]; snap.forEach(child=>{players.push({uid:child.key,...child.val()});});
+  const field={coins:'coins',won:'biggestWin',games:'gamesPlayed',time:'timeSpent'}[type];
+  players.sort((a,b)=>(b[field]||0)-(a[field]||0));
+  const medals=['🥇','🥈','🥉'];
+  list.innerHTML=players.slice(0,20).map((p,i)=>{
+    const isYou=p.uid===currentUser?.uid;
+    const av=(SHOP_AVATARS.find(a=>a.id===(p.equippedItems?.avatars))||SHOP_AVATARS[0]).preview;
+    const val=type==='coins'?coinSymbol+' '+fmtCoins(p.coins||0):type==='won'?'💥 '+fmtCoins(p.biggestWin||0):type==='games'?'🎮 '+fmtCoins(p.gamesPlayed||0)+' games':'⏱ '+fmtTime(p.timeSpent||0);
+    return`<div class="lb-row${isYou?' lb-you':''}"><span class="lb-rank${i<3?' '+['gold','silver','bronze'][i]:''}">${medals[i]||i+1}</span><span class="lb-avatar">${av}</span><span class="lb-username">${p.username||'?'}${isYou?' (You)':''}</span><span class="lb-val">${val}</span></div>`;
+  }).join('')||`<div style="color:var(--muted);padding:20px;text-align:center;">No data.</div>`;
+}
+
+window.showLbTab=function(type){
+  lbCurrentType=type;
+  document.querySelectorAll('.lb-tab').forEach((t,i)=>t.classList.toggle('active',['coins','won','games','time'][i]===type));
+  // Fetch once for tab switch (listener will also update)
+  db.ref('users').get().then(snap=>renderLeaderboard(snap,type));
+};
 
 // ════════════════════════════════════════════════
 // ACHIEVEMENTS
@@ -2074,6 +2310,8 @@ function renderStats(){
   document.getElementById('stat-bets').textContent=fmtCoins(bets);
   document.getElementById('stat-bigwin').textContent=coinSymbol+' '+fmtCoins(bigWin);
   document.getElementById('stat-bigloss').textContent=coinSymbol+' '+fmtCoins(bigLoss);
+  const bailoutEl=document.getElementById('stat-bailouts');
+  if(bailoutEl) bailoutEl.textContent=(userData.bailoutCount||0);
   const history=userData.balanceHistory||[];
   const canvas=document.getElementById('statsGraph'); if(!canvas) return;
   const W=canvas.parentElement.offsetWidth||800;
@@ -2110,8 +2348,86 @@ function renderStats(){
 }
 
 // ════════════════════════════════════════════════
-// SUGGESTIONS
+// GLOBAL STATS
 // ════════════════════════════════════════════════
+async function renderGlobalStats(){
+  const setEl=(id,val)=>{const el=document.getElementById(id);if(el)el.textContent=val;};
+  setEl('gs-players','Loading...'); setEl('gs-coins-total','...');
+  try{
+    const snap=await db.ref('users').get();
+    if(!snap.exists()){setEl('gs-players','0');return;}
+    let players=[],totalCoins=0,totalEarned=0,totalLost=0,totalBets=0,biggestWin=0,totalGames=0,totalBailouts=0;
+    let allBalances=[];
+    snap.forEach(child=>{
+      const p=child.val();
+      players.push(p);
+      totalCoins+=(p.coins||0);
+      totalEarned+=(p.totalEarned||0);
+      totalLost+=(p.totalLost||0);
+      totalBets+=(p.totalBets||0);
+      totalGames+=(p.gamesPlayed||0);
+      totalBailouts+=(p.bailoutCount||0);
+      if((p.biggestWin||0)>biggestWin) biggestWin=p.biggestWin||0;
+      const hist=p.balanceHistory||[];
+      if(hist.length>0) allBalances.push({name:p.username||'?',history:hist});
+    });
+    setEl('gs-players', players.length);
+    setEl('gs-coins-total', coinSymbol+' '+fmtCoins(totalCoins));
+    setEl('gs-earned', coinSymbol+' '+fmtCoins(totalEarned));
+    setEl('gs-lost', coinSymbol+' '+fmtCoins(totalLost));
+    setEl('gs-bets', fmtCoins(totalBets));
+    setEl('gs-bigwin', coinSymbol+' '+fmtCoins(biggestWin));
+    setEl('gs-games', fmtCoins(totalGames));
+    setEl('gs-bailouts', totalBailouts);
+    // Draw merged balance graph
+    const canvas=document.getElementById('globalStatsGraph'); if(!canvas) return;
+    const W=canvas.parentElement.offsetWidth||800;
+    canvas.width=Math.max(W-20,300); canvas.height=280;
+    const ctx=canvas.getContext('2d'); const cW=canvas.width, cH=canvas.height;
+    ctx.clearRect(0,0,cW,cH); ctx.fillStyle='#03031a'; ctx.fillRect(0,0,cW,cH);
+    if(allBalances.length===0){
+      ctx.fillStyle='rgba(255,255,255,.3)'; ctx.font='16px Montserrat';
+      ctx.textAlign='center'; ctx.textBaseline='middle';
+      ctx.fillText('No balance data yet.',cW/2,cH/2); return;
+    }
+    const PAD=48, gW=cW-PAD*2, gH=cH-PAD*2-20;
+    const COLORS=['#4466ff','#ff4444','#44ff88','#ffaa00','#ff44cc','#44ccff','#ffff44','#cc44ff'];
+    // Find global min/max across ALL players so lines share the same scale
+    let globalMin=Infinity, globalMax=-Infinity;
+    allBalances.forEach(p=>p.history.forEach(v=>{if(v<globalMin)globalMin=v;if(v>globalMax)globalMax=v;}));
+    const range=Math.max(globalMax-globalMin,1);
+    // Grid lines
+    ctx.strokeStyle='rgba(255,255,255,.07)'; ctx.lineWidth=1;
+    for(let i=0;i<=4;i++){
+      const y=PAD+gH*(1-i/4);
+      ctx.beginPath(); ctx.moveTo(PAD,y); ctx.lineTo(PAD+gW,y); ctx.stroke();
+      ctx.fillStyle='rgba(255,255,255,.4)'; ctx.font='10px Montserrat';
+      ctx.textAlign='right'; ctx.textBaseline='middle';
+      ctx.fillText(fmtCoins(Math.round(globalMin+range*(i/4))),PAD-5,y);
+    }
+    // Draw each player's line
+    allBalances.forEach((p,pi)=>{
+      const hist=p.history; if(hist.length<2) return;
+      ctx.beginPath();
+      hist.forEach((v,i)=>{
+        const x=PAD+gW*(i/(hist.length-1));
+        const y=PAD+gH*(1-(v-globalMin)/range);
+        if(i===0) ctx.moveTo(x,y); else ctx.lineTo(x,y);
+      });
+      ctx.strokeStyle=COLORS[pi%COLORS.length]; ctx.lineWidth=2;
+      ctx.globalAlpha=0.75; ctx.lineJoin='round'; ctx.stroke(); ctx.globalAlpha=1;
+    });
+    // Legend at bottom
+    const legendY=cH-12;
+    ctx.font='bold 10px Montserrat'; ctx.textBaseline='middle';
+    allBalances.slice(0,8).forEach((p,pi)=>{
+      const x=PAD+(pi*(gW/Math.min(allBalances.length,8)));
+      ctx.fillStyle=COLORS[pi%COLORS.length];
+      ctx.beginPath(); ctx.arc(x,legendY,4,0,Math.PI*2); ctx.fill();
+      ctx.fillText(p.name,x+8,legendY);
+    });
+  }catch(e){console.error('Global stats error',e);}
+}
 let suggestionsListener=null, allSuggestions=[], currentFilter='all';
 
 function initSuggestions(){
@@ -2135,19 +2451,43 @@ function renderSuggestions(){
   const filtered=currentFilter==='all'?allSuggestions:allSuggestions.filter(s=>s.category===currentFilter);
   if(filtered.length===0){list.innerHTML='<div class="sug-empty">No suggestions yet in this category. Be the first!</div>';return;}
   const CAT_LABELS={game:'🎮',feature:'✨',shop:'🛒',bug:'🐛',other:'💡'};
+  const STATUS_LABELS={being_added:'🔄 Being Added',added:'✅ Added',rejected:'❌ Rejected'};
+  const isOwner = currentUser && currentUser.uid === OWNER_UID;
   list.innerHTML=filtered.map(s=>{
     const date=new Date(s.timestamp);
     const dateStr=date.toLocaleDateString()+' '+date.toLocaleTimeString(undefined,{hour:'2-digit',minute:'2-digit'});
+    const statusBadge = s.status ? `<span class="sug-status-badge sug-status-${s.status}">${STATUS_LABELS[s.status]||s.status}</span>` : '';
+    const ownerBtns = isOwner ? `<div class="sug-owner-btns">
+      <button class="btn sug-mod-btn" onclick="setSugStatus('${s.id}','being_added')" style="font-size:.65rem;padding:5px 8px;background:rgba(0,100,255,.3);">🔄 Being Added</button>
+      <button class="btn sug-mod-btn" onclick="setSugStatus('${s.id}','added')" style="font-size:.65rem;padding:5px 8px;background:rgba(0,180,0,.3);">✅ Added</button>
+      <button class="btn sug-mod-btn" onclick="setSugStatus('${s.id}','rejected')" style="font-size:.65rem;padding:5px 8px;background:rgba(200,0,0,.3);">❌ Rejected</button>
+      <button class="btn sug-mod-btn" onclick="deleteSuggestion('${s.id}')" style="font-size:.65rem;padding:5px 8px;background:rgba(100,0,0,.4);">🗑 Delete</button>
+    </div>` : '';
     return`<div class="sug-card">
       <div class="sug-card-header">
         <span class="sug-cat-badge">${CAT_LABELS[s.category]||'💡'} ${s.category}</span>
+        ${statusBadge}
         <span class="sug-card-title">${escHtml(s.title||'(no title)')}</span>
         <span class="sug-card-meta">${escHtml(s.username||'?')} · ${dateStr}</span>
       </div>
       <div class="sug-card-body">${escHtml(s.body||'')}</div>
+      ${ownerBtns}
     </div>`;
   }).join('');
 }
+
+window.setSugStatus=async function(id, status){
+  try{
+    await db.ref('suggestions/'+id+'/status').set(status);
+    toast('✅ Status updated!');
+  }catch(e){toast('Error: '+e.message);}
+};
+window.deleteSuggestion=async function(id){
+  try{
+    await db.ref('suggestions/'+id).remove();
+    toast('🗑 Suggestion deleted.');
+  }catch(e){toast('Error: '+e.message);}
+};
 function escHtml(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
 window.submitSuggestion=async function(){
   const title=(document.getElementById('sug-title').value||'').trim();
@@ -2164,11 +2504,64 @@ window.submitSuggestion=async function(){
 };
 
 // ════════════════════════════════════════════════
+// SEND COINS
+// ════════════════════════════════════════════════
+function initSendCoins(){
+  const histEl=document.getElementById('send-history');
+  if(histEl){
+    const hist=userData.sendHistory||[];
+    if(hist.length===0){histEl.innerHTML='<div style="color:var(--muted);font-size:.8rem;">No sends yet.</div>';}
+    else{histEl.innerHTML=hist.slice().reverse().slice(0,20).map(h=>`<div class="sug-card" style="padding:8px 12px;margin-bottom:6px;font-size:.78rem;"><span style="color:var(--gold);">→ ${escHtml(h.to)}</span> <span style="color:#44ff88;">+${fmtCoins(h.amount)} ${coinSymbol}</span> <span style="color:var(--muted);">${new Date(h.time).toLocaleString()}</span></div>`).join('');}
+  }
+}
+
+window.sendCoins=async function(){
+  const toUsername=(document.getElementById('send-username').value||'').trim().toLowerCase();
+  const amtRaw=parseInt(document.getElementById('send-amount').value||'0');
+  const msgEl=document.getElementById('send-msg');
+  function setMsg(t,c){if(msgEl){msgEl.textContent=t;msgEl.className='msg '+(c||'');}}
+  if(!toUsername) return setMsg('Enter a username.','error');
+  if(!amtRaw||amtRaw<=0) return setMsg('Enter a valid amount.','error');
+  if(amtRaw>1000000) return setMsg('Max send is 1,000,000 coins.','error');
+  if((userData.coins||0)<amtRaw) return setMsg('Not enough coins!','error');
+  if(toUsername===(userData.username||'').toLowerCase()) return setMsg("You can't send to yourself!",'error');
+  // Cooldown check: 10 minutes
+  const lastSend=userData.lastSendTime||0;
+  const cooldownMs=10*60*1000;
+  const remaining=cooldownMs-(Date.now()-lastSend);
+  if(remaining>0) return setMsg('Cooldown: wait '+fmtTime(remaining)+' before sending again.','error');
+  setMsg('Sending...','');
+  try{
+    // Look up recipient UID
+    const snap=await db.ref('usernames/'+toUsername).get();
+    if(!snap.exists()) return setMsg('User not found.','error');
+    const toUid=snap.val();
+    // Deduct from sender
+    const newCoins=(userData.coins||0)-amtRaw;
+    // Credit recipient
+    const recipSnap=await db.ref('users/'+toUid+'/coins').get();
+    const recipCoins=(recipSnap.exists()?recipSnap.val():0)+amtRaw;
+    await db.ref('users/'+toUid+'/coins').set(recipCoins);
+    // Record history
+    const sendHistory=[...(userData.sendHistory||[]),{to:toUsername,amount:amtRaw,time:Date.now()}];
+    if(sendHistory.length>50) sendHistory.shift();
+    await saveUserData({coins:newCoins,lastSendTime:Date.now(),sendHistory});
+    setMsg('✅ Sent '+fmtCoins(amtRaw)+' coins to @'+toUsername+'!','success');
+    toast('💸 Sent '+fmtCoins(amtRaw)+' '+coinSymbol+' to @'+toUsername);
+    document.getElementById('send-username').value='';
+    document.getElementById('send-amount').value='';
+    initSendCoins();
+  }catch(e){setMsg('Error: '+e.message,'error');}
+};
+
+// ════════════════════════════════════════════════
 // SHOP
 // ════════════════════════════════════════════════
 function renderShop(tab){
-  document.querySelectorAll('.shop-tab').forEach(t=>{
-    t.classList.toggle('active',t.textContent.toLowerCase().replace(/[^a-z]/g,'').includes(tab.toLowerCase().replace(/[^a-z]/g,'')));
+  const tabMap={'themes':'themes','bgfx':'bgeffects','carddecks':'carddecks','coinskinsshop':'coinskins','avatars':'avatars'};
+  const tabButtons=['themes','bgfx','carddecks','coinskinsshop','avatars'];
+  document.querySelectorAll('.shop-tab').forEach((t,i)=>{
+    t.classList.toggle('active', tabButtons[i]===tab);
   });
   const owned=userData.ownedItems||[]; const equipped=userData.equippedItems||{};
   let items, tabKey;
@@ -2202,7 +2595,7 @@ const tierLabel=tier==='divine'?'✨ DIVINE':tier==='mythic'?'⚗ MYTHIC':tier==
     }
 
     const priceClass=tier==='divine'?'price-divine':tier==='mythic'?'price-mythic':tier==='legend'?'price-legend':'';
-    const priceLabel=item.price===0?'Free':coinSymbol+' '+fmtCoins(item.price);
+    const priceLabel=item.price===0?'Free':coinSymbol+' '+fmtPrice(item.price);
 
     return`<div class="shop-card${isEquipped?' equipped':isOwned?' owned':''} ${tierClass}">
       ${tierLabel?`<span class="tier-badge ${tier}">${tierLabel}</span>`:''}
@@ -2579,4 +2972,11 @@ window.addEventListener('beforeunload',()=>{
     const spent=(userData.timeSpent||0)+(Date.now()-sessionStart);
     try{db.ref('users/'+currentUser.uid+'/timeSpent').set(spent);}catch(e){}
   }
+});
+
+// Mouse wheel scrolls nav buttons LEFT/RIGHT
+document.querySelector('.nav-center').addEventListener('wheel', (e) => {
+  e.preventDefault();
+  const container = e.currentTarget;
+  container.scrollLeft += e.deltaY > 0 ? 50 : -50;
 });
