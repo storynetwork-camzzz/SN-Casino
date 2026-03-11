@@ -128,6 +128,52 @@ const SHOP_THEMES = [
    colors:{blue:'#ffffff',dark:'#000005',glow:'rgba(255,255,255,.65)',particle:'#ffffff',gridColor:'rgba(255,255,255,.28)'}},
   {id:'legendary', name:'LEGENDARY',     preview:'👑', desc:'Forged from myth. No one has seen this. Until now.', price:1000000, tier:'divine',
    colors:{blue:'#ffd700',dark:'#040200',glow:'rgba(255,200,0,.65)',particle:'#ffee44',gridColor:'rgba(255,200,0,.25)'}},
+  // NEW THEMES
+  {id:'slime',     name:'Toxic Slime',   preview:'🟢', desc:'Gross glowing slime drips everywhere',          price:28000,
+   colors:{blue:'#39ff14',dark:'#010800',glow:'rgba(57,255,20,.55)',particle:'#66ff33',gridColor:'rgba(57,255,20,.18)'}},
+  {id:'copper',    name:'Copper Oxide',  preview:'🟤', desc:'Aged oxidized copper & teal patina',             price:32000,
+   colors:{blue:'#3ddc97',dark:'#010a06',glow:'rgba(61,220,151,.5)',particle:'#5eeebb',gridColor:'rgba(61,220,151,.18)'}},
+  {id:'bubblegum', name:'Bubblegum',     preview:'🩷', desc:'Sweet pastel pink & hot magenta pop',           price:25000,
+   colors:{blue:'#ff69b4',dark:'#0a0007',glow:'rgba(255,105,180,.55)',particle:'#ff8acc',gridColor:'rgba(255,105,180,.18)'}},
+  {id:'acid',      name:'Acid Trip',     preview:'🌀', desc:'Warped swirling psychedelic rainbow',            price:55000,
+   colors:{blue:'#ff00ff',dark:'#040004',glow:'rgba(255,0,255,.55)',particle:'#ff55ff',gridColor:'rgba(255,0,255,.2)'}},
+  {id:'rust',      name:'Rust Belt',     preview:'🦀', desc:'Industrial orange-brown rust & grime',          price:22000,
+   colors:{blue:'#c44b16',dark:'#080200',glow:'rgba(196,75,22,.55)',particle:'#e06030',gridColor:'rgba(196,75,22,.18)'}},
+  {id:'cobalt',    name:'Cobalt Strike', preview:'🔵', desc:'Deep rich cobalt blue military tech',           price:38000,
+   colors:{blue:'#0047ab',dark:'#000408',glow:'rgba(0,71,171,.6)',particle:'#1166cc',gridColor:'rgba(0,71,171,.18)'}},
+  {id:'amethyst',  name:'Amethyst',      preview:'💜', desc:'Rich violet amethyst crystal glow',             price:45000,
+   colors:{blue:'#9966cc',dark:'#050010',glow:'rgba(153,102,204,.55)',particle:'#bb88ee',gridColor:'rgba(153,102,204,.18)'}},
+  {id:'terminator',name:'Terminator',   preview:'🤖', desc:'Red-eye machine vision scanner mode',           price:60000,
+   colors:{blue:'#ff3300',dark:'#050000',glow:'rgba(255,50,0,.6)',particle:'#ff5511',gridColor:'rgba(255,50,0,.2)'}},
+  {id:'moonrise',  name:'Moonrise',      preview:'🌕', desc:'Warm amber moonlight glow',                     price:42000,
+   colors:{blue:'#ffaa33',dark:'#050300',glow:'rgba(255,170,51,.5)',particle:'#ffcc66',gridColor:'rgba(255,170,51,.18)'}},
+  {id:'deepmars',  name:'Deep Mars',     preview:'🔴', desc:'Dusty red Martian landscape at dusk',          price:48000,
+   colors:{blue:'#cc4411',dark:'#060100',glow:'rgba(204,68,17,.55)',particle:'#dd6633',gridColor:'rgba(204,68,17,.18)'}},
+  {id:'hacker',    name:'Hacker',        preview:'💚', desc:'Bright green terminal hacker console',          price:35000,
+   colors:{blue:'#00ff41',dark:'#000800',glow:'rgba(0,255,65,.55)',particle:'#33ff66',gridColor:'rgba(0,255,65,.18)'}},
+  {id:'lavablue',  name:'Lava & Blue',   preview:'🌊', desc:'Hot lava meets cold ocean — dual clash',       price:65000,
+   colors:{blue:'#0077ff',dark:'#020408',glow:'rgba(0,119,255,.55)',particle:'#3399ff',gridColor:'rgba(0,119,255,.18)'}},
+  {id:'stardust',  name:'Stardust',      preview:'🌟', desc:'Faint golden stardust shimmer everywhere',      price:70000,
+   colors:{blue:'#ffd700',dark:'#060500',glow:'rgba(255,215,0,.45)',particle:'#ffe066',gridColor:'rgba(255,215,0,.15)'}},
+  {id:'synthwave', name:'Synthwave',     preview:'🎹', desc:'80s retro pink & purple sunset grid',          price:80000,
+   colors:{blue:'#ff44aa',dark:'#050010',glow:'rgba(255,68,170,.55)',particle:'#ff77cc',gridColor:'rgba(255,68,170,.2)'}},
+  {id:'wraith',    name:'Wraith',        preview:'👻', desc:'Pale ghost-white on pitch black void',          price:85000,
+   colors:{blue:'#ccccff',dark:'#010104',glow:'rgba(200,200,255,.5)',particle:'#ddddff',gridColor:'rgba(200,200,255,.18)'}},
+  // LEGEND TIER (new)
+  {id:'eclipse',   name:'Eclipse',       preview:'🌒', desc:'Solar eclipse — darkness with a burning ring', price:400000, tier:'legend',
+   colors:{blue:'#ffaa00',dark:'#000000',glow:'rgba(255,170,0,.65)',particle:'#ffcc33',gridColor:'rgba(255,170,0,.22)'}},
+  {id:'genesis',   name:'Genesis',       preview:'🌍', desc:'Primordial swirling cosmic genesis',            price:450000, tier:'legend',
+   colors:{blue:'#00ddff',dark:'#000508',glow:'rgba(0,221,255,.6)',particle:'#33eeff',gridColor:'rgba(0,221,255,.2)'}},
+  // MYTHIC TIER (new)
+  {id:'fractured', name:'FRACTURED',     preview:'💠', desc:'Reality cracked. Everything is glitching.',     price:700000, tier:'mythic',
+   colors:{blue:'#00ffff',dark:'#000008',glow:'rgba(0,255,255,.65)',particle:'#55ffff',gridColor:'rgba(0,255,255,.25)'}},
+  {id:'abyss2',    name:'HOLLOW ABYSS',  preview:'🌑', desc:'You fell in. You cannot climb out.',            price:750000, tier:'mythic',
+   colors:{blue:'#550088',dark:'#000000',glow:'rgba(85,0,136,.65)',particle:'#7700aa',gridColor:'rgba(85,0,136,.22)'}},
+  // DIVINE TIER (new)
+  {id:'omnivoid',  name:'OMNIVOID',      preview:'🕳️', desc:'Beyond existence. No one should have this.',   price:5000000, tier:'divine',
+   colors:{blue:'#ffffff',dark:'#000000',glow:'rgba(255,255,255,.8)',particle:'#ffffff',gridColor:'rgba(255,255,255,.3)'}},
+  {id:'creator',   name:'THE CREATOR',   preview:'🌌', desc:'You built this casino. Now you rule it.',       price:10000000, tier:'divine',
+   colors:{blue:'#ff00ff',dark:'#000000',glow:'rgba(255,0,255,.7)',particle:'#ff55ff',gridColor:'rgba(255,0,255,.28)'}},
 ];
 
 const SHOP_BG_FX = [
@@ -154,6 +200,19 @@ const SHOP_BG_FX = [
   {id:'fx_portal',    name:'Portal Rift',    preview:'🌐', desc:'A glowing dimensional rift tears open',       price:350000, tier:'legend'},
   // DIVINE
   {id:'fx_cosmic',    name:'COSMIC RIFT',    preview:'🔮', desc:'Reality itself breaks apart. Legendary.',     price:1000000, tier:'divine'},
+  // NEW BG EFFECTS
+  {id:'fx_galaxy',    name:'Galaxy Spiral',  preview:'🌌', desc:'A slow galaxy arm spirals in the background', price:35000},
+  {id:'fx_bloodrain', name:'Blood Rain',     preview:'🩸', desc:'Crimson droplets streak down the screen',     price:55000},
+  {id:'fx_heartbeat', name:'Heartbeat Pulse',preview:'💓', desc:'Screen pulses with a living heartbeat',       price:40000},
+  {id:'fx_spiders',   name:'Web Crawl',      preview:'🕷️', desc:'Spiderwebs slowly grow across the screen',   price:65000},
+  {id:'fx_neonlines', name:'Neon Grid Lines',preview:'📐', desc:'Glowing neon grid lines flow across screen',  price:48000},
+  {id:'fx_butterflies',name:'Butterflies',   preview:'🦋', desc:'Glowing butterflies flutter across screen',   price:58000},
+  {id:'fx_dice',      name:'Falling Dice',   preview:'🎲', desc:'Casino dice tumble down the background',      price:45000},
+  // LEGEND
+  {id:'fx_apocalypse',name:'Apocalypse',     preview:'☄️', desc:'End-of-world meteor impacts and fire rain',   price:500000, tier:'legend'},
+  {id:'fx_timewarp',  name:'Time Warp',      preview:'⏳', desc:'Reality bends — clocks melt and time breaks',price:600000, tier:'legend'},
+  // DIVINE
+  {id:'fx_godhand',   name:'GOD\'S HAND',    preview:'🤲', desc:'A divine hand reaches from behind reality.',  price:5000000, tier:'divine'},
 ];
 
 const SHOP_DECKS = [
@@ -181,6 +240,25 @@ const SHOP_DECKS = [
   {id:'mythic_deck',   name:'MYTHIC Deck',    preview:'⚔️', desc:'Forged in the fires of legend itself',       price:500000, tier:'mythic'},
   // DIVINE
   {id:'divine_deck',   name:'DIVINE Deck',    preview:'✨', desc:'Cards touched by gods. Unmistakable.',        price:1000000, tier:'divine'},
+  // NEW DECKS
+  {id:'sakura_deck',   name:'Sakura Deck',    preview:'🌸', desc:'Delicate pink cherry blossom suits',          price:22000},
+  {id:'toxic_deck',    name:'Toxic Deck',     preview:'☢️', desc:'Radioactive neon-green glowing suits',        price:35000},
+  {id:'ocean_deck',    name:'Ocean Deck',     preview:'🌊', desc:'Deep-sea aqua & coral suits',                 price:28000},
+  {id:'cyber_deck',    name:'Cyber Deck',     preview:'🤖', desc:'Cold chrome machine-vision suits',            price:42000},
+  {id:'desert_deck',   name:'Desert Deck',    preview:'🏜️', desc:'Warm sandy dunes & sunset suits',            price:32000},
+  {id:'lava_deck',     name:'Lava Deck',      preview:'🌋', desc:'Molten rock orange & black suits',            price:48000},
+  {id:'storm_deck',    name:'Storm Deck',     preview:'⛈️', desc:'Dark clouds, lightning bolt suits',          price:55000},
+  {id:'casino_deck',   name:'Casino Royale',  preview:'🃏', desc:'Classic casino green felt & gold suits',      price:40000},
+  {id:'haunted_deck',  name:'Haunted Deck',   preview:'🎃', desc:'Spooky Halloween ghost & pumpkin suits',      price:50000},
+  {id:'chrome_deck',   name:'Chrome Deck',    preview:'⚙️', desc:'Sleek metallic silver mirror suits',          price:65000},
+  {id:'nuke_deck',     name:'Nuke Deck',      preview:'💣', desc:'Explosive red-and-yellow hazard suits',       price:70000},
+  // LEGEND
+  {id:'reaper_deck',   name:'REAPER Deck',    preview:'☠️', desc:'The grim reaper dealt these personally.',     price:400000, tier:'legend'},
+  {id:'titan_deck',    name:'TITAN Deck',     preview:'🗿', desc:'Carved from stone — ancient & powerful.',     price:450000, tier:'legend'},
+  // MYTHIC
+  {id:'cosmos_deck',   name:'COSMOS Deck',    preview:'🌠', desc:'Forged from the fabric of space-time itself.',price:750000, tier:'mythic'},
+  // DIVINE
+  {id:'genesis_deck',  name:'GENESIS Deck',   preview:'🌍', desc:'The first deck. The only deck. Absolute.',    price:5000000, tier:'divine'},
 ];
 
 const SHOP_COINS = [
@@ -209,10 +287,34 @@ const SHOP_COINS = [
   // MYTHIC
   {id:'coin_prismatic', name:'PRISMATIC',       preview:'🔮', desc:'Shifts color with every transaction',      price:500000, tier:'mythic'},
   // DIVINE
-  {id:'coin_omnipotent',name:'OMNIPOTENT',      preview:'⚡', desc:'The currency of gods. Pure power.',        price:1000000, tier:'divine'},
+  {id:'coin_omnipotent',name:'OMNIPOTENT',      preview:'🌩️', desc:'The currency of gods. Pure power.',        price:1000000, tier:'divine'},
 
   {id:'coin_starstruck',name:'STARSTRUCK',      preview:'🌟', desc:'Only The Goats Have This Divine Currency',        price:1000000000, tier:'divine'},
-
+  // NEW COIN SKINS
+  {id:'coin_clover',    name:'Lucky Clover',    preview:'🍀', desc:'Irish luck in every flip',                 price:12000},
+  {id:'coin_bomb',      name:'Ticking Bomb',    preview:'💣', desc:'High risk, high reward token',             price:18000},
+  {id:'coin_eye',       name:'Eye of Truth',    preview:'👁️', desc:'Sees all — the all-seeing wager',         price:22000},
+  {id:'coin_rose',      name:'Rose Coin',       preview:'🌹', desc:'Elegant thorny rose token',                price:16000},
+  {id:'coin_trophy',    name:'Trophy',          preview:'🏆', desc:'Only winners carry this',                  price:30000},
+  {id:'coin_volcano',   name:'Volcano Token',   preview:'🌋', desc:'Explosive molten reward',                  price:35000},
+  {id:'coin_snowflake', name:'Snowflake',        preview:'❄️', desc:'Ice cold calculated winnings',            price:20000},
+  {id:'coin_sun',       name:'Solar Coin',      preview:'☀️', desc:'Bright blazing energy currency',          price:28000},
+  {id:'coin_comet',     name:'Comet',           preview:'☄️', desc:'Blazing fast — get paid instantly',        price:32000},
+  {id:'coin_spider',    name:'Spider Chip',     preview:'🕷️', desc:'Spun from pure webbed gold',              price:38000},
+  {id:'coin_trident',   name:'Trident',         preview:'🔱', desc:'Command the seas of fortune',             price:45000},
+  {id:'coin_black',     name:'Blackout',        preview:'🖤', desc:'Pure darkness. Nothing to see here.',      price:55000},
+  {id:'coin_axe',       name:'Battle Axe',      preview:'🪓', desc:'Hack through your losses',                 price:60000},
+  {id:'coin_hypno',     name:'Hypno Coin',      preview:'🌀', desc:'Stare long enough, you believe you won',  price:70000},
+  {id:'coin_pixel',     name:'Pixel Coin',      preview:'🎮', desc:'8-bit retro arcade token',                 price:42000},
+  {id:'coin_dagger',    name:'Dagger',          preview:'🗡️', desc:'Sharp returns, sharper losses',           price:80000},
+  // LEGEND
+  {id:'coin_supernova', name:'SUPERNOVA',       preview:'💥', desc:'A dying star, reborn as your currency',   price:300000, tier:'legend'},
+  {id:'coin_draconus',  name:'DRACONUS',        preview:'🐉', desc:'Dragon-forged gold. Ancient & deadly.',   price:400000, tier:'legend'},
+  // MYTHIC
+  {id:'coin_eclipse',   name:'ECLIPSE TOKEN',   preview:'🌒', desc:'Minted during a total solar eclipse.',    price:700000, tier:'mythic'},
+  // DIVINE
+  {id:'coin_singularity',name:'SINGULARITY',    preview:'🌑', desc:'A coin that devours everything near it.', price:5000000, tier:'divine'},
+  {id:'coin_alpha',     name:'ALPHA CHIP',      preview:'🅰️', desc:'There is only one. You somehow have it.', price:10000000, tier:'divine'},
 ];
 
 const SHOP_AVATARS = [
@@ -240,6 +342,42 @@ const SHOP_AVATARS = [
   {id:'av_immortal',   name:'IMMORTAL',        preview:'♾️', desc:'Has never lost. Will never lose.',         price:750000, tier:'mythic'},
   // DIVINE
   {id:'av_theone',     name:'THE ONE',         preview:'🌟', desc:'There is no description. You just know.',  price:1000000000000, tier:'divine'},
+  {id:'av_pirate',     name:'Sea Dog',         preview:'🏴‍☠️', desc:'Plunders every pot at the table',       price:15000},
+  {id:'av_clown',      name:'The Joker',       preview:'🤡', desc:'Nobody knows what he\'ll bet next',        price:18000},
+  {id:'av_cowboy',     name:'Lone Ranger',     preview:'🤠', desc:'Rides into every casino guns blazing',     price:20000},
+  {id:'av_ninja',      name:'Shadow Blade',    preview:'🥷', desc:'Vanishes before you see the win',          price:25000},
+  {id:'av_wolf',       name:'Lone Wolf',       preview:'🐺', desc:'Howls at the jackpot every night',         price:22000},
+  {id:'av_fox',        name:'Sly Fox',         preview:'🦊', desc:'Cunning, clever, never caught bluffing',   price:28000},
+  {id:'av_penguin',    name:'Cold Caller',     preview:'🐧', desc:'Ice cool. Never tilts. Always calls.',     price:20000},
+  {id:'av_bear',       name:'The Bear',        preview:'🐻', desc:'Hibernates between sessions, wins big',    price:25000},
+  {id:'av_panda',      name:'Lucky Panda',     preview:'🐼', desc:'Adorably dangerous at the blackjack table',price:22000},
+  {id:'av_octopus',    name:'Eight Arms',      preview:'🐙', desc:'Plays eight games at once somehow',        price:35000},
+  {id:'av_snake',      name:'The Viper',       preview:'🐍', desc:'Strikes fast. You\'ll never see it coming',price:30000},
+  {id:'av_eagle',      name:'Sky Hunter',      preview:'🦅', desc:'Spots the winning hand from a mile away',  price:40000},
+  {id:'av_unicorn',    name:'Unicorn',         preview:'🦄', desc:'Mythically lucky. Impossibly rare.',       price:50000},
+  {id:'av_witch',      name:'Dark Witch',      preview:'🧙‍♀️', desc:'Hexes opponents. Blesses her own cards.',price:55000},
+  {id:'av_knight',     name:'Iron Knight',     preview:'🧟', desc:'Undead and still collecting winnings',     price:48000},
+  {id:'av_astronaut',  name:'Space Cowboy',    preview:'👨‍🚀', desc:'Bets from the cosmos, wins in orbit',   price:60000},
+  {id:'av_hacker',     name:'Hackerman',       preview:'💻', desc:'Knows every card before it\'s dealt',      price:65000},
+  {id:'av_jester',     name:'Royal Jester',    preview:'🎭', desc:'Plays the fool — but always wins',         price:45000},
+  {id:'av_gladiator',  name:'Gladiator',       preview:'⚔️', desc:'Every game is a fight to the death',      price:70000},
+  {id:'av_monk',       name:'The Monk',        preview:'🧘', desc:'Transcends tilt. Pure mental fortitude.',  price:75000},
+  {id:'av_detective',  name:'The Detective',   preview:'🕵️', desc:'Always reads the opponent perfectly',     price:80000},
+  {id:'av_reaper',     name:'Grim Reaper',     preview:'💀', desc:'Your chips aren\'t safe anywhere',        price:100000},
+  {id:'av_mermaid',    name:'Deep Siren',      preview:'🧜', desc:'Lures opponents into bad bets beautifully',price:90000},
+  {id:'av_warlock',    name:'Warlock Prime',   preview:'🧝', desc:'Ancient magic + modern strategy',         price:110000},
+  // PREMIUM
+  {id:'av_overlord',   name:'Overlord',        preview:'😤', desc:'Rules every table with iron authority',   price:150000},
+  {id:'av_sentinel',   name:'Sentinel',        preview:'🛡️', desc:'Unbreakable defense, flawless patience', price:175000},
+  // LEGEND (new)
+  {id:'av_doomslayer',  name:'DOOMSLAYER',     preview:'🔥', desc:'Slays bad luck before it hits',          price:400000, tier:'legend'},
+  {id:'av_voidwalker',  name:'VOID WALKER',    preview:'🌑', desc:'Steps between dimensions to find the win',price:500000, tier:'legend'},
+  // MYTHIC (new)
+  {id:'av_archon',      name:'THE ARCHON',     preview:'🔱', desc:'Rules above gods. Answers to no one.',   price:800000, tier:'mythic'},
+  {id:'av_primalforce', name:'PRIMAL FORCE',   preview:'💥', desc:'The raw power of the universe, gambling.',price:950000, tier:'mythic'},
+  // DIVINE (new)
+  {id:'av_cosmos',      name:'COSMOS',         preview:'🌌', desc:'You are the universe. The casino is you.',price:5000000, tier:'divine'},
+  {id:'av_absolute',    name:'THE ABSOLUTE',   preview:'🔮', desc:'Beyond all limits. Beyond all others.',  price:10000000, tier:'divine'},
 ];
 
 // ════════════════════════════════════════════════
@@ -266,6 +404,22 @@ const DECK_THEMES = {
   blood_deck:    {redSuit:'#ff0000', blackSuit:'#880000', rankColor:'#ff4444', backGrad:'linear-gradient(135deg,#200000,#400000)',  rankBg:'rgba(255,0,0,.1)'},
   mythic_deck:   {redSuit:'#ff8800', blackSuit:'#cc44ff', rankColor:'#ffdd44', backGrad:'linear-gradient(135deg,#100008,#040010)',  rankBg:'rgba(200,100,255,.08)'},
   divine_deck:   {redSuit:'#ffd700', blackSuit:'#ffffff', rankColor:'#ffd700', backGrad:'linear-gradient(135deg,#0a0800,#181400)',  rankBg:'rgba(255,215,0,.1)'},
+  // NEW DECK THEMES
+  sakura_deck:   {redSuit:'#ff99bb', blackSuit:'#cc6688', rankColor:'#ffbbdd', backGrad:'linear-gradient(135deg,#1a0010,#2a0020)',  rankBg:'rgba(255,150,200,.06)'},
+  toxic_deck:    {redSuit:'#39ff14', blackSuit:'#22cc00', rankColor:'#88ff44', backGrad:'linear-gradient(135deg,#001400,#002800)',  rankBg:'rgba(57,255,20,.08)'},
+  ocean_deck:    {redSuit:'#00bbdd', blackSuit:'#006688', rankColor:'#44ddff', backGrad:'linear-gradient(135deg,#000a10,#001828)',  rankBg:'rgba(0,180,220,.06)'},
+  cyber_deck:    {redSuit:'#cccccc', blackSuit:'#888888', rankColor:'#ffffff', backGrad:'linear-gradient(135deg,#050508,#0a0a10)',  rankBg:'rgba(200,200,220,.06)'},
+  desert_deck:   {redSuit:'#cc8833', blackSuit:'#886622', rankColor:'#ffaa55', backGrad:'linear-gradient(135deg,#1a0e00,#2e1800)',  rankBg:'rgba(200,130,50,.06)'},
+  lava_deck:     {redSuit:'#ff4400', blackSuit:'#cc2200', rankColor:'#ff8833', backGrad:'linear-gradient(135deg,#1a0200,#300800)',  rankBg:'rgba(255,60,0,.08)'},
+  storm_deck:    {redSuit:'#aabbff', blackSuit:'#556699', rankColor:'#ddeeFF', backGrad:'linear-gradient(135deg,#010510,#020a18)',  rankBg:'rgba(100,130,255,.06)'},
+  casino_deck:   {redSuit:'#cc0000', blackSuit:'#006600', rankColor:'#ffd700', backGrad:'linear-gradient(135deg,#012a01,#041804)',  rankBg:'rgba(0,100,0,.08)'},
+  haunted_deck:  {redSuit:'#ff8800', blackSuit:'#440066', rankColor:'#ffaa33', backGrad:'linear-gradient(135deg,#100005,#1a0030)',  rankBg:'rgba(150,0,100,.06)'},
+  chrome_deck:   {redSuit:'#eeeeee', blackSuit:'#aaaaaa', rankColor:'#ffffff', backGrad:'linear-gradient(135deg,#080808,#141414)',  rankBg:'rgba(220,220,220,.05)'},
+  nuke_deck:     {redSuit:'#ffcc00', blackSuit:'#ff6600', rankColor:'#ffee44', backGrad:'linear-gradient(135deg,#1a0e00,#2a1400)',  rankBg:'rgba(255,180,0,.08)'},
+  reaper_deck:   {redSuit:'#cc00cc', blackSuit:'#440044', rankColor:'#ff44ff', backGrad:'linear-gradient(135deg,#0a000a,#180018)',  rankBg:'rgba(200,0,200,.08)'},
+  titan_deck:    {redSuit:'#886633', blackSuit:'#554422', rankColor:'#bbaa77', backGrad:'linear-gradient(135deg,#100a00,#1e1200)',  rankBg:'rgba(140,100,50,.06)'},
+  cosmos_deck:   {redSuit:'#ff66ff', blackSuit:'#4466ff', rankColor:'#ffaaff', backGrad:'linear-gradient(135deg,#02000a,#06000e)',  rankBg:'rgba(200,100,255,.06)'},
+  genesis_deck:  {redSuit:'#00ffaa', blackSuit:'#0088ff', rankColor:'#ffffff', backGrad:'linear-gradient(135deg,#000a06,#000510)',  rankBg:'rgba(0,255,180,.08)'},
 };
 
 function getDeckTheme(){
@@ -295,19 +449,62 @@ function rand(min,max){return Math.floor(Math.random()*(max-min+1))+min;}
 function showMsg(id,text,type){const el=document.getElementById(id);if(!el)return;el.textContent=text;el.className='msg '+type;}
 function clearMsg(id){const el=document.getElementById(id);if(!el)return;el.className='msg';el.textContent='';}
 function setLoading(id,loading,label){const b=document.getElementById(id);if(!b)return;b.disabled=loading;const t=b.querySelector('.btn-text');if(t)t.textContent=loading?'Please wait...':label;}
+function fmtNum(n,suffix,div){return (n/div).toFixed(2).replace(/\.?0+$/,'')+suffix;}
 function fmtCoins(n){
   n=Number(n);
-  if(n>=1e12)  return (n/1e12).toFixed(n%1e12===0?0:2).replace(/\.?0+$/,'')+'T';
-  if(n>=1e9)   return (n/1e9).toFixed(n%1e9===0?0:2).replace(/\.?0+$/,'')+'B';
-  if(n>=1e6)   return (n/1e6).toFixed(n%1e6===0?0:2).replace(/\.?0+$/,'')+'M';
-  if(n>=1e5)   return (n/1e3).toFixed(n%1e3===0?0:1).replace(/\.?0+$/,'')+'K';
+  if(!isFinite(n)) return '∞';
+  if(n>=1e303) return fmtNum(n,'Ce',1e300);   // Centillion
+  if(n>=1e123) return fmtNum(n,'Sg',1e120);   // Sexagintillion
+  if(n>=1e120) return fmtNum(n,'Sx',1e120);   // Sexvigintillion (10^120, rough)
+  if(n>=1e102) return fmtNum(n,'Td',1e102);   // Trigintaduillion (10^102)
+  if(n>=1e99)  return fmtNum(n,'Du',1e99);    // Duotrigintillion (Googol range)
+  if(n>=1e96)  return fmtNum(n,'Ug',1e96);    // Untrigintillion
+  if(n>=1e93)  return fmtNum(n,'Tg',1e93);    // Trigintillion
+  if(n>=1e90)  return fmtNum(n,'Ng',1e90);    // Novemvigintillion
+  if(n>=1e87)  return fmtNum(n,'Og',1e87);    // Octovigintillion
+  if(n>=1e84)  return fmtNum(n,'Sv',1e84);    // Septemvigintillion
+  if(n>=1e81)  return fmtNum(n,'Xv',1e81);    // Sexvigintillion
+  if(n>=1e78)  return fmtNum(n,'Qv',1e78);    // Quinvigintillion
+  if(n>=1e75)  return fmtNum(n,'Qv',1e75);    // Quattuorvigintillion
+  if(n>=1e72)  return fmtNum(n,'Tv',1e72);    // Trevigintillion
+  if(n>=1e69)  return fmtNum(n,'Dv',1e69);    // Duovigintillion
+  if(n>=1e66)  return fmtNum(n,'Uv',1e66);    // Unvigintillion
+  if(n>=1e63)  return fmtNum(n,'Vg',1e63);    // Vigintillion
+  if(n>=1e60)  return fmtNum(n,'NV',1e60);    // Novemdecillion
+  if(n>=1e57)  return fmtNum(n,'OD',1e57);    // Octodecillion
+  if(n>=1e54)  return fmtNum(n,'SD',1e54);    // Septendecillion
+  if(n>=1e51)  return fmtNum(n,'SxD',1e51);   // Sexdecillion
+  if(n>=1e48)  return fmtNum(n,'QnD',1e48);   // Quindecillion
+  if(n>=1e45)  return fmtNum(n,'QdD',1e45);   // Quattuordecillion
+  if(n>=1e42)  return fmtNum(n,'TrD',1e42);   // Tredecillion
+  if(n>=1e39)  return fmtNum(n,'DuD',1e39);   // Duodecillion
+  if(n>=1e36)  return fmtNum(n,'UdD',1e36);   // Undecillion
+  if(n>=1e33)  return fmtNum(n,'De',1e33);    // Decillion
+  if(n>=1e30)  return fmtNum(n,'No',1e30);    // Nonillion
+  if(n>=1e27)  return fmtNum(n,'Oc',1e27);    // Octillion
+  if(n>=1e24)  return fmtNum(n,'Sp',1e24);    // Septillion
+  if(n>=1e21)  return fmtNum(n,'Sx',1e21);    // Sextillion
+  if(n>=1e18)  return fmtNum(n,'Qi',1e18);    // Quintillion
+  if(n>=1e15)  return fmtNum(n,'Q',1e15);     // Quadrillion
+  if(n>=1e12)  return fmtNum(n,'T',1e12);     // Trillion
+  if(n>=1e9)   return fmtNum(n,'B',1e9);      // Billion
+  if(n>=1e6)   return fmtNum(n,'M',1e6);      // Million
+  if(n>=1e5)   return fmtNum(n,'K',1e3);      // Thousand
   return n.toLocaleString();
 }
 function fmtPrice(n){
   n=Number(n);
-  if(n>=1e12)  return (n/1e12).toFixed(n%1e12===0?0:2).replace(/\.?0+$/,'')+'T';
-  if(n>=1e9)   return (n/1e9).toFixed(n%1e9===0?0:2).replace(/\.?0+$/,'')+'B';
-  if(n>=1e6)   return (n/1e6).toFixed(n%1e6===0?0:2).replace(/\.?0+$/,'')+'M';
+  if(!isFinite(n)) return '∞';
+  if(n>=1e303) return fmtNum(n,'Ce',1e300);
+  if(n>=1e120) return fmtNum(n,'Sx',1e120);
+  if(n>=1e99)  return fmtNum(n,'Du',1e99);
+  if(n>=1e63)  return fmtNum(n,'Vg',1e63);
+  if(n>=1e33)  return fmtNum(n,'De',1e33);
+  if(n>=1e18)  return fmtNum(n,'Qi',1e18);
+  if(n>=1e15)  return fmtNum(n,'Q',1e15);
+  if(n>=1e12)  return fmtNum(n,'T',1e12);
+  if(n>=1e9)   return fmtNum(n,'B',1e9);
+  if(n>=1e6)   return fmtNum(n,'M',1e6);
   return n.toLocaleString();
 }
 function fmtTime(ms){const s=Math.floor(ms/1000),m=Math.floor(s/60),h=Math.floor(m/60);return h>0?h+'h '+(m%60)+'m':m>0?m+'m '+(s%60)+'s':s+'s';}
@@ -446,10 +643,10 @@ async function addGame(){
 function refreshCoinDisplays(){
   const c    = fmtCoins(userData.coins||0);
   const icon = coinSymbol;
-  ['user-coins','game-coins','lb-coins','ach-coins','shop-coins','spin-coins','stats-coins','sug-coins','gs-coins','send-coins','cred-coins'].forEach(id=>{
+  ['user-coins','game-coins','lb-coins','ach-coins','shop-coins','spin-coins','stats-coins','sug-coins','gs-coins','send-coins','cred-coins','bank-coins','beg-coins'].forEach(id=>{
     const el=document.getElementById(id); if(el) el.textContent=c;
   });
-  ['nav-coin-icon','game-coin-icon','lb-coin-icon','ach-coin-icon','shop-coin-icon','spin-coin-icon','stats-coin-icon','sug-coin-icon','gs-coin-icon','send-coin-icon','cred-coin-icon'].forEach(id=>{
+  ['nav-coin-icon','game-coin-icon','lb-coin-icon','ach-coin-icon','shop-coin-icon','spin-coin-icon','stats-coin-icon','sug-coin-icon','gs-coin-icon','send-coin-icon','cred-coin-icon','bank-coin-icon','beg-coin-icon'].forEach(id=>{
     const el=document.getElementById(id); if(el) el.textContent=icon;
   });
 }
@@ -457,7 +654,15 @@ function refreshCoinDisplays(){
 function checkBailoutLive(){
   const b=document.getElementById('bailout-banner');
   if(!b) return;
-  b.style.display=((userData.coins||0)<500&&!userData.bailoutUsed)?'block':'none';
+  const coins=userData.coins||0;
+  // Auto-give 1000 coins if under 100
+  if(coins<100&&currentUser){
+    const newCoins=coins+1000;
+    saveUserData({coins:newCoins}).then(()=>{
+      toast('💰 Auto-refill! +1,000 coins (you had under 100)');
+    });
+  }
+  b.style.display=(coins<500&&!userData.bailoutUsed)?'block':'none';
 }
 // keep old name as alias for backward compat
 function checkBailout(){ checkBailoutLive(); }
@@ -516,12 +721,37 @@ function showScreen(id){
   if(id==='globalstats')  renderGlobalStats();
   if(id==='suggestions')  initSuggestions();
   if(id==='send')         initSendCoins();
-  if(id==='lobby')        checkBailoutLive();
+  if(id==='bank')         initBank();
+  if(id==='begging')      initBegging();
+  if(id==='lobby')        { checkBailoutLive(); showLobbyTab('main'); }
   playSound('click');
 }
 
+function showLobbyTab(tab){
+  playSound('click');
+  const main=document.getElementById('lobby-tab-main');
+  const games=document.getElementById('lobby-tab-games');
+  const btnMain=document.getElementById('nav-main-btn');
+  const btnGames=document.getElementById('nav-games-btn');
+  if(!main||!games) return;
+  if(tab==='games'){
+    main.style.display='none'; games.style.display='block';
+    if(btnMain) btnMain.classList.remove('active-nav');
+    if(btnGames) btnGames.classList.add('active-nav');
+  } else {
+    main.style.display='block'; games.style.display='none';
+    if(btnMain) btnMain.classList.add('active-nav');
+    if(btnGames) btnGames.classList.remove('active-nav');
+  }
+}
+
+let lastLobbyTab='main';
+
 function showGame(name){
   currentGame=name;
+  // detect which lobby tab was active before going into a game
+  const gamesTab=document.getElementById('lobby-tab-games');
+  lastLobbyTab=(gamesTab&&gamesTab.style.display==='block')?'games':'main';
   showScreen('game');
   const c=document.getElementById('game-container');
   c.innerHTML='';
@@ -529,17 +759,15 @@ function showGame(name){
     slots:buildSlots, blackjack:buildBlackjack, roulette:buildRoulette, plinko:buildPlinko,
     poker:buildPoker, dice:buildDice, scratch:buildScratch, ridebus:buildRideBus, gofish:buildGoFish,
     flappy:buildFlappy, coinflip:buildCoinFlip, minesweeper:buildMinesweeper,
-    horserace:buildHorseRace, higherlow:buildHigherLow, wheelfortune:buildWheelFortune,
-    tictactoe:buildTicTacToe
+    horserace:buildHorseRace, higherlow:buildHigherLow, wheelfortune:buildWheelFortune
   };
   if(games[name]) games[name](c);
 }
 
-// ════════════════════════════════════════════════
-// BET PANEL
-// ════════════════════════════════════════════════
 function lockBets(locked){
   document.querySelectorAll('.bet-opt').forEach(b=>b.disabled=locked);
+  const ci=document.getElementById('custom-bet-input');
+  if(ci) ci.disabled=locked;
 }
 function buildBetPanel(container){
   const opts=[100,500,1000,5000,10000];
@@ -547,15 +775,34 @@ function buildBetPanel(container){
   div.className='bet-panel';
   div.innerHTML=`<span class="bet-label">Bet</span><div class="bet-btns">${
     opts.map(o=>`<button class="bet-opt${o===currentBet?' active':''}" onclick="setBet(${o},this)">${fmtCoins(o)}</button>`).join('')
-  }<button class="bet-opt" onclick="setBet('all',this)">ALL IN</button></div><span class="current-bet" id="current-bet-display">Bet: ${coinSymbol} ${fmtCoins(currentBet)}</span>`;
+  }<button class="bet-opt" onclick="setBet('all',this)">ALL IN</button></div>
+  <div style="display:flex;align-items:center;gap:8px;margin-top:6px;">
+    <span style="font-size:.72rem;color:var(--muted);white-space:nowrap;">Custom:</span>
+    <input id="custom-bet-input" type="number" min="1" placeholder="Custom amount..." style="flex:1;min-width:0;background:rgba(0,0,50,.5);border:1px solid var(--border);border-radius:6px;color:#fff;font-size:.8rem;padding:5px 8px;font-family:Montserrat;" oninput="setCustomBet(this)"/>
+  </div>
+  <span class="current-bet" id="current-bet-display">Bet: ${coinSymbol} ${fmtCoins(currentBet)}</span>`;
   container.appendChild(div);
 }
 
 function setBet(amount, btn){
-  if(amount==='all') currentBet=Math.max(100,userData.coins||100);
+  if(amount==='all') currentBet=Math.max(1,userData.coins||1);
   else currentBet=Math.min(amount, userData.coins||amount);
+  currentBet=Math.max(1,currentBet);
   document.querySelectorAll('.bet-opt').forEach(b=>b.classList.remove('active'));
   if(btn) btn.classList.add('active');
+  const ci=document.getElementById('custom-bet-input');
+  if(ci) ci.value='';
+  const d=document.getElementById('current-bet-display');
+  if(d) d.textContent='Bet: '+coinSymbol+' '+fmtCoins(currentBet);
+}
+
+function setCustomBet(input){
+  let val=parseInt(input.value)||0;
+  const max=userData.coins||0;
+  if(val>max){val=max;input.value=val;}
+  if(val<1) return;
+  currentBet=val;
+  document.querySelectorAll('.bet-opt').forEach(b=>b.classList.remove('active'));
   const d=document.getElementById('current-bet-display');
   if(d) d.textContent='Bet: '+coinSymbol+' '+fmtCoins(currentBet);
 }
@@ -666,7 +913,7 @@ function buildSlots(c){
       if(payout>=10000) unlockAchievement('big_win');
     } else {
       trackLoss(betAmt);
-      rb.textContent='😔 '+reels.join(' ')+' · No match. Try again!';
+      rb.textContent='😔 '+reels.join(' ')+' · No match. Lost '+fmtCoins(betAmt)+' coins.';
       rb.className='result-banner lose'; playSound('lose'); recordResult(false);
     }
     spinning=false; setLoading('spin-slots-btn',false,'Spin'); lockBets(false);
@@ -717,23 +964,28 @@ function buildBlackjack(c){
 
   async function endGame(result, msg){
     gameActive=false; renderHands(false);
-    const rb=document.getElementById('bj-result'); rb.textContent=msg;
     ['bj-hit','bj-stand','bj-double'].forEach(id=>document.getElementById(id).disabled=true);
     document.getElementById('bj-deal').disabled=false; lockBets(false);
+    const rb=document.getElementById('bj-result');
     if(result==='win'){
+      const payout=betAmt*2;
+      rb.textContent=msg+' +'+fmtCoins(payout)+' returned! (net +'+fmtCoins(betAmt)+')';
       rb.className='result-banner win';
-      await addCoins(betAmt*2,'Blackjack');
+      await addCoins(payout,'Blackjack');
       await recordResult(true); playSound('win');
     } else if(result==='blackjack'){
       const payout=Math.floor(betAmt*2.5);
+      rb.textContent=msg+' +'+fmtCoins(payout)+' returned! (net +'+fmtCoins(payout-betAmt)+')';
       rb.className='result-banner win';
       await addCoins(payout,'Blackjack!');
       await recordResult(true); playSound('bigwin'); unlockAchievement('blackjack');
     } else if(result==='push'){
+      rb.textContent=msg+' Bet of '+fmtCoins(betAmt)+' returned.';
       rb.className='result-banner push';
       await addCoins(betAmt,'Push');
       await recordResult(false); playSound('click');
     } else {
+      rb.textContent=msg+' Lost '+fmtCoins(betAmt)+' coins.';
       rb.className='result-banner lose';
       await trackLoss(betAmt);
       await recordResult(false); playSound('lose');
@@ -871,15 +1123,16 @@ function buildRoulette(c){
         const rb=document.getElementById('rl-result');
         if(mult>0){
           const payout=betAmt*mult;
+          const netGain=payout-betAmt;
           addCoins(payout,'Roulette');
-          rb.textContent='🎉 Landed '+landed+'! '+selectedBet.label+' · +'+fmtCoins(payout)+' coins!';
+          rb.textContent='🎉 Landed '+landed+'! '+selectedBet.label+' · +'+fmtCoins(payout)+' returned! (net +'+fmtCoins(netGain)+')';
           rb.className='result-banner win';
           playSound(payout>=5000?'bigwin':'win'); recordResult(true);
           if(landed===0) unlockAchievement('roulette_0');
           if(payout>=10000) unlockAchievement('big_win');
         } else {
           trackLoss(betAmt);
-          rb.textContent='😔 Landed '+landed+'. '+selectedBet.label+' loses.';
+          rb.textContent='😔 Landed '+landed+'. '+selectedBet.label+' loses. Lost '+fmtCoins(betAmt)+' coins.';
           rb.className='result-banner lose'; playSound('lose'); recordResult(false);
         }
         spinning=false; setLoading('rl-spin-btn',false,'Spin'); lockBets(false);
@@ -935,7 +1188,7 @@ function buildPlinko(c){
     document.querySelectorAll('.pm').forEach(e=>e.style.background='');
     const betAmt=currentBet;
     await saveUserData({coins:(userData.coins||0)-betAmt});
-    dropping=true; playSound('spin');
+    dropping=true; lockBets(true); playSound('spin');
     let bx=PW/2+(Math.random()-0.5)*20, by=15, vx=(Math.random()-0.5)*1.5, vy=0;
     const GRAVITY=0.35, BOUNCE_DAMP=0.55, PEG_RADIUS=14, BALL_R=11; let pegCooldown=0;
     function step(){
@@ -952,7 +1205,8 @@ function buildPlinko(c){
         const rb=document.getElementById('pk-result');
         if(mult>=1){
           addCoins(payout,'Plinko');
-          rb.textContent='🎉 '+mult+'x · +'+fmtCoins(payout)+' coins returned!';
+          const netGain = payout - betAmt;
+          rb.textContent='🎉 '+mult+'x · +'+fmtCoins(payout)+' returned! (net +'+fmtCoins(netGain)+')';
           rb.className='result-banner win';
           playSound(mult>=5?'bigwin':'win'); recordResult(true);
           if(mult===Math.max(...MULTS)) unlockAchievement('plinko_max');
@@ -960,10 +1214,10 @@ function buildPlinko(c){
         } else {
           if(payout>0) addCoins(payout,'Plinko partial');
           trackLoss(betAmt - payout);
-          rb.textContent='😔 '+mult+'x · Only '+fmtCoins(payout)+' of '+fmtCoins(betAmt)+' returned.';
+          rb.textContent='😔 '+mult+'x · Only '+fmtCoins(payout)+' of '+fmtCoins(betAmt)+' returned. (lost '+fmtCoins(betAmt-payout)+')';
           rb.className='result-banner lose'; playSound('lose'); recordResult(false);
         }
-        dropping=false; document.getElementById('pk-drop-btn').disabled=false;
+        dropping=false; lockBets(false); document.getElementById('pk-drop-btn').disabled=false;
         return;
       }
       requestAnimationFrame(step);
@@ -1035,6 +1289,7 @@ function buildPoker(c){
     document.getElementById('poker-result').className='result-banner';
     document.getElementById('poker-deal-btn').disabled=true;
     document.getElementById('poker-draw-btn').disabled=false;
+    lockBets(true);
     playSound('deal');
   };
   window.pokerDraw=async function(){
@@ -1042,18 +1297,20 @@ function buildPoker(c){
     held=[false,false,false,false,false]; dealt=false; renderHand(); playSound('deal');
     document.getElementById('poker-draw-btn').disabled=true;
     document.getElementById('poker-deal-btn').disabled=false;
+    lockBets(false);
     const result=evalHand(hand); const rb=document.getElementById('poker-result');
     if(result.mult>0){
       const payout=betAmt*result.mult;
+      const netGain = payout - betAmt;
       await addCoins(payout,'Video Poker');
-      rb.textContent='🎉 '+result.name+'! +'+fmtCoins(payout)+' coins!';
+      rb.textContent='🎉 '+result.name+'! +'+fmtCoins(payout)+' returned! (net +'+fmtCoins(netGain)+')';
       rb.className='result-banner win';
       playSound(result.mult>=25?'bigwin':'win'); await recordResult(true);
       if(result.name==='Royal Flush'){unlockAchievement('poker_royal');toast('👑 ROYAL FLUSH!');}
       if(payout>=10000) unlockAchievement('big_win');
     } else {
       await trackLoss(betAmt);
-      rb.textContent='😔 '+result.name+'. No win — deal again!';
+      rb.textContent='😔 '+result.name+'. Lost '+fmtCoins(betAmt)+'. Deal again!';
       rb.className='result-banner lose'; playSound('lose'); await recordResult(false);
     }
   };
@@ -1113,12 +1370,12 @@ function buildDice(c){
         if(won){
           const payout=betAmt*mult;
           await addCoins(payout,'Dice');
-          rb.textContent='🎉 Rolled '+DICE_FACES[d1]+' '+d1+'! '+mult+'x · +'+fmtCoins(payout)+' coins!';
+          rb.textContent='🎉 Rolled '+DICE_FACES[d1]+' '+d1+'! '+mult+'x · +'+fmtCoins(payout)+' returned! (net +'+fmtCoins(payout-betAmt)+')';
           rb.className='result-banner win'; playSound('win'); await recordResult(true);
           if(payout>=10000) unlockAchievement('big_win');
         } else {
           await trackLoss(betAmt);
-          rb.textContent='😔 Rolled '+DICE_FACES[d1]+' '+d1+'. No match.';
+          rb.textContent='😔 Rolled '+DICE_FACES[d1]+' '+d1+'. No match. Lost '+fmtCoins(betAmt)+' coins.';
           rb.className='result-banner lose'; playSound('lose'); await recordResult(false);
         }
         rolling=false; setLoading('dice-roll-btn',false,'Roll'); lockBets(false);
@@ -1171,8 +1428,12 @@ function buildScratch(c){
       }while(attempts<30);
     }
   }
+  function isComplete(){return symGrid.length>0&&symGrid.every(s=>s.scratched);}
   function drawCard(){
     ctx.clearRect(0,0,360,360); ctx.fillStyle='#07071a'; ctx.fillRect(0,0,360,360);
+    // Only show winner highlights when all tiles are revealed
+    const complete=isComplete();
+    const counts={}; if(complete) symGrid.forEach(s=>{counts[s.sym]=(counts[s.sym]||0)+1;});
     for(let i=0;i<9;i++){
       const x=(i%3)*120+60, y=Math.floor(i/3)*120+60;
       if(!symGrid[i]||!symGrid[i].scratched){
@@ -1184,8 +1445,7 @@ function buildScratch(c){
         ctx.fillStyle='rgba(100,120,255,.6)'; ctx.font='bold 32px Montserrat';
         ctx.textAlign='center'; ctx.textBaseline='middle'; ctx.fillText('?',x,y);
       } else {
-        const counts={}; symGrid.forEach(s=>{counts[s.sym]=(counts[s.sym]||0)+1;});
-        const isWinner=counts[symGrid[i].sym]>=3;
+        const isWinner=complete&&counts[symGrid[i].sym]>=3;
         ctx.beginPath(); ctx.roundRect(x-50,y-50,100,100,12);
         ctx.fillStyle=isWinner?'rgba(0,80,0,.45)':'rgba(6,6,20,.85)'; ctx.fill();
         ctx.strokeStyle=isWinner?'rgba(0,255,100,.55)':'rgba(0,0,255,.25)'; ctx.lineWidth=2; ctx.stroke();
@@ -1196,12 +1456,15 @@ function buildScratch(c){
   }
   window.newScratch=async function(){
     if((userData.coins||0)<currentBet){toast('Not enough coins!');return;}
-    await saveUserData({coins:(userData.coins||0)-currentBet});
+    const betAmt=currentBet;
+    await saveUserData({coins:(userData.coins||0)-betAmt});
     genCard(); document.getElementById('sc-result').className='result-banner';
     cardPaid=true;
     const revBtn=document.getElementById('sc-reveal-btn');
     if(revBtn) revBtn.disabled=false;
-    drawCard(); scratching=true; playSound('click');
+    drawCard(); scratching=true; lockBets(true); playSound('click');
+    // Store betAmt for checkScratch
+    canvas._betAmt=betAmt;
   };
   window.revealAll=function(){
     if(!cardPaid){toast('Buy a card first!');return;}
@@ -1209,6 +1472,7 @@ function buildScratch(c){
     symGrid.forEach(s=>s.scratched=true); drawCard(); scratching=false; cardPaid=false;
     const revBtn=document.getElementById('sc-reveal-btn');
     if(revBtn) revBtn.disabled=true;
+    lockBets(false);
     checkScratch();
   };
   function scratch(e){
@@ -1224,6 +1488,9 @@ function buildScratch(c){
         scratching=false; cardPaid=false;
         const revBtn=document.getElementById('sc-reveal-btn');
         if(revBtn) revBtn.disabled=true;
+        lockBets(false);
+        // Redraw to show highlights now that complete
+        drawCard();
         checkScratch();
       }
     }
@@ -1232,19 +1499,27 @@ function buildScratch(c){
   canvas.addEventListener('touchmove',e=>{e.preventDefault();scratch(e);},{passive:false});
   canvas.addEventListener('click',scratch);
   async function checkScratch(){
+    const betAmt=canvas._betAmt||currentBet;
     const counts={}; symGrid.forEach(s=>{counts[s.sym]=(counts[s.sym]||0)+1;});
-    const winSym=Object.keys(counts).find(k=>counts[k]>=3);
+    // Find the winning symbol with the HIGHEST multiplier (not just first found)
+    let winSym=null; let bestMult=0;
+    Object.keys(counts).forEach(sym=>{
+      if(counts[sym]>=3){
+        const m=PRIZE_MULTS[sym]||2;
+        if(m>bestMult){bestMult=m;winSym=sym;}
+      }
+    });
     const rb=document.getElementById('sc-result');
     if(winSym){
-      const mult=PRIZE_MULTS[winSym]||2, payout=currentBet*mult;
+      const payout=betAmt*bestMult;
       await addCoins(payout,'Scratch Card');
-      rb.textContent='🎉 3x '+winSym+'! '+mult+'x · +'+fmtCoins(payout)+' coins!';
+      rb.textContent='🎉 3x '+winSym+'! '+bestMult+'x · +'+fmtCoins(payout)+' returned! (net +'+fmtCoins(payout-betAmt)+')';
       rb.className='result-banner win'; playSound(payout>=5000?'bigwin':'win');
       await recordResult(true); unlockAchievement('scratch_3');
       if(payout>=10000) unlockAchievement('big_win');
     } else {
-      await trackLoss(currentBet);
-      rb.textContent='😔 No 3-of-a-kind. Better luck next time!';
+      await trackLoss(betAmt);
+      rb.textContent='😔 No 3-of-a-kind. Lost '+fmtCoins(betAmt)+' coins.';
       rb.className='result-banner lose'; playSound('lose'); await recordResult(false);
     }
   }
@@ -1312,6 +1587,7 @@ function buildRideBus(c){
     cardHistory=[]; stage=0; active=true; winnings=betAmt*2;
     document.getElementById('bus-result').className='result-banner';
     document.getElementById('bus-start-btn').style.display='none';
+    lockBets(true);
     renderCards(); updateChoices(); playSound('deal');
   };
   window.busGuess=async function(choice){
@@ -1347,25 +1623,27 @@ function buildRideBus(c){
       if(stage===4){
         // Full completion — payout the full winnings
         await addCoins(winnings,'Ride the Bus');
-        rb.textContent='🎉 You rode the full bus! Won '+fmtCoins(winnings)+' coins!';
+        rb.textContent='🎉 You rode the full bus! Won +'+fmtCoins(winnings)+' coins! (bet was '+fmtCoins(betAmt)+')';
         active=false;
         document.getElementById('bus-choices').innerHTML='';
         document.getElementById('bus-question').textContent='You won! 🎉';
         document.getElementById('bus-cashout-btn').style.display='none';
         document.getElementById('bus-start-btn').style.display='block';
         document.getElementById('bus-streak').textContent='Stage: 4/4 · Won: '+coinSymbol+' '+fmtCoins(winnings);
+        lockBets(false);
         await recordResult(true); unlockAchievement('bus_5');
         if(winnings>=10000) unlockAchievement('big_win'); playSound('bigwin');
       } else { updateChoices(); }
     } else {
       await trackLoss(betAmt);
-      rb.textContent='❌ Wrong! Card was '+card.rank+card.suit+'. You lose.';
+      rb.textContent='❌ Wrong! Card was '+card.rank+card.suit+'. Lost '+fmtCoins(betAmt)+' coins.';
       rb.className='result-banner lose'; playSound('lose'); active=false;
       document.getElementById('bus-choices').innerHTML='';
       document.getElementById('bus-question').textContent='Better luck next time!';
       document.getElementById('bus-cashout-btn').style.display='none';
       document.getElementById('bus-start-btn').style.display='block';
       document.getElementById('bus-streak').textContent='Stage: '+stage+'/4 · Lost it all!';
+      lockBets(false);
       await recordResult(false);
     }
   };
@@ -1380,6 +1658,7 @@ function buildRideBus(c){
     document.getElementById('bus-question').textContent='';
     document.getElementById('bus-cashout-btn').style.display='none';
     document.getElementById('bus-start-btn').style.display='block';
+    lockBets(false);
     playSound('win'); await recordResult(true);
   };
 }
@@ -1437,25 +1716,37 @@ function buildGoFish(c){
       </div>`;
     }).join('');
     document.getElementById('gf-selected-label').textContent=selectedRank?'Asking for: '+selectedRank+'s':'Select a card to ask for that rank.';
+    // Update ask button state
+    const askBtn=document.getElementById('gf-ask-btn');
+    if(askBtn){
+      if(gameActive&&playerTurn&&playerHand.length===0){
+        askBtn.disabled=false;
+        askBtn.querySelector('.btn-text').textContent='Draw a Card';
+      } else if(gameActive&&playerTurn){
+        askBtn.disabled=false;
+        askBtn.querySelector('.btn-text').textContent='Ask CPU';
+      }
+    }
     if(gameActive&&deck.length===0&&playerHand.length===0&&cpuHand.length===0) endGame();
   }
   function endGame(){
     gameActive=false;
+    lockBets(false);
     const win=playerBooks.length>cpuBooks.length, tie=playerBooks.length===cpuBooks.length;
     const rb=document.getElementById('gf-result');
     if(win){
       const prize=betAmt*3;
       addCoins(prize,'Go Fish');
-      rb.textContent='🎉 You win! '+playerBooks.length+' books vs '+cpuBooks.length+' · +'+fmtCoins(prize)+' coins!';
+      rb.textContent='🎉 You win! '+playerBooks.length+' books vs '+cpuBooks.length+' · +'+fmtCoins(prize)+' coins! (net +'+fmtCoins(prize-betAmt)+')';
       rb.className='result-banner win'; playSound('bigwin'); recordResult(true);
       if(playerBooks.length>=1) unlockAchievement('fish_book');
     } else if(tie){
       addCoins(betAmt,'Go Fish tie');
-      rb.textContent='🤝 Tie! '+playerBooks.length+' books each · Bet returned.';
+      rb.textContent='🤝 Tie! '+playerBooks.length+' books each · Bet of '+fmtCoins(betAmt)+' returned.';
       rb.className='result-banner push'; playSound('click'); recordResult(false);
     } else {
       trackLoss(betAmt);
-      rb.textContent='😔 CPU wins. '+playerBooks.length+' vs '+cpuBooks.length+' books.';
+      rb.textContent='😔 CPU wins. '+playerBooks.length+' vs '+cpuBooks.length+' books. Lost '+fmtCoins(betAmt)+' coins.';
       rb.className='result-banner lose'; playSound('lose'); recordResult(false);
     }
     document.getElementById('gf-start-btn').style.display='block';
@@ -1471,11 +1762,23 @@ function buildGoFish(c){
     document.getElementById('gf-result').className='result-banner';
     document.getElementById('gf-start-btn').style.display='none';
     document.getElementById('gf-ask-btn').disabled=false;
+    lockBets(true);
     playSound('deal'); render('Game started! Pick a card rank and ask the CPU.');
   };
   window.selectFishCard=function(rank){if(!gameActive||!playerTurn)return;selectedRank=rank;render(null);playSound('click');};
   window.askCpu=async function(){
-    if(!gameActive||!selectedRank||!playerTurn) return;
+    if(!gameActive||!playerTurn) return;
+    if(playerHand.length===0){
+      // Player has no cards — draw from deck or end game
+      if(deck.length>0){
+        const drawn=deck.pop();playerHand.push(drawn);checkBooks(playerHand,playerBooks);
+        render('No cards in hand! Drew a '+drawn.rank+drawn.suit+'. Pick a card to ask for.');
+      } else {
+        render('No cards and deck is empty!');endGame();
+      }
+      return;
+    }
+    if(!selectedRank){toast('Select a card rank to ask for!');return;}
     document.getElementById('gf-ask-btn').disabled=true; playerTurn=false;
     const matches=cpuHand.filter(cd=>cd.rank===selectedRank); let msg='';
     if(matches.length>0){
@@ -1585,6 +1888,7 @@ function buildFlappy(c){
     document.getElementById('fl-cashout-btn').style.display='none';
     document.getElementById('fl-start-btn').style.display='block';
     document.getElementById('fl-mult-display').textContent='Multiplier: —';
+    lockBets(false);
     trackLoss(currentBet);
     playSound('lose'); recordResult(false);
   }
@@ -1597,6 +1901,7 @@ function buildFlappy(c){
     document.getElementById('fl-start-btn').style.display='none';
     document.getElementById('fl-cashout-btn').style.display='block';
     document.getElementById('fl-mult-display').textContent='Multiplier: 1x';
+    lockBets(true);
     betPlaced=true; initGame();
     startCountdown(()=>{gameRunning=true;animId=requestAnimationFrame(gameLoop);});
   };
@@ -1611,6 +1916,7 @@ function buildFlappy(c){
     document.getElementById('fl-cashout-btn').style.display='none';
     document.getElementById('fl-start-btn').style.display='block';
     document.getElementById('fl-mult-display').textContent='Multiplier: —';
+    lockBets(false);
     playSound(mult>=5?'bigwin':'win'); await recordResult(true);
     if(payout>=10000) unlockAchievement('big_win');
   };
@@ -1670,14 +1976,14 @@ function buildCoinFlip(c){
         if(streak>=7) mult=8; else if(streak>=5) mult=4; else if(streak>=3) mult=2.5;
         const payout=Math.floor(currentBet*mult);
         await addCoins(payout,'Coin Flip');
-        rb.textContent='🎉 '+result.toUpperCase()+'! '+mult+'x · +'+fmtCoins(payout)+' coins! Streak: '+streak;
+        rb.textContent='🎉 '+result.toUpperCase()+'! '+mult+'x · +'+fmtCoins(payout)+' returned! (net +'+fmtCoins(payout-currentBet)+') Streak: '+streak;
         rb.className='result-banner win'; playSound(streak>=3?'bigwin':'win'); await recordResult(true);
         if(payout>=10000) unlockAchievement('big_win');
         if(coinFlipWins>=10) unlockAchievement('coin_flip_10');
       } else {
         streak=0;
         await trackLoss(currentBet);
-        rb.textContent='😔 '+result.toUpperCase()+'! Bad luck. Streak reset.';
+        rb.textContent='😔 '+result.toUpperCase()+'! Lost '+fmtCoins(currentBet)+' coins. Streak reset.';
         rb.className='result-banner lose'; playSound('lose'); await recordResult(false);
       }
       document.getElementById('cf-streak').textContent='Streak: '+streak+(streak>=3?' 🔥':'');
@@ -1737,6 +2043,7 @@ function buildMinesweeper(c){
       rb.className='result-banner lose';
       document.getElementById('ms-cashout-btn').disabled=true;
       document.getElementById('ms-start-btn').disabled=false;
+      lockBets(false);
       await trackLoss(betAmt);
       playSound('lose'); await recordResult(false); tilesCleared=0;
     } else {
@@ -1747,10 +2054,11 @@ function buildMinesweeper(c){
       if(revealed===TOTAL-MINES){
         gameActive=false; const payout=Math.floor(betAmt*getMult(revealed));
         await addCoins(payout,'Minesweeper');
-        document.getElementById('ms-result').textContent='🎉 All safe tiles found! +'+fmtCoins(payout)+' coins!';
+        document.getElementById('ms-result').textContent='🎉 All safe tiles found! +'+fmtCoins(payout)+' coins! (net +'+fmtCoins(payout-betAmt)+')';
         document.getElementById('ms-result').className='result-banner win';
         document.getElementById('ms-cashout-btn').disabled=true;
         document.getElementById('ms-start-btn').disabled=false;
+        lockBets(false);
         playSound('bigwin'); await recordResult(true);
         if(payout>=10000) unlockAchievement('big_win');
       }
@@ -1766,6 +2074,7 @@ function buildMinesweeper(c){
     document.getElementById('ms-cashout-btn').disabled=true;
     document.getElementById('ms-start-btn').disabled=false;
     document.getElementById('ms-mult-display').textContent='Pick a tile!';
+    lockBets(true);
     renderGrid(); playSound('click');
   };
   window.mineCashout=async function(){
@@ -1773,11 +2082,12 @@ function buildMinesweeper(c){
     gameActive=false; const mult=getMult(revealed); const payout=Math.floor(betAmt*mult);
     await addCoins(payout,'Minesweeper');
     grid.forEach(c=>{if(c.mine)c.revealed=true;}); renderGrid();
-    document.getElementById('ms-result').textContent='💰 Cashed out! '+revealed+' tiles · '+mult+'x · +'+fmtCoins(payout)+' coins!';
+    document.getElementById('ms-result').textContent='💰 Cashed out! '+revealed+' tiles · '+mult+'x · +'+fmtCoins(payout)+' coins! (net +'+fmtCoins(payout-betAmt)+')';
     document.getElementById('ms-result').className='result-banner win';
     document.getElementById('ms-cashout-btn').disabled=true;
     document.getElementById('ms-start-btn').disabled=false;
     document.getElementById('ms-mult-display').textContent='—';
+    lockBets(false);
     playSound(mult>=5?'bigwin':'win'); await recordResult(true);
   };
   renderGrid();
@@ -1839,10 +2149,12 @@ function buildHorseRace(c){
     if(racing) return;
     if(picked===null){toast('Pick a horse first!');return;}
     if((userData.coins||0)<currentBet){toast('Not enough coins!');return;}
-    await saveUserData({coins:(userData.coins||0)-currentBet});
+    const betAmt=currentBet;
+    await saveUserData({coins:(userData.coins||0)-betAmt});
     racing=true; positions=[0,0,0,0,0];
     document.getElementById('hr-race-btn').disabled=true;
     document.getElementById('hr-result').className='result-banner';
+    lockBets(true);
     const totalWeight=HORSES.reduce((s,h)=>s+1/h.odds,0);
     let r=Math.random()*totalWeight; let winner=0;
     for(let i=0;i<HORSES.length;i++){r-=1/HORSES[i].odds;if(r<=0){winner=i;break;}}
@@ -1856,16 +2168,17 @@ function buildHorseRace(c){
         racing=false; cancelAnimationFrame(animId);
         const rb=document.getElementById('hr-result');
         if(finishedIdx===picked){
-          const payout=currentBet*HORSES[picked].odds;
+          const payout=betAmt*HORSES[picked].odds;
           addCoins(payout,'Horse Racing');
-          rb.textContent='🎉 '+HORSES[finishedIdx].name+' wins! '+HORSES[picked].odds+'x · +'+fmtCoins(payout)+' coins!';
+          rb.textContent='🎉 '+HORSES[finishedIdx].name+' wins! '+HORSES[picked].odds+'x · +'+fmtCoins(payout)+' coins! (net +'+fmtCoins(payout-betAmt)+')';
           rb.className='result-banner win'; playSound('bigwin'); recordResult(true);
           unlockAchievement('horse_win'); if(payout>=10000) unlockAchievement('big_win');
         } else {
-          trackLoss(currentBet);
-          rb.textContent='😔 '+HORSES[finishedIdx].name+' wins! Your horse '+HORSES[picked].name+' lost.';
+          trackLoss(betAmt);
+          rb.textContent='😔 '+HORSES[finishedIdx].name+' wins! Your horse '+HORSES[picked].name+' lost. Lost '+fmtCoins(betAmt)+' coins.';
           rb.className='result-banner lose'; playSound('lose'); recordResult(false);
         }
+        lockBets(false);
         document.getElementById('hr-race-btn').disabled=false; return;
       }
       animId=requestAnimationFrame(raceLoop);
@@ -1921,6 +2234,7 @@ function buildHigherLow(c){
     ['hl-higher-btn','hl-lower-btn'].forEach(id=>document.getElementById(id).disabled=false);
     document.getElementById('hl-cashout-btn').disabled=true;
     document.getElementById('hl-start-btn').disabled=true;
+    lockBets(true);
     playSound('deal');
   };
   window.hlGuess=async function(guess){
@@ -1945,8 +2259,9 @@ function buildHigherLow(c){
       if(deck.length===0){hlCashout();return;}
     } else {
       gameActive=false;
+      lockBets(false);
       await trackLoss(betAmt);
-      rb.textContent='❌ Wrong! '+nextCard.rank+nextCard.suit+' — streak broken at '+streak+'.';
+      rb.textContent='❌ Wrong! '+nextCard.rank+nextCard.suit+' — streak broken at '+streak+'. Lost '+fmtCoins(betAmt)+' coins.';
       rb.className='result-banner lose'; playSound('lose'); await recordResult(false);
       streak=0; document.getElementById('hl-streak').textContent='0';
       document.getElementById('hl-potential').textContent='—';
@@ -1955,9 +2270,9 @@ function buildHigherLow(c){
   };
   window.hlCashout=async function(){
     if(!gameActive||streak===0){toast('Get at least 1 correct first!');return;}
-    gameActive=false; const mult=getMultForStreak(streak); const payout=Math.floor(betAmt*mult);
+    gameActive=false; lockBets(false); const mult=getMultForStreak(streak); const payout=Math.floor(betAmt*mult);
     await addCoins(payout,'Higher or Lower');
-    document.getElementById('hl-result').textContent='💰 Cashed out! Streak '+streak+' · '+mult+'x · +'+fmtCoins(payout)+' coins!';
+    document.getElementById('hl-result').textContent='💰 Cashed out! Streak '+streak+' · '+mult+'x · +'+fmtCoins(payout)+' coins! (net +'+fmtCoins(payout-betAmt)+')';
     document.getElementById('hl-result').className='result-banner win';
     ['hl-higher-btn','hl-lower-btn','hl-cashout-btn'].forEach(id=>document.getElementById(id).disabled=true);
     document.getElementById('hl-start-btn').disabled=false;
@@ -2046,9 +2361,10 @@ function buildWheelFortune(c){
   window.spinWheelFortune=async function(){
     if(spinning) return;
     if((userData.coins||0)<currentBet){toast('Not enough coins!');return;}
-    spinning=true; setLoading('wf-spin-btn',true,'Spinning...');
+    spinning=true; setLoading('wf-spin-btn',true,'Spinning...'); lockBets(true);
     document.getElementById('wf-result').className='result-banner';
-    await saveUserData({coins:(userData.coins||0)-currentBet});
+    const betAmt=currentBet;
+    await saveUserData({coins:(userData.coins||0)-betAmt});
     playSound('wheel_spin');
 
     // Pick a random winning segment index
@@ -2082,25 +2398,26 @@ function buildWheelFortune(c){
         drawWheel(currentAngle);
         const seg=SEGMENTS[winIndex];
         const rb=document.getElementById('wf-result');
-        spinning=false; setLoading('wf-spin-btn',false,'Spin!');
+        spinning=false; setLoading('wf-spin-btn',false,'Spin!'); lockBets(false);
         if(seg.mult>=1){
           // 1x just returns stake, anything above is profit
-          const payout=Math.floor(currentBet*seg.mult);
+          const payout=Math.floor(betAmt*seg.mult);
+          const netGain = payout - betAmt;
           addCoins(payout,'Wheel of Fortune');
-          rb.textContent='🎉 '+seg.label+'! +'+fmtCoins(payout)+' coins returned!';
+          rb.textContent='🎉 '+seg.label+'! +'+fmtCoins(payout)+' returned!'+(netGain>0?' (net +'+fmtCoins(netGain)+')':'');
           rb.className='result-banner win';
           playSound(seg.mult>=5?'bigwin':'win'); recordResult(true);
           if(payout>=10000) unlockAchievement('big_win');
           if(seg.mult>=20) unlockAchievement('wheel_jackpot');
         } else if(seg.mult>0){
-          const payout=Math.floor(currentBet*seg.mult);
+          const payout=Math.floor(betAmt*seg.mult);
           if(payout>0) addCoins(payout,'Wheel partial');
-          trackLoss(currentBet - payout);
-          rb.textContent='😔 '+seg.label+' · Only '+fmtCoins(payout)+' of '+fmtCoins(currentBet)+' returned.';
+          trackLoss(betAmt - payout);
+          rb.textContent='😔 '+seg.label+' · Only '+fmtCoins(payout)+' of '+fmtCoins(betAmt)+' returned. (lost '+fmtCoins(betAmt-payout)+')';
           rb.className='result-banner lose'; playSound('lose'); recordResult(false);
         } else {
-          trackLoss(currentBet);
-          rb.textContent='💀 BUST! Better luck next time.';
+          trackLoss(betAmt);
+          rb.textContent='💀 BUST! Lost '+fmtCoins(betAmt)+' coins.';
           rb.className='result-banner lose'; playSound('lose'); recordResult(false);
         }
       }
@@ -2188,19 +2505,19 @@ function buildTicTacToe(c){
     if(winner==='X'){
       const payout=betAmt*2;
       addCoins(payout,'Tic-Tac-Toe');
-      rb.textContent='🎉 You win! +'+fmtCoins(payout)+' coins!';
+      rb.textContent='🎉 You win! +'+fmtCoins(payout)+' returned! (net +'+fmtCoins(payout-betAmt)+')';
       rb.className='result-banner win';
       status.textContent='You win! ✅';
       playSound('bigwin'); recordResult(true); unlockAchievement('ttt_win');
     } else if(winner==='draw'){
       addCoins(betAmt,'Tic-Tac-Toe draw');
-      rb.textContent='🤝 Draw! Bet returned.';
+      rb.textContent='🤝 Draw! Bet of '+fmtCoins(betAmt)+' returned.';
       rb.className='result-banner push';
       status.textContent='Draw! 🤝';
       playSound('click'); recordResult(false);
     } else {
       trackLoss(betAmt);
-      rb.textContent='😔 CPU wins! Better luck next time.';
+      rb.textContent='😔 CPU wins! Lost '+fmtCoins(betAmt)+' coins.';
       rb.className='result-banner lose';
       status.textContent='CPU wins! ❌';
       playSound('lose'); recordResult(false);
@@ -2302,14 +2619,21 @@ function renderStats(){
   const earned=userData.totalEarned||0, lost=userData.totalLost||0;
   const net=earned-lost, bets=userData.totalBets||0;
   const bigWin=userData.biggestWin||0, bigLoss=userData.biggestLoss||0;
-  document.getElementById('stat-earned').textContent=coinSymbol+' '+fmtCoins(earned);
-  document.getElementById('stat-lost').textContent=coinSymbol+' '+fmtCoins(lost);
+  function setStatEl(id,text){
+    const el=document.getElementById(id); if(!el) return;
+    el.textContent=text;
+    el.classList.toggle('big', text.length>12);
+  }
+  setStatEl('stat-earned',coinSymbol+' '+fmtCoins(earned));
+  setStatEl('stat-lost',coinSymbol+' '+fmtCoins(lost));
   const netEl=document.getElementById('stat-net');
-  netEl.textContent=(net>=0?'+':'')+coinSymbol+' '+fmtCoins(net);
-  netEl.className='stat-value '+(net>=0?'green':'red');
-  document.getElementById('stat-bets').textContent=fmtCoins(bets);
-  document.getElementById('stat-bigwin').textContent=coinSymbol+' '+fmtCoins(bigWin);
-  document.getElementById('stat-bigloss').textContent=coinSymbol+' '+fmtCoins(bigLoss);
+  if(netEl){
+    netEl.textContent=(net>=0?'+':'')+coinSymbol+' '+fmtCoins(net);
+    netEl.className='stat-value '+(net>=0?'green':'red')+(Math.abs(net)>=1e9?' big':'');
+  }
+  setStatEl('stat-bets',fmtCoins(bets));
+  setStatEl('stat-bigwin',coinSymbol+' '+fmtCoins(bigWin));
+  setStatEl('stat-bigloss',coinSymbol+' '+fmtCoins(bigLoss));
   const bailoutEl=document.getElementById('stat-bailouts');
   if(bailoutEl) bailoutEl.textContent=(userData.bailoutCount||0);
   const history=userData.balanceHistory||[];
@@ -2428,7 +2752,7 @@ async function renderGlobalStats(){
     });
   }catch(e){console.error('Global stats error',e);}
 }
-let suggestionsListener=null, allSuggestions=[], currentFilter='all';
+let suggestionsListener=null, allSuggestions=[], currentFilter='all', currentStatusFilter='all';
 
 function initSuggestions(){
   const textarea=document.getElementById('sug-body');
@@ -2442,28 +2766,46 @@ function initSuggestions(){
 }
 function filterSuggestions(cat){
   currentFilter=cat;
-  document.querySelectorAll('.sug-filter').forEach(b=>b.classList.toggle('active',b.textContent.toLowerCase().includes(cat==='all'?'all':cat)));
+  document.querySelectorAll('.sug-filter:not(.sug-status-filter)').forEach(b=>b.classList.toggle('active',b.textContent.toLowerCase().includes(cat==='all'?'all':cat)));
   renderSuggestions();
 }
 window.filterSuggestions=filterSuggestions;
+function filterSugStatus(status){
+  currentStatusFilter=status;
+  document.querySelectorAll('.sug-status-filter').forEach(b=>{
+    const t=b.textContent.toLowerCase();
+    b.classList.toggle('active',
+      (status==='all'&&t.includes('all status'))||
+      (status==='being_added'&&t.includes('being'))||
+      (status==='added'&&t.includes('added')&&!t.includes('being'))||
+      (status==='rejected'&&t.includes('rejected'))||
+      (status==='open'&&t.includes('open'))
+    );
+  });
+  renderSuggestions();
+}
+window.filterSugStatus=filterSugStatus;
+
 function renderSuggestions(){
   const list=document.getElementById('suggestions-list'); if(!list) return;
-  const filtered=currentFilter==='all'?allSuggestions:allSuggestions.filter(s=>s.category===currentFilter);
-  if(filtered.length===0){list.innerHTML='<div class="sug-empty">No suggestions yet in this category. Be the first!</div>';return;}
+  let filtered=currentFilter==='all'?allSuggestions:allSuggestions.filter(s=>s.category===currentFilter);
+  if(currentStatusFilter!=='all'){
+    if(currentStatusFilter==='open') filtered=filtered.filter(s=>!s.status);
+    else filtered=filtered.filter(s=>s.status===currentStatusFilter);
+  }
+  if(filtered.length===0){list.innerHTML='<div class="sug-empty">No suggestions in this category/status. Be the first!</div>';return;}
   const CAT_LABELS={game:'🎮',feature:'✨',shop:'🛒',bug:'🐛',other:'💡'};
   const STATUS_LABELS={being_added:'🔄 Being Added',added:'✅ Added',rejected:'❌ Rejected'};
-  const isOwner = currentUser && currentUser.uid === OWNER_UID;
   list.innerHTML=filtered.map(s=>{
     const date=new Date(s.timestamp);
     const dateStr=date.toLocaleDateString()+' '+date.toLocaleTimeString(undefined,{hour:'2-digit',minute:'2-digit'});
-    const statusBadge = s.status ? `<span class="sug-status-badge sug-status-${s.status}">${STATUS_LABELS[s.status]||s.status}</span>` : '';
-    const ownerBtns = isOwner ? `<div class="sug-owner-btns">
-      <button class="btn sug-mod-btn" onclick="setSugStatus('${s.id}','being_added')" style="font-size:.65rem;padding:5px 8px;background:rgba(0,100,255,.3);">🔄 Being Added</button>
-      <button class="btn sug-mod-btn" onclick="setSugStatus('${s.id}','added')" style="font-size:.65rem;padding:5px 8px;background:rgba(0,180,0,.3);">✅ Added</button>
-      <button class="btn sug-mod-btn" onclick="setSugStatus('${s.id}','rejected')" style="font-size:.65rem;padding:5px 8px;background:rgba(200,0,0,.3);">❌ Rejected</button>
-      <button class="btn sug-mod-btn" onclick="deleteSuggestion('${s.id}')" style="font-size:.65rem;padding:5px 8px;background:rgba(100,0,0,.4);">🗑 Delete</button>
-    </div>` : '';
-    return`<div class="sug-card">
+    const statusBadge = s.status ? `<span class="sug-status-badge sug-status-${s.status}">${STATUS_LABELS[s.status]||s.status}</span>` : '<span class="sug-status-badge" style="background:rgba(255,200,0,.15);color:#ffdd44;border:1px solid rgba(255,200,0,.3);">🟡 Open</span>';
+    const upvotes=s.upvotes||0;
+    const hasUpvoted=(s.upvoters||{})[currentUser&&currentUser.uid]||false;
+    const replyCount=s.replies?Object.keys(s.replies).length:0;
+    const isOwner=currentUser&&currentUser.uid===OWNER_UID;
+    const isAuthor=currentUser&&currentUser.uid===s.uid;
+    return`<div class="sug-card" onclick="openSuggestion('${s.id}')" style="cursor:pointer;">
       <div class="sug-card-header">
         <span class="sug-cat-badge">${CAT_LABELS[s.category]||'💡'} ${s.category}</span>
         ${statusBadge}
@@ -2471,10 +2813,160 @@ function renderSuggestions(){
         <span class="sug-card-meta">${escHtml(s.username||'?')} · ${dateStr}</span>
       </div>
       <div class="sug-card-body">${escHtml(s.body||'')}</div>
-      ${ownerBtns}
+      <div style="display:flex;gap:10px;align-items:center;margin-top:8px;flex-wrap:wrap;" onclick="event.stopPropagation()">
+        <button class="sug-action-btn${hasUpvoted?' sug-upvote-active':''}" onclick="upvoteSuggestion('${s.id}')">
+          👍 ${upvotes}
+        </button>
+        <span style="font-size:.72rem;color:var(--muted);">💬 ${replyCount} repl${replyCount===1?'y':'ies'}</span>
+        ${isAuthor?`<button class="sug-action-btn sug-edit-btn" onclick="editSuggestion('${s.id}')">✏️ Edit</button>`:''}
+        <span style="font-size:.7rem;color:var(--muted);margin-left:auto;">Click to open →</span>
+      </div>
     </div>`;
   }).join('');
 }
+
+window.openSuggestion=function(id){
+  const s=allSuggestions.find(x=>x.id===id); if(!s) return;
+  const CAT_LABELS={game:'🎮',feature:'✨',shop:'🛒',bug:'🐛',other:'💡'};
+  const STATUS_LABELS={being_added:'🔄 Being Added',added:'✅ Added',rejected:'❌ Rejected'};
+  const isOwner=currentUser&&currentUser.uid===OWNER_UID;
+  const isAuthor=currentUser&&currentUser.uid===s.uid;
+  const upvotes=s.upvotes||0;
+  const replies=s.replies?Object.values(s.replies).sort((a,b)=>a.timestamp-b.timestamp):[];
+  const history=s.editHistory||[];
+  const statusBadge=s.status?`<span class="sug-status-badge sug-status-${s.status}">${STATUS_LABELS[s.status]||s.status}</span>`:'<span class="sug-status-badge" style="background:rgba(255,200,0,.15);color:#ffdd44;border:1px solid rgba(255,200,0,.3);">🟡 Open</span>';
+  const ownerSection=isOwner?`<div style="margin:16px 0;padding:14px;background:rgba(255,200,0,.07);border:1px solid rgba(255,200,0,.3);border-radius:10px;">
+    <div style="font-size:.78rem;font-weight:800;color:var(--gold);margin-bottom:8px;">👑 Owner Controls</div>
+    <div style="display:flex;gap:8px;flex-wrap:wrap;">
+      <button class="btn sug-mod-btn" onclick="setSugStatus('${s.id}','being_added')" style="font-size:.65rem;padding:5px 8px;background:rgba(0,100,255,.3);">🔄 Being Added</button>
+      <button class="btn sug-mod-btn" onclick="setSugStatus('${s.id}','added')" style="font-size:.65rem;padding:5px 8px;background:rgba(0,180,0,.3);">✅ Added</button>
+      <button class="btn sug-mod-btn" onclick="setSugStatus('${s.id}','rejected')" style="font-size:.65rem;padding:5px 8px;background:rgba(200,0,0,.3);">❌ Rejected</button>
+      <button class="btn sug-mod-btn" onclick="deleteSuggestion('${s.id}');closeSugModal()" style="font-size:.65rem;padding:5px 8px;background:rgba(100,0,0,.4);">🗑 Delete</button>
+    </div>
+  </div>`:'';
+  const editHistorySection=isAuthor&&history.length>0?`<div style="margin:12px 0;padding:10px;background:rgba(0,0,50,.4);border:1px solid var(--border);border-radius:8px;">
+    <div style="font-size:.72rem;font-weight:800;color:var(--muted);margin-bottom:6px;">📝 Edit History</div>
+    ${history.map(h=>`<div style="font-size:.7rem;color:var(--muted);margin-bottom:4px;"><span style="color:var(--gold);">${new Date(h.timestamp).toLocaleString()}</span> · ${escHtml(h.body||'')}</div>`).join('')}
+  </div>`:'';
+  const repliesHtml=replies.map(r=>`<div style="padding:10px 12px;background:rgba(0,0,50,.4);border:1px solid var(--border);border-radius:8px;margin-bottom:8px;">
+    <div style="font-size:.72rem;color:var(--gold);font-weight:800;margin-bottom:4px;">${escHtml(r.username||'?')} · ${new Date(r.timestamp).toLocaleString()}</div>
+    <div style="font-size:.82rem;color:rgba(255,255,255,.85);">${escHtml(r.body||'')}</div>
+  </div>`).join('');
+
+  const modal=document.createElement('div');
+  modal.id='sug-modal';
+  modal.style.cssText='position:fixed;inset:0;z-index:9000;background:rgba(0,0,0,.75);display:flex;align-items:center;justify-content:center;padding:16px;';
+  modal.innerHTML=`<div style="background:#08081e;border:1px solid var(--border);border-radius:16px;max-width:600px;width:100%;max-height:90vh;overflow-y:auto;padding:24px;position:relative;">
+    <button onclick="closeSugModal()" style="position:absolute;top:14px;right:14px;background:rgba(255,255,255,.1);border:none;color:#fff;font-size:1.1rem;cursor:pointer;border-radius:6px;width:32px;height:32px;">✕</button>
+    <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:8px;">
+      <span class="sug-cat-badge">${CAT_LABELS[s.category]||'💡'} ${s.category}</span>
+      ${statusBadge}
+    </div>
+    <h3 style="font-size:1.1rem;font-weight:900;color:#fff;margin-bottom:4px;">${escHtml(s.title||'')}</h3>
+    <div style="font-size:.75rem;color:var(--muted);margin-bottom:12px;">by ${escHtml(s.username||'?')} · ${new Date(s.timestamp).toLocaleString()}</div>
+    <div style="font-size:.88rem;color:rgba(255,255,255,.85);line-height:1.5;margin-bottom:12px;padding:12px;background:rgba(0,0,50,.4);border-radius:8px;">${escHtml(s.body||'')}</div>
+    <div style="display:flex;gap:10px;align-items:center;margin-bottom:12px;">
+      <button class="sug-action-btn" onclick="upvoteSuggestion('${s.id}');closeSugModal();openSuggestion('${s.id}')">👍 ${upvotes} Upvotes</button>
+      ${isAuthor?`<button class="sug-action-btn sug-edit-btn" onclick="editSuggestion('${s.id}')">✏️ Edit</button>`:''}
+    </div>
+    ${isOwner?`<div style="margin:16px 0;padding:14px;background:rgba(255,200,0,.07);border:1px solid rgba(255,200,0,.3);border-radius:10px;">
+    <div style="font-size:.78rem;font-weight:800;color:var(--gold);margin-bottom:10px;">👑 Owner Controls</div>
+    <div style="display:flex;gap:8px;flex-wrap:wrap;">
+      <button class="owner-ctrl-btn owner-ctrl-blue" onclick="setSugStatus('${s.id}','being_added')">🔄 Being Added</button>
+      <button class="owner-ctrl-btn owner-ctrl-green" onclick="setSugStatus('${s.id}','added')">✅ Added</button>
+      <button class="owner-ctrl-btn owner-ctrl-red" onclick="setSugStatus('${s.id}','rejected')">❌ Rejected</button>
+      <button class="owner-ctrl-btn owner-ctrl-dark" onclick="deleteSuggestion('${s.id}');closeSugModal()">🗑 Delete</button>
+    </div>
+  </div>`:''}
+    ${editHistorySection}
+    <div style="margin-top:16px;">
+      <h4 style="font-size:.85rem;font-weight:900;color:#fff;margin-bottom:10px;">💬 Replies (${replies.length})</h4>
+      ${repliesHtml||'<div style="font-size:.78rem;color:var(--muted);margin-bottom:10px;">No replies yet. Be the first!</div>'}
+      <textarea id="sug-reply-input" class="sug-textarea" placeholder="Write a reply..." maxlength="300" style="height:70px;margin-top:8px;"></textarea>
+      <button class="btn btn-sm" onclick="submitSugReply('${s.id}')" style="margin-top:6px;"><span class="btn-text">Post Reply</span></button>
+    </div>
+  </div>`;
+  document.body.appendChild(modal);
+  modal.addEventListener('click',e=>{if(e.target===modal)closeSugModal();});
+};
+window.closeSugModal=function(){const m=document.getElementById('sug-modal');if(m)m.remove();};
+
+window.upvoteSuggestion=async function(id){
+  if(!currentUser){toast('Log in to upvote!');return;}
+  const s=allSuggestions.find(x=>x.id===id); if(!s) return;
+  const uid=currentUser.uid;
+  const upvoters=s.upvoters||{};
+  if(upvoters[uid]){
+    // Un-upvote
+    await db.ref('suggestions/'+id+'/upvoters/'+uid).remove();
+    await db.ref('suggestions/'+id+'/upvotes').set(Math.max(0,(s.upvotes||1)-1));
+    toast('👍 Upvote removed');
+  } else {
+    upvoters[uid]=true;
+    await db.ref('suggestions/'+id+'/upvoters/'+uid).set(true);
+    await db.ref('suggestions/'+id+'/upvotes').set((s.upvotes||0)+1);
+    toast('👍 Upvoted!');
+  }
+};
+
+window.submitSugReply=async function(id){
+  const input=document.getElementById('sug-reply-input');
+  const body=(input?input.value:'').trim();
+  if(!body){toast('Write something first!');return;}
+  if(!currentUser){toast('Log in to reply!');return;}
+  try{
+    await db.ref('suggestions/'+id+'/replies').push({username:userData.username||'?',uid:currentUser.uid,body,timestamp:Date.now()});
+    toast('💬 Reply posted!'); closeSugModal();
+  }catch(e){toast('Error: '+e.message);}
+};
+
+window.editSuggestion=function(id){
+  const s=allSuggestions.find(x=>x.id===id); if(!s) return;
+  if(!currentUser||currentUser.uid!==s.uid){toast('Not your suggestion!');return;}
+  const modal=document.createElement('div');
+  modal.id='sug-edit-modal';
+  modal.style.cssText='position:fixed;inset:0;z-index:9001;background:rgba(0,0,0,.8);display:flex;align-items:center;justify-content:center;padding:16px;';
+  modal.innerHTML=`<div style="background:#08081e;border:1px solid var(--border);border-radius:16px;max-width:500px;width:100%;padding:24px;position:relative;">
+    <button onclick="document.getElementById('sug-edit-modal').remove()" style="position:absolute;top:14px;right:14px;background:rgba(255,255,255,.1);border:none;color:#fff;font-size:1.1rem;cursor:pointer;border-radius:6px;width:32px;height:32px;">✕</button>
+    <h3 style="font-size:1rem;font-weight:900;color:#fff;margin-bottom:16px;">✏️ Edit Suggestion</h3>
+    <div class="form-group" style="margin-bottom:10px;">
+      <label style="font-size:.78rem;color:var(--muted);">Category</label>
+      <select id="edit-sug-category" class="sug-select" style="margin-top:4px;">
+        <option value="game"${s.category==='game'?' selected':''}>🎮 New Game Idea</option>
+        <option value="feature"${s.category==='feature'?' selected':''}>✨ New Feature</option>
+        <option value="shop"${s.category==='shop'?' selected':''}>🛒 Shop Item</option>
+        <option value="bug"${s.category==='bug'?' selected':''}>🐛 Bug Report</option>
+        <option value="other"${s.category==='other'?' selected':''}>💡 Other</option>
+      </select>
+    </div>
+    <div class="form-group" style="margin-bottom:10px;">
+      <label style="font-size:.78rem;color:var(--muted);">Title</label>
+      <input type="text" id="edit-sug-title" class="sug-input" value="${escHtml(s.title||'')}" maxlength="80" style="margin-top:4px;"/>
+    </div>
+    <div class="form-group" style="margin-bottom:14px;">
+      <label style="font-size:.78rem;color:var(--muted);">Description</label>
+      <textarea id="edit-sug-body" class="sug-textarea" maxlength="500" style="margin-top:4px;height:100px;">${escHtml(s.body||'')}</textarea>
+    </div>
+    <button class="btn btn-green" onclick="saveEditSuggestion('${s.id}')" style="max-width:160px;"><span class="btn-text">Save Changes</span></button>
+  </div>`;
+  document.body.appendChild(modal);
+};
+
+window.saveEditSuggestion=async function(id){
+  const s=allSuggestions.find(x=>x.id===id); if(!s) return;
+  const category=document.getElementById('edit-sug-category').value;
+  const title=(document.getElementById('edit-sug-title').value||'').trim();
+  const body=(document.getElementById('edit-sug-body').value||'').trim();
+  if(!title||!body){toast('Fill in all fields!');return;}
+  // Save edit history
+  const history=s.editHistory||[];
+  history.push({body:s.body,title:s.title,category:s.category,timestamp:Date.now()});
+  try{
+    await db.ref('suggestions/'+id).update({category,title,body,editHistory:history,edited:true,editedAt:Date.now()});
+    toast('✅ Suggestion updated!');
+    document.getElementById('sug-edit-modal')?.remove();
+  }catch(e){toast('Error: '+e.message);}
+};
 
 window.setSugStatus=async function(id, status){
   try{
@@ -2501,6 +2993,216 @@ window.submitSuggestion=async function(){
     document.getElementById('sug-title').value=''; document.getElementById('sug-body').value=''; document.getElementById('sug-char').textContent='0';
     toast('✅ Suggestion submitted! Thanks!'); playSound('coin');
   }catch(e){toast('Error submitting: '+e.message);}
+};
+
+// ════════════════════════════════════════════════
+// BANK SYSTEM
+// ════════════════════════════════════════════════
+function initBank(){
+  refreshCoinDisplays();
+  renderBankUI();
+}
+
+function renderBankUI(){
+  const coins=userData.coins||0;
+  const banked=userData.bankCoins||0;
+  const loan=userData.activeLoan||null;
+  const setEl=(id,v)=>{const e=document.getElementById(id);if(e)e.textContent=v;};
+  setEl('bank-wallet-display',coinSymbol+' '+fmtCoins(coins));
+  setEl('bank-saved-display',coinSymbol+' '+fmtCoins(banked));
+  if(loan){
+    const due=new Date(loan.dueDate);
+    const remaining=loan.dueDate-Date.now();
+    const repayAmt=Math.floor(loan.amount*1.1);
+    setEl('bank-loan-display',coinSymbol+' '+fmtCoins(loan.amount)+' (repay: '+fmtCoins(repayAmt)+')');
+    const timerEl=document.getElementById('bank-loan-timer');
+    if(timerEl){
+      if(remaining>0){
+        const days=Math.floor(remaining/86400000),hrs=Math.floor((remaining%86400000)/3600000),mins=Math.floor((remaining%3600000)/60000);
+        timerEl.textContent='⏱ Time left: '+(days>0?days+'d ':'')+hrs+'h '+mins+'m';
+        timerEl.style.color=remaining<86400000?'#ff4444':'var(--gold)';
+      } else {
+        timerEl.textContent='⚠️ LOAN OVERDUE! Pay now or lose 2x!';
+        timerEl.style.color='#ff4444';
+        // Check if overdue penalty should fire
+        checkLoanOverdue();
+      }
+    }
+    // Check overdue on load
+    if(remaining<=0) checkLoanOverdue();
+  } else {
+    setEl('bank-loan-display','None');
+    const timerEl=document.getElementById('bank-loan-timer');
+    if(timerEl) timerEl.textContent='';
+  }
+}
+
+async function checkLoanOverdue(){
+  const loan=userData.activeLoan;
+  if(!loan||loan.penaltyApplied) return;
+  if(Date.now()>loan.dueDate){
+    const penalty=Math.floor(loan.amount*2);
+    const newCoins=Math.max(0,(userData.coins||0)-penalty);
+    await saveUserData({coins:newCoins,'activeLoan':null});
+    toast('💀 Loan overdue! Lost '+fmtCoins(penalty)+' coins!',5000);
+    renderBankUI();
+  }
+}
+
+window.bankDeposit=async function(){
+  const input=document.getElementById('bank-dw-amount');
+  const amt=parseInt(input.value)||0;
+  const msgEl=document.getElementById('bank-dw-msg');
+  function setMsg(t,c){if(msgEl){msgEl.textContent=t;msgEl.className='msg '+(c||'');}}
+  if(amt<=0) return setMsg('Enter a valid amount.','error');
+  if(amt>(userData.coins||0)) return setMsg('Not enough coins in wallet!','error');
+  await saveUserData({coins:(userData.coins||0)-amt,bankCoins:(userData.bankCoins||0)+amt});
+  setMsg('✅ Deposited '+fmtCoins(amt)+' coins!','success');
+  input.value=''; renderBankUI(); toast('🏦 Deposited '+fmtCoins(amt)+' '+coinSymbol);
+};
+
+window.bankWithdraw=async function(){
+  const input=document.getElementById('bank-dw-amount');
+  const amt=parseInt(input.value)||0;
+  const msgEl=document.getElementById('bank-dw-msg');
+  function setMsg(t,c){if(msgEl){msgEl.textContent=t;msgEl.className='msg '+(c||'');}}
+  if(amt<=0) return setMsg('Enter a valid amount.','error');
+  if(amt>(userData.bankCoins||0)) return setMsg('Not enough coins in bank!','error');
+  await saveUserData({coins:(userData.coins||0)+amt,bankCoins:(userData.bankCoins||0)-amt});
+  setMsg('✅ Withdrew '+fmtCoins(amt)+' coins!','success');
+  input.value=''; renderBankUI(); toast('💰 Withdrew '+fmtCoins(amt)+' '+coinSymbol);
+};
+
+window.takeLoan=async function(){
+  const input=document.getElementById('bank-loan-amount');
+  const amt=parseInt(input.value)||0;
+  const msgEl=document.getElementById('bank-loan-msg');
+  function setMsg(t,c){if(msgEl){msgEl.textContent=t;msgEl.className='msg '+(c||'');}}
+  if(userData.activeLoan) return setMsg('You already have an active loan! Repay it first.','error');
+  if(amt<100) return setMsg('Minimum loan is 100 coins.','error');
+  if(amt>50000) return setMsg('Maximum loan is 50,000 coins.','error');
+  const loan={amount:amt,dueDate:Date.now()+7*24*60*60*1000,takenAt:Date.now()};
+  await saveUserData({coins:(userData.coins||0)+amt,activeLoan:loan});
+  setMsg('✅ Loan of '+fmtCoins(amt)+' taken! Repay within 7 days.','success');
+  input.value=''; renderBankUI(); toast('💳 Loan granted: +'+fmtCoins(amt)+' '+coinSymbol);
+};
+
+window.repayLoan=async function(){
+  const loan=userData.activeLoan;
+  const msgEl=document.getElementById('bank-loan-msg');
+  function setMsg(t,c){if(msgEl){msgEl.textContent=t;msgEl.className='msg '+(c||'');}}
+  if(!loan) return setMsg('No active loan to repay.','error');
+  const repayAmt=Math.floor(loan.amount*1.1);
+  if((userData.coins||0)<repayAmt) return setMsg('Not enough coins to repay! Need '+fmtCoins(repayAmt)+'.','error');
+  await saveUserData({coins:(userData.coins||0)-repayAmt,activeLoan:null});
+  setMsg('✅ Loan repaid! ('+fmtCoins(repayAmt)+' including 10% interest)','success');
+  renderBankUI(); toast('✅ Loan repaid!');
+};
+
+// ════════════════════════════════════════════════
+// BEGGING SYSTEM
+// ════════════════════════════════════════════════
+let beggingListener=null;
+
+function initBegging(){
+  refreshCoinDisplays();
+  if(beggingListener) beggingListener();
+  beggingListener=db.ref('begging').orderByChild('timestamp').limitToLast(50).on('value',snap=>{
+    const list=document.getElementById('begging-list'); if(!list) return;
+    const posts=[]; if(snap.exists()){snap.forEach(child=>{posts.unshift({id:child.key,...child.val()});});}
+    if(posts.length===0){list.innerHTML='<div class="sug-empty">No active begging posts. Be the first!</div>';return;}
+    const isOwner=currentUser&&currentUser.uid===OWNER_UID;
+    list.innerHTML=posts.map(p=>{
+      const raised=p.raised||0, goal=p.goal||1000;
+      const pct=Math.min(100,Math.floor(raised/goal*100));
+      const isAuthor=currentUser&&currentUser.uid===p.uid;
+      const date=new Date(p.timestamp).toLocaleDateString();
+      return`<div class="sug-card">
+        <div class="sug-card-header">
+          <span class="sug-cat-badge">🙏 Begging</span>
+          <span class="sug-card-title">${escHtml(p.username||'?')} needs coins!</span>
+          <span class="sug-card-meta">${date} · Goal: ${coinSymbol} ${fmtCoins(goal)}</span>
+        </div>
+        <div class="sug-card-body">${escHtml(p.reason||'')}</div>
+        <div style="margin:8px 0;">
+          <div style="background:rgba(255,255,255,.1);border-radius:4px;height:8px;overflow:hidden;">
+            <div style="background:var(--blue);height:100%;width:${pct}%;transition:width .3s;border-radius:4px;"></div>
+          </div>
+          <div style="font-size:.72rem;color:var(--muted);margin-top:4px;">${coinSymbol} ${fmtCoins(raised)} raised of ${fmtCoins(goal)} (${pct}%)</div>
+        </div>
+        <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-top:8px;">
+          ${!isAuthor?`<div style="display:flex;gap:6px;align-items:center;">
+            <input type="range" min="1" max="100" value="10" id="donate-pct-${p.id}" oninput="updateDonatePreview('${p.id}',${goal})" style="width:100px;accent-color:var(--blue);">
+            <span id="donate-preview-${p.id}" style="font-size:.75rem;color:var(--gold);min-width:80px;">${fmtCoins(Math.floor(goal*0.1))} (10%)</span>
+            <button class="btn btn-green" onclick="donateBeg('${p.id}',${goal})" style="font-size:.7rem;padding:5px 10px;">Donate</button>
+          </div>`:'<span style="font-size:.72rem;color:var(--muted);">Your post</span>'}
+          ${(isAuthor||isOwner)?`<button class="btn sug-mod-btn" onclick="deleteBegPost('${p.id}')" style="font-size:.65rem;padding:4px 8px;background:rgba(100,0,0,.4);">🗑 Delete</button>`:''}
+        </div>
+      </div>`;
+    }).join('');
+  });
+}
+
+window.updateDonatePreview=function(id,goal){
+  const slider=document.getElementById('donate-pct-'+id);
+  const preview=document.getElementById('donate-preview-'+id);
+  if(!slider||!preview) return;
+  const pct=parseInt(slider.value);
+  const amt=Math.floor(goal*(pct/100));
+  preview.textContent=fmtCoins(amt)+' ('+pct+'%)';
+};
+
+window.donateBeg=async function(id,goal){
+  if(!currentUser){toast('Log in to donate!');return;}
+  const slider=document.getElementById('donate-pct-'+id);
+  const pct=parseInt(slider?slider.value:10);
+  const amt=Math.floor(goal*(pct/100));
+  if(amt<=0){toast('Donation amount too small!');return;}
+  if((userData.coins||0)<amt){toast('Not enough coins to donate '+fmtCoins(amt)+'!');return;}
+  try{
+    const snap=await db.ref('begging/'+id).get();
+    if(!snap.exists()){toast('Post no longer exists!');return;}
+    const post=snap.val();
+    if(post.uid===currentUser.uid){toast("You can't donate to your own post!");return;}
+    // Deduct from donor
+    await saveUserData({coins:(userData.coins||0)-amt});
+    // Credit recipient
+    const recipSnap=await db.ref('users/'+post.uid+'/coins').get();
+    const recipCoins=(recipSnap.exists()?recipSnap.val():0)+amt;
+    await db.ref('users/'+post.uid+'/coins').set(recipCoins);
+    // Update raised amount
+    await db.ref('begging/'+id+'/raised').set((post.raised||0)+amt);
+    toast('🙏 Donated '+fmtCoins(amt)+' coins!');
+  }catch(e){toast('Error: '+e.message);}
+};
+
+window.submitBegPost=async function(){
+  const reason=(document.getElementById('beg-reason').value||'').trim();
+  const goal=parseInt(document.getElementById('beg-goal').value)||0;
+  const msgEl=document.getElementById('beg-post-msg');
+  function setMsg(t,c){if(msgEl){msgEl.textContent=t;msgEl.className='msg '+(c||'');}}
+  if(!reason) return setMsg('Describe why you need coins!','error');
+  if(goal<100) return setMsg('Goal must be at least 100 coins.','error');
+  if(!currentUser) return setMsg('You must be logged in!','error');
+  try{
+    // Scan for existing post without needing a Firebase index on 'uid'
+    const allSnap=await db.ref('begging').limitToLast(100).get();
+    if(allSnap.exists()){
+      let hasPost=false;
+      allSnap.forEach(child=>{if(child.val().uid===currentUser.uid) hasPost=true;});
+      if(hasPost) return setMsg('You already have an active begging post! Delete it first.','error');
+    }
+    await db.ref('begging').push({username:userData.username||'?',uid:currentUser.uid,reason,goal,raised:0,timestamp:Date.now()});
+    document.getElementById('beg-reason').value=''; document.getElementById('beg-goal').value='';
+    setMsg('✅ Post submitted!','success'); toast('🙏 Begging post created!');
+  }catch(e){setMsg('Error: '+e.message,'error');}
+};
+
+window.deleteBegPost=async function(id){
+  try{
+    await db.ref('begging/'+id).remove();
+    toast('🗑 Post deleted.');
+  }catch(e){toast('Error: '+e.message);}
 };
 
 // ════════════════════════════════════════════════
@@ -2571,10 +3273,17 @@ function renderShop(tab){
   else if(tab==='avatars')  {items=SHOP_AVATARS;  tabKey='avatars';}
   else                      {items=SHOP_COINS;    tabKey='coinskinsshop';}
 
-  document.getElementById('shop-grid').innerHTML=items.map(item=>{
+  const TIER_ORDER={common:0,uncommon:1,rare:2,legend:3,mythic:4,divine:5};
+  function getTier(item){return item.tier||(item.price===0?'common':item.price<20000?'common':item.price<50000?'uncommon':item.price<150000?'rare':'legend');}
+  const sorted=[...items].sort((a,b)=>{
+    const ta=TIER_ORDER[getTier(a)]??0, tb=TIER_ORDER[getTier(b)]??0;
+    if(ta!==tb) return ta-tb;
+    return a.price-b.price;
+  });
+  document.getElementById('shop-grid').innerHTML=sorted.map(item=>{
     const isOwned=owned.includes(item.id)||item.price===0;
     const isEquipped=equipped[tabKey]===item.id;
-    const tier=item.tier||(item.price===0?'common':item.price<20000?'common':item.price<50000?'uncommon':item.price<150000?'rare':'legend');
+    const tier=getTier(item);
 const tierClass=tier?'tier-'+tier:'';
 const tierLabel=tier==='divine'?'✨ DIVINE':tier==='mythic'?'⚗ MYTHIC':tier==='legend'?'🔥 LEGEND':tier==='rare'?'💠 RARE':tier==='uncommon'?'🔹 UNCOMMON':'⬜ COMMON';
 
@@ -2590,8 +3299,21 @@ const tierLabel=tier==='divine'?'✨ DIVINE':tier==='mythic'?'⚗ MYTHIC':tier==
     } else if(tab==='avatars'){
       preview=`<div style="font-size:3rem;margin-bottom:10px;">${item.preview}</div>`;
     } else {
-      const skins={coin_default:'🪙',coin_blue:'💎',coin_fire:'🔥',coin_star:'⭐',coin_heart:'❤️',coin_skull:'💀',coin_moon:'🌙',coin_crown:'👑',coin_alien:'👾',coin_rainbow:'🌈',coin_diamond:'💠',coin_lightning:'⚡',coin_gem:'💗',coin_infinity:'♾️',coin_toxic:'☢️',coin_angel:'😇',coin_devil:'😈',coin_ghost:'👻',coin_nebula:'🌌',coin_vortex:'🌀',coin_prismatic:'🔮',coin_omnipotent:'⚡',coin_starstruck:'🌟'};
-      preview=`<div style="font-size:2.8rem;margin-bottom:10px;">${skins[item.id]||'🪙'}</div>`;
+      const skins={
+        coin_default:'🪙',coin_blue:'💎',coin_fire:'🔥',coin_star:'⭐',coin_heart:'❤️',
+        coin_skull:'💀',coin_moon:'🌙',coin_crown:'👑',coin_alien:'👾',coin_rainbow:'🌈',
+        coin_diamond:'💠',coin_lightning:'⚡',coin_gem:'💗',coin_infinity:'♾️',coin_toxic:'☢️',
+        coin_angel:'😇',coin_devil:'😈',coin_ghost:'👻',coin_nebula:'🌌',coin_vortex:'🌀',
+        coin_prismatic:'🔮',coin_omnipotent:'🌩️',coin_starstruck:'🌟',
+        // new skins
+        coin_clover:'🍀',coin_bomb:'💣',coin_eye:'👁️',coin_rose:'🌹',coin_trophy:'🏆',
+        coin_volcano:'🌋',coin_snowflake:'❄️',coin_sun:'☀️',coin_comet:'☄️',coin_spider:'🕷️',
+        coin_trident:'🔱',coin_black:'🖤',coin_axe:'🪓',coin_hypno:'🌀',coin_pixel:'🎮',
+        coin_dagger:'🗡️',coin_supernova:'💥',coin_draconus:'🐉',coin_eclipse:'🌒',
+        coin_singularity:'🌑',coin_alpha:'🅰️'
+      };
+      const skinEmoji=skins[item.id]||item.preview||'🪙';
+      preview=`<div style="font-size:2.8rem;margin-bottom:10px;">${skinEmoji}</div>`;
     }
 
     const priceClass=tier==='divine'?'price-divine':tier==='mythic'?'price-mythic':tier==='legend'?'price-legend':'';
@@ -2630,7 +3352,18 @@ window.equipItem=async function(tabKey,id,tab){
 };
 
 function applyCoinSkin(id){
-  const skins={coin_default:'🪙',coin_blue:'💎',coin_fire:'🔥',coin_star:'⭐',coin_heart:'❤️',coin_skull:'💀',coin_moon:'🌙',coin_crown:'👑',coin_alien:'👾',coin_rainbow:'🌈',coin_diamond:'💠',coin_lightning:'⚡',coin_gem:'💗',coin_infinity:'♾️',coin_toxic:'☢️',coin_angel:'😇',coin_devil:'😈',coin_ghost:'👻',coin_nebula:'🌌',coin_vortex:'🌀',coin_prismatic:'🔮',coin_omnipotent:'⚡',coin_starstruck:'🌟'};
+  const skins={
+    coin_default:'🪙',coin_blue:'💎',coin_fire:'🔥',coin_star:'⭐',coin_heart:'❤️',
+    coin_skull:'💀',coin_moon:'🌙',coin_crown:'👑',coin_alien:'👾',coin_rainbow:'🌈',
+    coin_diamond:'💠',coin_lightning:'⚡',coin_gem:'💗',coin_infinity:'♾️',coin_toxic:'☢️',
+    coin_angel:'😇',coin_devil:'😈',coin_ghost:'👻',coin_nebula:'🌌',coin_vortex:'🌀',
+    coin_prismatic:'🔮',coin_omnipotent:'🌩️',coin_starstruck:'🌟',
+    coin_clover:'🍀',coin_bomb:'💣',coin_eye:'👁️',coin_rose:'🌹',coin_trophy:'🏆',
+    coin_volcano:'🌋',coin_snowflake:'❄️',coin_sun:'☀️',coin_comet:'☄️',coin_spider:'🕷️',
+    coin_trident:'🔱',coin_black:'🖤',coin_axe:'🪓',coin_hypno:'🌀',coin_pixel:'🎮',
+    coin_dagger:'🗡️',coin_supernova:'💥',coin_draconus:'🐉',coin_eclipse:'🌒',
+    coin_singularity:'🌑',coin_alpha:'🅰️'
+  };
   coinSymbol=skins[id]||'🪙'; refreshCoinDisplays();
 }
 function applyTheme(id){
@@ -2891,6 +3624,52 @@ auth.onAuthStateChanged(async(user)=>{
   function drawCosmicRift(){cosmicT+=0.008;// Multiple rifts
     for(let rift=0;rift<3;rift++){const rx=W*(0.25+rift*0.25)+Math.sin(cosmicT+rift)*80;const ry=H/2+Math.cos(cosmicT*0.7+rift)*100;for(let ring=0;ring<8;ring++){const r=30+ring*25+Math.sin(cosmicT*2+rift+ring)*15;const hue=(cosmicT*40+rift*120+ring*20)%360;ctx.globalAlpha=0.12+Math.sin(cosmicT+ring)*0.05;ctx.strokeStyle=`hsl(${hue},100%,70%)`;ctx.lineWidth=2;ctx.beginPath();ctx.arc(rx,ry,r,0,Math.PI*2);ctx.stroke();}}ctx.globalAlpha=1;}
 
+  // === NEW BG EFFECT CLASSES ===
+  // Galaxy Spiral — slow rotating dots
+  let galaxyAngle=0;
+  function drawGalaxySpiral(){galaxyAngle+=0.003;for(let arm=0;arm<3;arm++){for(let i=0;i<80;i++){const a=galaxyAngle+arm*(Math.PI*2/3)+i*0.15;const r=20+i*5.5;const x=W/2+Math.cos(a)*r;const y=H/2+Math.sin(a)*r*0.45;const hue=(i*4+galaxyAngle*40)%360;ctx.globalAlpha=0.2-i*0.002;ctx.beginPath();ctx.arc(x,y,1.5+i*0.03,0,Math.PI*2);ctx.fillStyle=`hsl(${hue},80%,70%)`;ctx.fill();}}ctx.globalAlpha=1;}
+
+  // Blood Rain
+  class BloodDrop{constructor(){this.reset();}reset(){this.x=Math.random()*W;this.y=-rand(0,H);this.len=rand(25,70);this.speed=7+Math.random()*9;this.alpha=0.4+Math.random()*.5;}update(){this.y+=this.speed;if(this.y-this.len>H)this.reset();}draw(){const grad=ctx.createLinearGradient(this.x,this.y-this.len,this.x,this.y);grad.addColorStop(0,'transparent');grad.addColorStop(1,`rgba(180,0,0,${this.alpha})`);ctx.globalAlpha=1;ctx.strokeStyle=grad;ctx.lineWidth=2;ctx.beginPath();ctx.moveTo(this.x,this.y-this.len);ctx.lineTo(this.x,this.y);ctx.stroke();}}
+
+  // Heartbeat Pulse
+  let heartbeatT=0;
+  function drawHeartbeat(){heartbeatT+=0.04;const pulse=0.5+0.5*Math.abs(Math.sin(heartbeatT*1.8));ctx.globalAlpha=pulse*0.18;const g=ctx.createRadialGradient(W/2,H/2,0,W/2,H/2,Math.min(W,H)*0.6);g.addColorStop(0,'rgba(255,0,50,.9)');g.addColorStop(1,'transparent');ctx.fillStyle=g;ctx.fillRect(0,0,W,H);// ECG line
+    ctx.globalAlpha=pulse*0.6;ctx.strokeStyle='rgba(255,60,60,.9)';ctx.lineWidth=2;ctx.beginPath();const cy=H*0.55;const step=W/100;ctx.moveTo(0,cy);for(let i=0;i<100;i++){const px=i*step;let py=cy;const phase=(heartbeatT*3+i*0.08)%(Math.PI*2);if(phase>0.8&&phase<1.2)py=cy-80;else if(phase>1.2&&phase<1.35)py=cy+40;else if(phase>1.35&&phase<1.55)py=cy-150*Math.exp(-Math.pow((phase-1.45)*8,2));ctx.lineTo(px,py);}ctx.stroke();ctx.globalAlpha=1;}
+
+  // Web Crawl
+  class WebNode{constructor(){this.x=Math.random()*W;this.y=Math.random()*H;this.vx=(Math.random()-.5)*0.3;this.vy=(Math.random()-.5)*0.3;}update(){this.x+=this.vx;this.y+=this.vy;if(this.x<0||this.x>W)this.vx*=-1;if(this.y<0||this.y>H)this.vy*=-1;}}
+  let webNodes=[];
+  function drawWebCrawl(){if(webNodes.length===0)for(let i=0;i<20;i++)webNodes.push(new WebNode());webNodes.forEach(n=>n.update());for(let i=0;i<webNodes.length;i++){for(let j=i+1;j<webNodes.length;j++){const dx=webNodes[i].x-webNodes[j].x,dy=webNodes[i].y-webNodes[j].y;const d=Math.sqrt(dx*dx+dy*dy);if(d<180){ctx.globalAlpha=(1-d/180)*0.25;ctx.strokeStyle='rgba(200,200,255,.8)';ctx.lineWidth=0.8;ctx.beginPath();ctx.moveTo(webNodes[i].x,webNodes[i].y);ctx.lineTo(webNodes[j].x,webNodes[j].y);ctx.stroke();}}}webNodes.forEach(n=>{ctx.globalAlpha=0.5;ctx.beginPath();ctx.arc(n.x,n.y,3,0,Math.PI*2);ctx.fillStyle='rgba(200,200,255,.7)';ctx.fill();});ctx.globalAlpha=1;}
+
+  // Neon Grid Lines
+  let gridT=0;
+  function drawNeonGridLines(){gridT+=0.02;for(let i=0;i<8;i++){const offset=((gridT*60*((i%2===0)?1:-1)+i*120)%H+H)%H;ctx.globalAlpha=0.12+Math.sin(gridT+i)*0.06;ctx.strokeStyle=`hsl(${(i*45+gridT*20)%360},100%,65%)`;ctx.lineWidth=2;ctx.beginPath();ctx.moveTo(0,offset);ctx.lineTo(W,offset);ctx.stroke();}for(let i=0;i<6;i++){const offset=((gridT*40*((i%2===0)?1:-1)+i*150)%W+W)%W;ctx.globalAlpha=0.1+Math.sin(gridT*1.3+i)*0.05;ctx.strokeStyle=`hsl(${(i*60+gridT*15)%360},100%,65%)`;ctx.lineWidth=2;ctx.beginPath();ctx.moveTo(offset,0);ctx.lineTo(offset,H);ctx.stroke();}ctx.globalAlpha=1;}
+
+  // Butterflies
+  class Butterfly{constructor(){this.reset();}reset(){this.x=Math.random()*W;this.y=Math.random()*H;this.vx=(Math.random()-.5)*1.2;this.vy=(Math.random()-.5)*1.2;this.phase=Math.random()*Math.PI*2;this.hue=rand(200,340);this.size=10+Math.random()*14;}update(){this.phase+=0.06;this.x+=this.vx+Math.sin(this.phase*0.7)*0.8;this.y+=this.vy+Math.cos(this.phase*0.5)*0.6;if(this.x<-30)this.x=W+30;if(this.x>W+30)this.x=-30;if(this.y<-30)this.y=H+30;if(this.y>H+30)this.y=-30;}draw(){const wing=Math.abs(Math.sin(this.phase))*this.size;ctx.globalAlpha=0.65;ctx.fillStyle=`hsl(${this.hue},90%,70%)`;ctx.beginPath();ctx.ellipse(this.x-wing/2,this.y,wing,wing*0.6,Math.PI*0.1,0,Math.PI*2);ctx.fill();ctx.beginPath();ctx.ellipse(this.x+wing/2,this.y,wing,wing*0.6,-Math.PI*0.1,0,Math.PI*2);ctx.fill();}}
+
+  // Falling Dice
+  class FallingDie{constructor(){this.reset();}reset(){this.x=Math.random()*W;this.y=-60;this.size=22+Math.random()*20;this.vy=1.2+Math.random()*2.5;this.vx=(Math.random()-.5)*1.5;this.rot=Math.random()*Math.PI*2;this.rotV=(Math.random()-.5)*0.06;this.face=Math.ceil(Math.random()*6);}update(){this.y+=this.vy;this.x+=this.vx;this.rot+=this.rotV;if(this.y>H+70)this.reset();}draw(){ctx.globalAlpha=0.55;ctx.save();ctx.translate(this.x,this.y);ctx.rotate(this.rot);const s=this.size;ctx.fillStyle='rgba(30,30,60,.85)';ctx.strokeStyle='rgba(100,100,255,.7)';ctx.lineWidth=1.5;ctx.beginPath();ctx.roundRect(-s,-s,s*2,s*2,6);ctx.fill();ctx.stroke();ctx.fillStyle='rgba(150,180,255,.9)';const dots={1:[[0,0]],2:[[-s*.45,-s*.45],[s*.45,s*.45]],3:[[-s*.45,-s*.45],[0,0],[s*.45,s*.45]],4:[[-s*.45,-s*.45],[s*.45,-s*.45],[-s*.45,s*.45],[s*.45,s*.45]],5:[[-s*.45,-s*.45],[s*.45,-s*.45],[0,0],[-s*.45,s*.45],[s*.45,s*.45]],6:[[-s*.45,-s*.45],[s*.45,-s*.45],[-s*.45,0],[s*.45,0],[-s*.45,s*.45],[s*.45,s*.45]]};(dots[this.face]||dots[1]).forEach(([dx,dy])=>{ctx.beginPath();ctx.arc(dx,dy,s*.12,0,Math.PI*2);ctx.fill();});ctx.restore();}}
+
+  // Apocalypse — meteors + fire
+  let apocalypseTimer=0;
+  class ApocMeteor{constructor(){this.reset();}reset(){this.x=Math.random()*W;this.y=-100;this.vx=2+Math.random()*6;this.vy=5+Math.random()*10;this.len=100+Math.random()*150;this.alpha=0.7+Math.random()*.3;}update(){this.x+=this.vx;this.y+=this.vy;if(this.y>H+100)this.reset();}draw(){const grad=ctx.createLinearGradient(this.x,this.y,this.x-this.vx*6,this.y-this.vy*6);grad.addColorStop(0,`rgba(255,180,50,${this.alpha})`);grad.addColorStop(1,'transparent');ctx.globalAlpha=1;ctx.strokeStyle=grad;ctx.lineWidth=4;ctx.beginPath();ctx.moveTo(this.x,this.y);ctx.lineTo(this.x-this.vx*6,this.y-this.vy*6);ctx.stroke();}}
+  function drawApocalypse(){fxPool.forEach(p=>{p.update();p.draw();});// Screen shake tint
+    if(Math.random()<0.03){ctx.globalAlpha=0.08;ctx.fillStyle='rgba(255,50,0,1)';ctx.fillRect(0,0,W,H);}ctx.globalAlpha=1;}
+
+  // Time Warp
+  let timeWarpT=0;
+  function drawTimeWarp(){timeWarpT+=0.015;// Melting clocks / grid warp
+    ctx.globalAlpha=0.12;for(let y=0;y<H;y+=50){ctx.strokeStyle=`hsl(${(timeWarpT*30+y)%360},80%,60%)`;ctx.lineWidth=1.5;ctx.beginPath();ctx.moveTo(0,y+Math.sin(timeWarpT+y*.02)*30);for(let x=0;x<W;x+=8){ctx.lineTo(x,y+Math.sin(timeWarpT+x*.015+y*.02)*30);}ctx.stroke();}// Rotating clock hands
+    for(let c=0;c<5;c++){const cx=W*(0.15+c*0.18)+Math.sin(timeWarpT+c)*50;const cy=H*(0.3+c*0.12)+Math.cos(timeWarpT*0.7+c)*40;const r=25+Math.sin(timeWarpT*2+c)*10;ctx.globalAlpha=0.2;ctx.strokeStyle=`hsl(${(c*60+timeWarpT*20)%360},100%,70%)`;ctx.lineWidth=2;ctx.beginPath();ctx.arc(cx,cy,r,0,Math.PI*2);ctx.stroke();const a=timeWarpT*(1+c*0.3);ctx.beginPath();ctx.moveTo(cx,cy);ctx.lineTo(cx+Math.cos(a)*r*.8,cy+Math.sin(a)*r*.8);ctx.stroke();}ctx.globalAlpha=1;}
+
+  // God's Hand
+  let godHandT=0;
+  function drawGodHand(){godHandT+=0.01;// Divine light rays from top
+    for(let ray=0;ray<12;ray++){const angle=-Math.PI/2+((ray-6)/6)*Math.PI*0.6+Math.sin(godHandT+ray*0.5)*0.1;const len=H*1.2;const ox=W/2+Math.sin(godHandT*0.3)*100;const oy=-80;ctx.globalAlpha=0.05+Math.sin(godHandT*2+ray*0.8)*0.03;const grad=ctx.createLinearGradient(ox,oy,ox+Math.cos(angle)*len,oy+Math.sin(angle)*len);grad.addColorStop(0,`rgba(255,240,180,.9)`);grad.addColorStop(1,'transparent');ctx.fillStyle=grad;const w=30+ray*5;ctx.beginPath();ctx.moveTo(ox-w/2,oy);ctx.lineTo(ox+w/2,oy);ctx.lineTo(ox+Math.cos(angle)*len+w,oy+Math.sin(angle)*len);ctx.lineTo(ox+Math.cos(angle)*len-w,oy+Math.sin(angle)*len);ctx.closePath();ctx.fill();}// Glowing center orb
+    ctx.globalAlpha=0.25+Math.sin(godHandT*3)*0.1;const orb=ctx.createRadialGradient(W/2,0,0,W/2,0,200);orb.addColorStop(0,'rgba(255,250,200,.9)');orb.addColorStop(1,'transparent');ctx.fillStyle=orb;ctx.fillRect(0,0,W,H);ctx.globalAlpha=1;}
+
   function buildFxPool(id){
     fxPool=[];
     if(id==='fx_stars')     for(let i=0;i<30;i++) fxPool.push(new Star());
@@ -2904,6 +3683,11 @@ auth.onAuthStateChanged(async(user)=>{
     else if(id==='fx_sakura')   for(let i=0;i<80;i++) fxPool.push(new Sakura());
     else if(id==='fx_lava')     for(let i=0;i<18;i++) fxPool.push(new LavaBlob());
     else if(id==='fx_matrix')   initMatrix();
+    // NEW EFFECTS
+    else if(id==='fx_bloodrain')  for(let i=0;i<65;i++) fxPool.push(new BloodDrop());
+    else if(id==='fx_butterflies')for(let i=0;i<35;i++) fxPool.push(new Butterfly());
+    else if(id==='fx_dice')       for(let i=0;i<20;i++) fxPool.push(new FallingDie());
+    else if(id==='fx_apocalypse') for(let i=0;i<25;i++) fxPool.push(new ApocMeteor());
   }
 
   function reinitAll(){
@@ -2947,6 +3731,14 @@ auth.onAuthStateChanged(async(user)=>{
     else if(fx==='fx_storm')   drawStorm();
     else if(fx==='fx_portal')  drawPortal();
     else if(fx==='fx_cosmic')  drawCosmicRift();
+    // NEW EFFECTS
+    else if(fx==='fx_galaxy')    drawGalaxySpiral();
+    else if(fx==='fx_heartbeat') drawHeartbeat();
+    else if(fx==='fx_spiders')   drawWebCrawl();
+    else if(fx==='fx_neonlines') drawNeonGridLines();
+    else if(fx==='fx_apocalypse') drawApocalypse();
+    else if(fx==='fx_timewarp')  drawTimeWarp();
+    else if(fx==='fx_godhand')   drawGodHand();
     else{fxPool.forEach(p=>{p.update();p.draw();});}
     ctx.globalAlpha=1;
     requestAnimationFrame(loop);
